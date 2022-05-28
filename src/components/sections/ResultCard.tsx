@@ -2,16 +2,17 @@ import React = require("react")
 import Card from "react-bootstrap/Card"
 
 interface Props {
+  color: "primary" | "secondary" | "success" | "warning" | "danger",
   header: string,
   children: string[] | string
 }
 
 class ResultCard extends React.Component<Props> {
   render() {
-    return <Card>
+    return <Card bg={this.props.color} text="white">
       <Card.Header>{this.props.header}</Card.Header>
-      <Card.Body>
-        <Card.Text>{this.props.children}</Card.Text>
+      <Card.Body className="bg-light text-dark">
+        <Card.Text className="text-end">{this.props.children}</Card.Text>
       </Card.Body>
     </Card>
   }
