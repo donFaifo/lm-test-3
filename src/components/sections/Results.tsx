@@ -25,9 +25,9 @@ class Results extends React.Component<Props> {
     })
 
     amph = kwh / this.props.voltage
-    pw = amph * this.props.voltage / this.props.panelEficiency
+    pw = amph * this.props.voltage / this.props.panelEficiency / this.props.peekHours
 
-    let avEnergy = kwh.toFixed(1).toString()
+    let avEnergy = (kwh/1000).toFixed(2).toString()
     let batCapacity = amph.toFixed(1).toString()
     let power = pw.toFixed(1).toString()
     let amperage = "0.0"

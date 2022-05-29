@@ -12,7 +12,7 @@ class ResultCard extends React.Component<Props> {
     return <Card bg={this.props.color} text="white">
       <Card.Header>{this.props.header}</Card.Header>
       <Card.Body className="bg-light text-dark">
-        <Card.Text className="text-end">{this.props.children}</Card.Text>
+        <Card.Text className="text-end h4">{this.props.children}</Card.Text>
       </Card.Body>
     </Card>
   }

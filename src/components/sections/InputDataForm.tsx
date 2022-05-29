@@ -75,8 +75,8 @@ export default class InputDataForm extends React.Component<Props, Stats> {
           <Row>
             <Col sm="12" md="6" xxl="4" className="mb-3">
               <Form.Label htmlFor="type">Tipo</Form.Label>
-              <Form.Select id="type" onChange={this.handleType} defaultValue={this.state.type}>
-                <option defaultValue={this.state.type}>{this.state.type}</option>
+              <Form.Select id="type" onChange={this.handleType} value={this.state.type}>
+                <option value={this.state.type}>{this.state.type}</option>
                 <option value="Motor">Motor</option>
                 <option value="Iluminación">Iluminación</option>
                 <option value="Electrónico">Aparato electrónico</option>

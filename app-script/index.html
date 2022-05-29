@@ -37861,8 +37861,8 @@ class Results extends React.Component {
             kwh += item.pw * item.qt * item.use;
         });
         amph = kwh / this.props.voltage;
-        pw = amph * this.props.voltage / this.props.panelEficiency;
-        let avEnergy = kwh.toFixed(1).toString();
+        pw = amph * this.props.voltage / this.props.panelEficiency / this.props.peekHours;
+        let avEnergy = (kwh / 1000).toFixed(2).toString();
         let batCapacity = amph.toFixed(1).toString();
         let power = pw.toFixed(1).toString();
         let amperage = "0.0";
@@ -37967,7 +37967,7 @@ class ResultCard extends React.Component {
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default.Body, {
                     className: "bg-light text-dark",
                     children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default.Text, {
-                        className: "text-end",
+                        className: "text-end h4",
                         children: this.props.children
                     }, void 0, false, {
                         fileName: "src/components/sections/ResultCard.tsx",
@@ -43001,10 +43001,10 @@ class InputDataForm extends React.Component {
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
                                     id: "type",
                                     onChange: this.handleType,
-                                    defaultValue: this.state.type,
+                                    value: this.state.type,
                                     children: [
                                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                            defaultValue: this.state.type,
+                                            value: this.state.type,
                                             children: this.state.type
                                         }, void 0, false, {
                                             fileName: "src/components/sections/InputDataForm.tsx",
