@@ -30,13 +30,22 @@ class Main extends React.Component<Props, States> {
       panelEficiency: 0.9,
       dischargeDeep: 0.6
     }
+
+    this.saveNewData = this.saveNewData.bind(this)
+  }
+
+  saveNewData(record: InputDataType) {
+    this.state.data.push(record)
+    this.setState({
+      data: this.state.data
+    })
   }
 
   render() {
 
     return <Container className="mt-3">
       
-      <InputData data={this.state.data} />
+      <InputData data={this.state.data} dataHandler={this.saveNewData}/>
 
       <Results 
         data={this.state.data}

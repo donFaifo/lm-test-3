@@ -2,3 +2,4 @@ node_modules
 .clasp.json
 app-script/appsscript.json
 .parcel-cache
+app-script/

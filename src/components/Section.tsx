@@ -5,6 +5,7 @@ interface Props {
     children: any,
     name: string,
     button?: string
+    btnHandler(): any
 }
 
 export default class Section extends React.Component<Props> {
@@ -12,7 +13,7 @@ export default class Section extends React.Component<Props> {
         let button: JSX.Element
 
         if (this.props.button != null) {
-            button = <Button size="sm">{this.props.button}</Button>
+            button = <Button size="sm" onClick={this.props.btnHandler}>{this.props.button}</Button>
         }
         
         return <Row className="mt-3">
