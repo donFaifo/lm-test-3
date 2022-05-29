@@ -20,6 +20,7 @@ export default class InputDataList extends React.Component<Props> {
   }
 
   render() {
+    if(this.props.data.length == 0) return <></>
 
     let dataRows = this.props.data.map((item) => {
       return <tr key={item.id}>

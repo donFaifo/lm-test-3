@@ -5,7 +5,7 @@ interface Props {
     children: any,
     name: string,
     button?: string
-    btnHandler(): any
+    btnHandler?: any
 }
 
 export default class Section extends React.Component<Props> {
