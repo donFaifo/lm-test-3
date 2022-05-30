@@ -16,6 +16,9 @@ interface Props {
 }
 
 export default class InputDataForm extends React.Component<Props, Stats> {
+
+  selectTypeRef: any
+
   constructor(props) {
     super(props);
     this.state = {
@@ -30,23 +33,26 @@ export default class InputDataForm extends React.Component<Props, Stats> {
     this.handlePw = this.handlePw.bind(this)
     this.handleUse = this.handleUse.bind(this)
     this.resetForm = this.resetForm.bind(this)
+
+    this.selectTypeRef = React.createRef()
   }
 
   handleType(event) {
-    this.setState({type: event.target.value})
+    this.setState({ type: event.target.value })
   }
   handleQt(event) {
-    this.setState({qt: event.target.value})
+    this.setState({ qt: event.target.value })
   }
   handlePw(event) {
-    this.setState({pw: event.target.value})
+    this.setState({ pw: event.target.value })
   }
   handleUse(event) {
-    this.setState({use: event.target.value})
+    this.setState({ use: event.target.value })
   }
 
   save() {
     this.resetForm()
+    this.selectTypeRef.current.focus()
     this.props.saveHandler({
       id: this.props.lastId + 1,
       qt: this.state.qt,
@@ -75,7 +81,11 @@ export default class InputDataForm extends React.Component<Props, Stats> {
           <Row>
             <Col sm="12" md="6" xxl="4" className="mb-3">
               <Form.Label htmlFor="type">Tipo</Form.Label>
-              <Form.Select id="type" onChange={this.handleType} value={this.state.type}>
+              <Form.Select id="type"
+                onChange={this.handleType}
+                value={this.state.type}
+                ref={this.selectTypeRef}
+              >
                 <option value={this.state.type}>{this.state.type}</option>
                 <option value="Motor">Motor</option>
                 <option value="Iluminación">Iluminación</option>
