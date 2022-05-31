@@ -16487,7 +16487,7 @@ class Results extends React.Component {
         this.props.data.map((item)=>{
             kwh += item.pw * item.qt * item.use;
         });
-        amph = kwh / this.props.voltage;
+        amph = kwh / this.props.voltage / this.props.dischargeDeep;
         pw = amph * this.props.voltage / this.props.panelEficiency / this.props.peekHours;
         let avEnergy = (kwh / 1000).toFixed(2).toString();
         let batCapacity = amph.toFixed(1).toString();
@@ -43224,65 +43224,91 @@ class InputDataList extends React.Component {
                 columnNumber: 14
             }, this);
         });
-        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Table, {
-            bordered: true,
-            hover: true,
+        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {
             children: [
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("thead", {
-                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tr", {
-                        children: [
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
-                                children: "Tipo"
-                            }, void 0, false, {
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Table, {
+                    bordered: true,
+                    hover: true,
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("thead", {
+                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tr", {
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
+                                        children: "Tipo"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/InputDataList.tsx",
+                                        lineNumber: 38,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
+                                        children: "Cantidad"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/InputDataList.tsx",
+                                        lineNumber: 39,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
+                                        children: "Potencia (W)"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/InputDataList.tsx",
+                                        lineNumber: 40,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
+                                        children: "Horas uso d\xeda"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/InputDataList.tsx",
+                                        lineNumber: 41,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "src/components/sections/InputDataList.tsx",
                                 lineNumber: 37,
                                 columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
-                                children: "Cantidad"
-                            }, void 0, false, {
-                                fileName: "src/components/sections/InputDataList.tsx",
-                                lineNumber: 38,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
-                                children: "Potencia (W)"
-                            }, void 0, false, {
-                                fileName: "src/components/sections/InputDataList.tsx",
-                                lineNumber: 39,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
-                                children: "Horas uso d\xeda"
-                            }, void 0, false, {
-                                fileName: "src/components/sections/InputDataList.tsx",
-                                lineNumber: 40,
-                                columnNumber: 11
                             }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/components/sections/InputDataList.tsx",
-                        lineNumber: 36,
-                        columnNumber: 9
-                    }, this)
-                }, void 0, false, {
+                        }, void 0, false, {
+                            fileName: "src/components/sections/InputDataList.tsx",
+                            lineNumber: 36,
+                            columnNumber: 9
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tbody", {
+                            children: dataRows
+                        }, void 0, false, {
+                            fileName: "src/components/sections/InputDataList.tsx",
+                            lineNumber: 44,
+                            columnNumber: 9
+                        }, this)
+                    ]
+                }, void 0, true, {
                     fileName: "src/components/sections/InputDataList.tsx",
                     lineNumber: 35,
                     columnNumber: 7
                 }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tbody", {
-                    children: dataRows
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
+                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                        className: "d-flex justify-content-end",
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                            size: "sm",
+                            variant: "danger",
+                            children: "Limpiar tabla"
+                        }, void 0, false, {
+                            fileName: "src/components/sections/InputDataList.tsx",
+                            lineNumber: 50,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "src/components/sections/InputDataList.tsx",
+                        lineNumber: 49,
+                        columnNumber: 9
+                    }, this)
                 }, void 0, false, {
                     fileName: "src/components/sections/InputDataList.tsx",
-                    lineNumber: 43,
+                    lineNumber: 48,
                     columnNumber: 7
                 }, this)
             ]
-        }, void 0, true, {
-            fileName: "src/components/sections/InputDataList.tsx",
-            lineNumber: 34,
-            columnNumber: 12
-        }, this);
+        }, void 0, true);
     }
 }
 exports.default = InputDataList;

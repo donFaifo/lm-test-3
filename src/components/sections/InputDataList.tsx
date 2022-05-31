@@ -1,5 +1,5 @@
 import React = require("react");
-import { Table } from "react-bootstrap"
+import { Button, Col, Row, Table } from "react-bootstrap"
 
 export interface InputDataType {
   id: number,
@@ -31,18 +31,25 @@ export default class InputDataList extends React.Component<Props> {
       </tr>
     })
 
-    return <Table bordered hover>
-      <thead>
-        <tr>
-          <th>Tipo</th>
-          <th>Cantidad</th>
-          <th>Potencia (W)</th>
-          <th>Horas uso día</th>
-        </tr>
-      </thead>
-      <tbody>
-        {dataRows}
-      </tbody>
-    </Table>
+    return <>
+      <Table bordered hover>
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Potencia (W)</th>
+            <th>Horas uso día</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dataRows}
+        </tbody>
+      </Table>
+      <Row>
+        <Col className="d-flex justify-content-end">
+          <Button size="sm" variant="danger">Limpiar tabla</Button>
+        </Col>
+      </Row>
+    </>
   }
 }

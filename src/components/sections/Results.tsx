@@ -24,7 +24,7 @@ class Results extends React.Component<Props> {
       kwh += item.pw * item.qt * item.use
     })
 
-    amph = kwh / this.props.voltage
+    amph = (kwh / this.props.voltage)/this.props.dischargeDeep
     pw = amph * this.props.voltage / this.props.panelEficiency / this.props.peekHours
 
     let avEnergy = (kwh/1000).toFixed(2).toString()
