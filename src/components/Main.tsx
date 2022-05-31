@@ -2,8 +2,8 @@ import React = require("react")
 import Container from "react-bootstrap/Container"
 import Results from "./sections/Results"
 import InputData from "./sections/InputData"
-import EstimationList from "./sections/EstimationList"
-import { InputDataType } from "./sections/InputDataList"
+import Estimation from "./sections/Estimation"
+import { InputDataType } from "./sections/InputDataComponents/InputDataList"
 
 interface Props { }
 
@@ -27,6 +27,7 @@ class Main extends React.Component<Props, States> {
     }
 
     this.saveNewData = this.saveNewData.bind(this)
+    this.clearData = this.clearData.bind(this)
   }
 
   saveNewData(record: InputDataType) {
@@ -36,13 +37,20 @@ class Main extends React.Component<Props, States> {
     })
   }
 
+  clearData() {
+    this.setState({
+      data: []
+    })
+  }
+
   render() {
 
     return <Container className="mt-3">
       
       <InputData 
         data={this.state.data} 
-        dataHandler={this.saveNewData}/>
+        dataHandler={this.saveNewData}
+        dataCleaner={this.clearData}/>
 
       <Results 
         data={this.state.data}
@@ -51,7 +59,7 @@ class Main extends React.Component<Props, States> {
         dischargeDeep={this.state.dischargeDeep}
         voltage={this.state.voltage}/>
 
-      <EstimationList />
+      <Estimation />
       
     </Container>
   }

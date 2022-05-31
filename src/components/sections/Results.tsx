@@ -1,8 +1,8 @@
 import React = require("react")
-import ResultCard from "./ResultCard"
+import ResultCard from "./ResultsComponents/ResultCard"
 import { CardGroup } from "react-bootstrap"
-import Section from "../Section"
-import { InputDataType } from "./InputDataList"
+import Section from "./Section"
+import { InputDataType } from "./InputDataComponents/InputDataList"
 
 interface Props {
   data: InputDataType[],
@@ -25,12 +25,13 @@ class Results extends React.Component<Props> {
     })
 
     amph = (kwh / this.props.voltage)/this.props.dischargeDeep
-    pw = amph * this.props.voltage / this.props.panelEficiency / this.props.peekHours
+    pw = ((amph * this.props.voltage) / this.props.panelEficiency) / this.props.peekHours
+    amps = pw / this.props.voltage
 
     let avEnergy = (kwh/1000).toFixed(2).toString()
     let batCapacity = amph.toFixed(1).toString()
     let power = pw.toFixed(1).toString()
-    let amperage = "0.0"
+    let amperage = amps.toFixed(1).toString()
 
     return <Section name="Datos calculados">
       <CardGroup>

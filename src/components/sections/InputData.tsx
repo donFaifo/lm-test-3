@@ -1,16 +1,17 @@
 import React = require("react");
-import Section from "../Section";
-import InputDataForm from "./InputDataForm";
-import InputDataList from "./InputDataList";
-import { InputDataType } from "./InputDataList";
+import Section from "./Section";
+import InputDataForm from "./InputDataComponents/InputDataForm";
+import InputDataList from "./InputDataComponents/InputDataList";
+import { InputDataType } from "./InputDataComponents/InputDataList";
 
 interface Props {
-  data: InputDataType[];
-  dataHandler(record: InputDataType): any;
+  data: InputDataType[]
+  dataHandler(record: InputDataType): any
+  dataCleaner(): any
 }
 
 interface States {
-  inputHidden: boolean;
+  inputHidden: boolean
 }
 
 class InputData extends React.Component<Props, States> {
@@ -41,7 +42,10 @@ class InputData extends React.Component<Props, States> {
           saveHandler={this.props.dataHandler}
           lastId={this.getLastId(this.props.data)}
         />
-        <InputDataList data={this.props.data} />
+        <InputDataList
+          data={this.props.data}
+          dataCleaner={this.props.dataCleaner}
+        />
       </Section>
     );
   }

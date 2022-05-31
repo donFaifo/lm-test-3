@@ -15266,8 +15266,8 @@ var _results = require("./sections/Results");
 var _resultsDefault = parcelHelpers.interopDefault(_results);
 var _inputData = require("./sections/InputData");
 var _inputDataDefault = parcelHelpers.interopDefault(_inputData);
-var _estimationList = require("./sections/EstimationList");
-var _estimationListDefault = parcelHelpers.interopDefault(_estimationList);
+var _estimation = require("./sections/Estimation");
+var _estimationDefault = parcelHelpers.interopDefault(_estimation);
 const React = require("react");
 class Main extends React.Component {
     constructor(props){
@@ -15280,11 +15280,17 @@ class Main extends React.Component {
             dischargeDeep: 0.6
         };
         this.saveNewData = this.saveNewData.bind(this);
+        this.clearData = this.clearData.bind(this);
     }
     saveNewData(record) {
         this.state.data.push(record);
         this.setState({
             data: this.state.data
+        });
+    }
+    clearData() {
+        this.setState({
+            data: []
         });
     }
     render() {
@@ -15293,10 +15299,11 @@ class Main extends React.Component {
             children: [
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_inputDataDefault.default, {
                     data: this.state.data,
-                    dataHandler: this.saveNewData
+                    dataHandler: this.saveNewData,
+                    dataCleaner: this.clearData
                 }, void 0, false, {
                     fileName: "src/components/Main.tsx",
-                    lineNumber: 43,
+                    lineNumber: 50,
                     columnNumber: 7
                 }, this),
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultsDefault.default, {
@@ -15307,18 +15314,18 @@ class Main extends React.Component {
                     voltage: this.state.voltage
                 }, void 0, false, {
                     fileName: "src/components/Main.tsx",
-                    lineNumber: 47,
+                    lineNumber: 55,
                     columnNumber: 7
                 }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationListDefault.default, {}, void 0, false, {
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationDefault.default, {}, void 0, false, {
                     fileName: "src/components/Main.tsx",
-                    lineNumber: 54,
+                    lineNumber: 62,
                     columnNumber: 7
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/components/Main.tsx",
-            lineNumber: 41,
+            lineNumber: 48,
             columnNumber: 12
         }, this);
     }
@@ -15330,7 +15337,7 @@ exports.default = Main;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap/Container":"hEdsw","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./sections/Results":"9VCiz","./sections/InputData":"e8Fh6","./sections/EstimationList":"c1YeN"}],"hEdsw":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap/Container":"hEdsw","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./sections/Results":"9VCiz","./sections/InputData":"e8Fh6","./sections/Estimation":"aBKqX"}],"hEdsw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
@@ -16472,10 +16479,10 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _resultCard = require("./ResultCard");
+var _resultCard = require("./ResultsComponents/ResultCard");
 var _resultCardDefault = parcelHelpers.interopDefault(_resultCard);
 var _reactBootstrap = require("react-bootstrap");
-var _section = require("../Section");
+var _section = require("./Section");
 var _sectionDefault = parcelHelpers.interopDefault(_section);
 const React = require("react");
 class Results extends React.Component {
@@ -16489,10 +16496,11 @@ class Results extends React.Component {
         });
         amph = kwh / this.props.voltage / this.props.dischargeDeep;
         pw = amph * this.props.voltage / this.props.panelEficiency / this.props.peekHours;
+        amps = pw / this.props.voltage;
         let avEnergy = (kwh / 1000).toFixed(2).toString();
         let batCapacity = amph.toFixed(1).toString();
         let power = pw.toFixed(1).toString();
-        let amperage = "0.0";
+        let amperage = amps.toFixed(1).toString();
         return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_sectionDefault.default, {
             name: "Datos calculados",
             children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.CardGroup, {
@@ -16506,7 +16514,7 @@ class Results extends React.Component {
                         ]
                     }, void 0, true, {
                         fileName: "src/components/sections/Results.tsx",
-                        lineNumber: 37,
+                        lineNumber: 38,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultCardDefault.default, {
@@ -16518,7 +16526,7 @@ class Results extends React.Component {
                         ]
                     }, void 0, true, {
                         fileName: "src/components/sections/Results.tsx",
-                        lineNumber: 43,
+                        lineNumber: 44,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultCardDefault.default, {
@@ -16530,7 +16538,7 @@ class Results extends React.Component {
                         ]
                     }, void 0, true, {
                         fileName: "src/components/sections/Results.tsx",
-                        lineNumber: 49,
+                        lineNumber: 50,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultCardDefault.default, {
@@ -16542,18 +16550,18 @@ class Results extends React.Component {
                         ]
                     }, void 0, true, {
                         fileName: "src/components/sections/Results.tsx",
-                        lineNumber: 55,
+                        lineNumber: 56,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/sections/Results.tsx",
-                lineNumber: 36,
+                lineNumber: 37,
                 columnNumber: 7
             }, this)
         }, void 0, false, {
             fileName: "src/components/sections/Results.tsx",
-            lineNumber: 35,
+            lineNumber: 36,
             columnNumber: 12
         }, this);
     }
@@ -16565,236 +16573,7 @@ exports.default = Results;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","./ResultCard":"2JHAj","react-bootstrap":"3AD9A","../Section":"9mXYb","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"2JHAj":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$acea = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$acea.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _card = require("react-bootstrap/Card");
-var _cardDefault = parcelHelpers.interopDefault(_card);
-const React = require("react");
-class ResultCard extends React.Component {
-    render() {
-        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default, {
-            bg: this.props.color,
-            text: "white",
-            children: [
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default.Header, {
-                    children: this.props.header
-                }, void 0, false, {
-                    fileName: "src/components/sections/ResultCard.tsx",
-                    lineNumber: 13,
-                    columnNumber: 7
-                }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default.Body, {
-                    className: "bg-light text-dark",
-                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default.Text, {
-                        className: "text-end h4",
-                        children: this.props.children
-                    }, void 0, false, {
-                        fileName: "src/components/sections/ResultCard.tsx",
-                        lineNumber: 15,
-                        columnNumber: 9
-                    }, this)
-                }, void 0, false, {
-                    fileName: "src/components/sections/ResultCard.tsx",
-                    lineNumber: 14,
-                    columnNumber: 7
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "src/components/sections/ResultCard.tsx",
-            lineNumber: 12,
-            columnNumber: 12
-        }, this);
-    }
-}
-exports.default = ResultCard;
-
-  $parcel$ReactRefreshHelpers$acea.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap/Card":"lAynp","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"lAynp":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _createWithBsPrefix = require("./createWithBsPrefix");
-var _createWithBsPrefixDefault = parcelHelpers.interopDefault(_createWithBsPrefix);
-var _divWithClassName = require("./divWithClassName");
-var _divWithClassNameDefault = parcelHelpers.interopDefault(_divWithClassName);
-var _cardImg = require("./CardImg");
-var _cardImgDefault = parcelHelpers.interopDefault(_cardImg);
-var _cardHeader = require("./CardHeader");
-var _cardHeaderDefault = parcelHelpers.interopDefault(_cardHeader);
-var _jsxRuntime = require("react/jsx-runtime");
-const DivStyledAsH5 = _divWithClassNameDefault.default('h5');
-const DivStyledAsH6 = _divWithClassNameDefault.default('h6');
-const CardBody = _createWithBsPrefixDefault.default('card-body');
-const CardTitle = _createWithBsPrefixDefault.default('card-title', {
-    Component: DivStyledAsH5
-});
-const CardSubtitle = _createWithBsPrefixDefault.default('card-subtitle', {
-    Component: DivStyledAsH6
-});
-const CardLink = _createWithBsPrefixDefault.default('card-link', {
-    Component: 'a'
-});
-const CardText = _createWithBsPrefixDefault.default('card-text', {
-    Component: 'p'
-});
-const CardFooter = _createWithBsPrefixDefault.default('card-footer');
-const CardImgOverlay = _createWithBsPrefixDefault.default('card-img-overlay');
-const defaultProps = {
-    body: false
-};
-const Card = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , bg , text , border , body , children , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-as: Component = 'div' , ...props }, ref)=>{
-    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card');
-    return /*#__PURE__*/ _jsxRuntime.jsx(Component, {
-        ref: ref,
-        ...props,
-        className: _classnamesDefault.default(className, prefix, bg && `bg-${bg}`, text && `text-${text}`, border && `border-${border}`),
-        children: body ? /*#__PURE__*/ _jsxRuntime.jsx(CardBody, {
-            children: children
-        }) : children
-    });
-});
-Card.displayName = 'Card';
-Card.defaultProps = defaultProps;
-exports.default = Object.assign(Card, {
-    Img: _cardImgDefault.default,
-    Title: CardTitle,
-    Subtitle: CardSubtitle,
-    Body: CardBody,
-    Link: CardLink,
-    Text: CardText,
-    Header: _cardHeaderDefault.default,
-    Footer: CardFooter,
-    ImgOverlay: CardImgOverlay
-});
-
-},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./createWithBsPrefix":"itt7e","./divWithClassName":"eDg7t","./CardImg":"1reTi","./CardHeader":"dXnnx","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"itt7e":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _camelize = require("dom-helpers/camelize");
-var _camelizeDefault = parcelHelpers.interopDefault(_camelize);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _jsxRuntime = require("react/jsx-runtime");
-const pascalCase = (str)=>str[0].toUpperCase() + _camelizeDefault.default(str).slice(1)
-;
-function createWithBsPrefix(prefix, { displayName =pascalCase(prefix) , Component , defaultProps  } = {}) {
-    const BsComponent = /*#__PURE__*/ _react.forwardRef(({ className , bsPrefix , as: Tag = Component || 'div' , ...props }, ref)=>{
-        const resolvedPrefix = _themeProvider.useBootstrapPrefix(bsPrefix, prefix);
-        return /*#__PURE__*/ _jsxRuntime.jsx(Tag, {
-            ref: ref,
-            className: _classnamesDefault.default(className, resolvedPrefix),
-            ...props
-        });
-    });
-    BsComponent.defaultProps = defaultProps;
-    BsComponent.displayName = displayName;
-    return BsComponent;
-}
-exports.default = createWithBsPrefix;
-
-},{"classnames":"jocGM","dom-helpers/camelize":"kbWDq","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kbWDq":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var rHyphen = /-(.)/g;
-function camelize(string) {
-    return string.replace(rHyphen, function(_, chr) {
-        return chr.toUpperCase();
-    });
-}
-exports.default = camelize;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eDg7t":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _react = require("react");
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _jsxRuntime = require("react/jsx-runtime");
-exports.default = (className)=>/*#__PURE__*/ _react.forwardRef((p, ref)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
-            ...p,
-            ref: ref,
-            className: _classnamesDefault.default(p.className, className)
-        })
-    )
-;
-
-},{"react":"21dqq","classnames":"jocGM","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1reTi":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _jsxRuntime = require("react/jsx-runtime");
-const CardImg = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , variant , as: Component = 'img' , ...props }, ref)=>{
-    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card-img');
-    return /*#__PURE__*/ _jsxRuntime.jsx(Component, {
-        ref: ref,
-        className: _classnamesDefault.default(variant ? `${prefix}-${variant}` : prefix, className),
-        ...props
-    });
-});
-CardImg.displayName = 'CardImg';
-exports.default = CardImg;
-
-},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dXnnx":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _cardHeaderContext = require("./CardHeaderContext");
-var _cardHeaderContextDefault = parcelHelpers.interopDefault(_cardHeaderContext);
-var _jsxRuntime = require("react/jsx-runtime");
-const CardHeader = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-as: Component = 'div' , ...props }, ref)=>{
-    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card-header');
-    const contextValue = _react.useMemo(()=>({
-            cardHeaderBsPrefix: prefix
-        })
-    , [
-        prefix
-    ]);
-    return /*#__PURE__*/ _jsxRuntime.jsx(_cardHeaderContextDefault.default.Provider, {
-        value: contextValue,
-        children: /*#__PURE__*/ _jsxRuntime.jsx(Component, {
-            ref: ref,
-            ...props,
-            className: _classnamesDefault.default(className, prefix)
-        })
-    });
-});
-CardHeader.displayName = 'CardHeader';
-exports.default = CardHeader;
-
-},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./CardHeaderContext":"36cNB","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"36cNB":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _react = require("react");
-const context = /*#__PURE__*/ _react.createContext(null);
-context.displayName = 'CardHeaderContext';
-exports.default = context;
-
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3AD9A":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./ResultsComponents/ResultCard":"7DZNi","./Section":"0478G"}],"3AD9A":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Accordion", ()=>_accordionDefault.default
@@ -17260,7 +17039,180 @@ const Button = /*#__PURE__*/ _react.forwardRef((_ref, ref)=>{
 Button.displayName = 'Button';
 exports.default = Button;
 
-},{"react":"21dqq","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2j3Ij":[function(require,module,exports) {
+},{"react":"21dqq","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lAynp":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _createWithBsPrefix = require("./createWithBsPrefix");
+var _createWithBsPrefixDefault = parcelHelpers.interopDefault(_createWithBsPrefix);
+var _divWithClassName = require("./divWithClassName");
+var _divWithClassNameDefault = parcelHelpers.interopDefault(_divWithClassName);
+var _cardImg = require("./CardImg");
+var _cardImgDefault = parcelHelpers.interopDefault(_cardImg);
+var _cardHeader = require("./CardHeader");
+var _cardHeaderDefault = parcelHelpers.interopDefault(_cardHeader);
+var _jsxRuntime = require("react/jsx-runtime");
+const DivStyledAsH5 = _divWithClassNameDefault.default('h5');
+const DivStyledAsH6 = _divWithClassNameDefault.default('h6');
+const CardBody = _createWithBsPrefixDefault.default('card-body');
+const CardTitle = _createWithBsPrefixDefault.default('card-title', {
+    Component: DivStyledAsH5
+});
+const CardSubtitle = _createWithBsPrefixDefault.default('card-subtitle', {
+    Component: DivStyledAsH6
+});
+const CardLink = _createWithBsPrefixDefault.default('card-link', {
+    Component: 'a'
+});
+const CardText = _createWithBsPrefixDefault.default('card-text', {
+    Component: 'p'
+});
+const CardFooter = _createWithBsPrefixDefault.default('card-footer');
+const CardImgOverlay = _createWithBsPrefixDefault.default('card-img-overlay');
+const defaultProps = {
+    body: false
+};
+const Card = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , bg , text , border , body , children , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div' , ...props }, ref)=>{
+    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card');
+    return /*#__PURE__*/ _jsxRuntime.jsx(Component, {
+        ref: ref,
+        ...props,
+        className: _classnamesDefault.default(className, prefix, bg && `bg-${bg}`, text && `text-${text}`, border && `border-${border}`),
+        children: body ? /*#__PURE__*/ _jsxRuntime.jsx(CardBody, {
+            children: children
+        }) : children
+    });
+});
+Card.displayName = 'Card';
+Card.defaultProps = defaultProps;
+exports.default = Object.assign(Card, {
+    Img: _cardImgDefault.default,
+    Title: CardTitle,
+    Subtitle: CardSubtitle,
+    Body: CardBody,
+    Link: CardLink,
+    Text: CardText,
+    Header: _cardHeaderDefault.default,
+    Footer: CardFooter,
+    ImgOverlay: CardImgOverlay
+});
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./createWithBsPrefix":"itt7e","./divWithClassName":"eDg7t","./CardImg":"1reTi","./CardHeader":"dXnnx","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"itt7e":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _camelize = require("dom-helpers/camelize");
+var _camelizeDefault = parcelHelpers.interopDefault(_camelize);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+const pascalCase = (str)=>str[0].toUpperCase() + _camelizeDefault.default(str).slice(1)
+;
+function createWithBsPrefix(prefix, { displayName =pascalCase(prefix) , Component , defaultProps  } = {}) {
+    const BsComponent = /*#__PURE__*/ _react.forwardRef(({ className , bsPrefix , as: Tag = Component || 'div' , ...props }, ref)=>{
+        const resolvedPrefix = _themeProvider.useBootstrapPrefix(bsPrefix, prefix);
+        return /*#__PURE__*/ _jsxRuntime.jsx(Tag, {
+            ref: ref,
+            className: _classnamesDefault.default(className, resolvedPrefix),
+            ...props
+        });
+    });
+    BsComponent.defaultProps = defaultProps;
+    BsComponent.displayName = displayName;
+    return BsComponent;
+}
+exports.default = createWithBsPrefix;
+
+},{"classnames":"jocGM","dom-helpers/camelize":"kbWDq","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kbWDq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var rHyphen = /-(.)/g;
+function camelize(string) {
+    return string.replace(rHyphen, function(_, chr) {
+        return chr.toUpperCase();
+    });
+}
+exports.default = camelize;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eDg7t":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _jsxRuntime = require("react/jsx-runtime");
+exports.default = (className)=>/*#__PURE__*/ _react.forwardRef((p, ref)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
+            ...p,
+            ref: ref,
+            className: _classnamesDefault.default(p.className, className)
+        })
+    )
+;
+
+},{"react":"21dqq","classnames":"jocGM","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1reTi":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+const CardImg = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , variant , as: Component = 'img' , ...props }, ref)=>{
+    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card-img');
+    return /*#__PURE__*/ _jsxRuntime.jsx(Component, {
+        ref: ref,
+        className: _classnamesDefault.default(variant ? `${prefix}-${variant}` : prefix, className),
+        ...props
+    });
+});
+CardImg.displayName = 'CardImg';
+exports.default = CardImg;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dXnnx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _cardHeaderContext = require("./CardHeaderContext");
+var _cardHeaderContextDefault = parcelHelpers.interopDefault(_cardHeaderContext);
+var _jsxRuntime = require("react/jsx-runtime");
+const CardHeader = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div' , ...props }, ref)=>{
+    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card-header');
+    const contextValue = _react.useMemo(()=>({
+            cardHeaderBsPrefix: prefix
+        })
+    , [
+        prefix
+    ]);
+    return /*#__PURE__*/ _jsxRuntime.jsx(_cardHeaderContextDefault.default.Provider, {
+        value: contextValue,
+        children: /*#__PURE__*/ _jsxRuntime.jsx(Component, {
+            ref: ref,
+            ...props,
+            className: _classnamesDefault.default(className, prefix)
+        })
+    });
+});
+CardHeader.displayName = 'CardHeader';
+exports.default = CardHeader;
+
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./CardHeaderContext":"36cNB","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"36cNB":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+const context = /*#__PURE__*/ _react.createContext(null);
+context.displayName = 'CardHeaderContext';
+exports.default = context;
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2j3Ij":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _createWithBsPrefix = require("./createWithBsPrefix");
@@ -42724,11 +42676,67 @@ const Table = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , striped 
 });
 exports.default = Table;
 
-},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9mXYb":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$0ce6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7DZNi":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$e607 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$0ce6.prelude(module);
+$parcel$ReactRefreshHelpers$e607.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+const React = require("react");
+class ResultCard extends React.Component {
+    render() {
+        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default, {
+            bg: this.props.color,
+            text: "white",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default.Header, {
+                    children: this.props.header
+                }, void 0, false, {
+                    fileName: "src/components/sections/ResultsComponents/ResultCard.tsx",
+                    lineNumber: 13,
+                    columnNumber: 7
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default.Body, {
+                    className: "bg-light text-dark",
+                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cardDefault.default.Text, {
+                        className: "text-end h4",
+                        children: this.props.children
+                    }, void 0, false, {
+                        fileName: "src/components/sections/ResultsComponents/ResultCard.tsx",
+                        lineNumber: 15,
+                        columnNumber: 9
+                    }, this)
+                }, void 0, false, {
+                    fileName: "src/components/sections/ResultsComponents/ResultCard.tsx",
+                    lineNumber: 14,
+                    columnNumber: 7
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/components/sections/ResultsComponents/ResultCard.tsx",
+            lineNumber: 12,
+            columnNumber: 12
+        }, this);
+    }
+}
+exports.default = ResultCard;
+
+  $parcel$ReactRefreshHelpers$e607.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap/Card":"lAynp","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"0478G":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$cc0d = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$cc0d.prelude(module);
 
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -42744,9 +42752,9 @@ class Section extends React.Component {
             onClick: this.props.btnHandler,
             children: this.props.button
         }, void 0, false, {
-            fileName: "src/components/Section.tsx",
+            fileName: "src/components/sections/Section.tsx",
             lineNumber: 16,
-            columnNumber: 22
+            columnNumber: 16
         }, this);
         return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
             className: "mt-3",
@@ -42764,57 +42772,57 @@ class Section extends React.Component {
                                         className: "flex-grow-1 pt-1",
                                         children: this.props.name
                                     }, void 0, false, {
-                                        fileName: "src/components/Section.tsx",
-                                        lineNumber: 24,
-                                        columnNumber: 17
+                                        fileName: "src/components/sections/Section.tsx",
+                                        lineNumber: 27,
+                                        columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
                                         className: "",
                                         children: button
                                     }, void 0, false, {
-                                        fileName: "src/components/Section.tsx",
-                                        lineNumber: 25,
-                                        columnNumber: 17
+                                        fileName: "src/components/sections/Section.tsx",
+                                        lineNumber: 28,
+                                        columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
-                                fileName: "src/components/Section.tsx",
-                                lineNumber: 23,
-                                columnNumber: 15
+                                fileName: "src/components/sections/Section.tsx",
+                                lineNumber: 26,
+                                columnNumber: 13
                             }, this)
                         }, void 0, false, {
-                            fileName: "src/components/Section.tsx",
-                            lineNumber: 22,
-                            columnNumber: 13
+                            fileName: "src/components/sections/Section.tsx",
+                            lineNumber: 25,
+                            columnNumber: 11
                         }, this),
                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Card.Body, {
                             children: this.props.children
                         }, void 0, false, {
-                            fileName: "src/components/Section.tsx",
-                            lineNumber: 31,
-                            columnNumber: 13
+                            fileName: "src/components/sections/Section.tsx",
+                            lineNumber: 34,
+                            columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
-                    fileName: "src/components/Section.tsx",
-                    lineNumber: 21,
-                    columnNumber: 11
+                    fileName: "src/components/sections/Section.tsx",
+                    lineNumber: 24,
+                    columnNumber: 9
                 }, this)
             }, void 0, false, {
-                fileName: "src/components/Section.tsx",
-                lineNumber: 20,
-                columnNumber: 9
+                fileName: "src/components/sections/Section.tsx",
+                lineNumber: 23,
+                columnNumber: 7
             }, this)
         }, void 0, false, {
-            fileName: "src/components/Section.tsx",
-            lineNumber: 19,
-            columnNumber: 16
+            fileName: "src/components/sections/Section.tsx",
+            lineNumber: 22,
+            columnNumber: 12
         }, this);
     }
 }
 exports.default = Section;
 
-  $parcel$ReactRefreshHelpers$0ce6.postlude(module);
+  $parcel$ReactRefreshHelpers$cc0d.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
@@ -42829,11 +42837,11 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _section = require("../Section");
+var _section = require("./Section");
 var _sectionDefault = parcelHelpers.interopDefault(_section);
-var _inputDataForm = require("./InputDataForm");
+var _inputDataForm = require("./InputDataComponents/InputDataForm");
 var _inputDataFormDefault = parcelHelpers.interopDefault(_inputDataForm);
-var _inputDataList = require("./InputDataList");
+var _inputDataList = require("./InputDataComponents/InputDataList");
 var _inputDataListDefault = parcelHelpers.interopDefault(_inputDataList);
 const React = require("react");
 class InputData extends React.Component {
@@ -42861,20 +42869,21 @@ class InputData extends React.Component {
                     lastId: this.getLastId(this.props.data)
                 }, void 0, false, {
                     fileName: "src/components/sections/InputData.tsx",
-                    lineNumber: 39,
+                    lineNumber: 40,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_inputDataListDefault.default, {
-                    data: this.props.data
+                    data: this.props.data,
+                    dataCleaner: this.props.dataCleaner
                 }, void 0, false, {
                     fileName: "src/components/sections/InputData.tsx",
-                    lineNumber: 44,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/components/sections/InputData.tsx",
-            lineNumber: 34,
+            lineNumber: 35,
             columnNumber: 7
         }, this);
     }
@@ -42891,11 +42900,11 @@ exports.default = InputData;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","../Section":"9mXYb","./InputDataForm":"iAvAv","./InputDataList":"ijzVe","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iAvAv":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$e0d2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Section":"0478G","./InputDataComponents/InputDataForm":"cRIBn","./InputDataComponents/InputDataList":"4jVlG"}],"cRIBn":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$c03e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$e0d2.prelude(module);
+$parcel$ReactRefreshHelpers$c03e.prelude(module);
 
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -42975,7 +42984,7 @@ class InputDataForm extends React.Component {
                                     htmlFor: "type",
                                     children: "Tipo"
                                 }, void 0, false, {
-                                    fileName: "src/components/sections/InputDataForm.tsx",
+                                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                     lineNumber: 83,
                                     columnNumber: 15
                                 }, this),
@@ -42989,7 +42998,7 @@ class InputDataForm extends React.Component {
                                             value: this.state.type,
                                             children: this.state.type
                                         }, void 0, false, {
-                                            fileName: "src/components/sections/InputDataForm.tsx",
+                                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                             lineNumber: 89,
                                             columnNumber: 17
                                         }, this),
@@ -42997,7 +43006,7 @@ class InputDataForm extends React.Component {
                                             value: "Motor",
                                             children: "Motor"
                                         }, void 0, false, {
-                                            fileName: "src/components/sections/InputDataForm.tsx",
+                                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                             lineNumber: 90,
                                             columnNumber: 17
                                         }, this),
@@ -43005,7 +43014,7 @@ class InputDataForm extends React.Component {
                                             value: "Iluminaci\xf3n",
                                             children: "Iluminaci\xf3n"
                                         }, void 0, false, {
-                                            fileName: "src/components/sections/InputDataForm.tsx",
+                                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                             lineNumber: 91,
                                             columnNumber: 17
                                         }, this),
@@ -43013,19 +43022,19 @@ class InputDataForm extends React.Component {
                                             value: "Electr\xf3nico",
                                             children: "Aparato electr\xf3nico"
                                         }, void 0, false, {
-                                            fileName: "src/components/sections/InputDataForm.tsx",
+                                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                             lineNumber: 92,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
-                                    fileName: "src/components/sections/InputDataForm.tsx",
+                                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                     lineNumber: 84,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
-                            fileName: "src/components/sections/InputDataForm.tsx",
+                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                             lineNumber: 82,
                             columnNumber: 13
                         }, this),
@@ -43039,7 +43048,7 @@ class InputDataForm extends React.Component {
                                     htmlFor: "qt",
                                     children: "Cantidad"
                                 }, void 0, false, {
-                                    fileName: "src/components/sections/InputDataForm.tsx",
+                                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                     lineNumber: 96,
                                     columnNumber: 15
                                 }, this),
@@ -43050,13 +43059,13 @@ class InputDataForm extends React.Component {
                                     onChange: this.handleQt,
                                     value: this.state.qt
                                 }, void 0, false, {
-                                    fileName: "src/components/sections/InputDataForm.tsx",
+                                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                     lineNumber: 97,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
-                            fileName: "src/components/sections/InputDataForm.tsx",
+                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                             lineNumber: 95,
                             columnNumber: 13
                         }, this),
@@ -43070,7 +43079,7 @@ class InputDataForm extends React.Component {
                                     htmlFor: "pw",
                                     children: "Potencia (W)"
                                 }, void 0, false, {
-                                    fileName: "src/components/sections/InputDataForm.tsx",
+                                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                     lineNumber: 106,
                                     columnNumber: 15
                                 }, this),
@@ -43081,13 +43090,13 @@ class InputDataForm extends React.Component {
                                     onChange: this.handlePw,
                                     value: this.state.pw
                                 }, void 0, false, {
-                                    fileName: "src/components/sections/InputDataForm.tsx",
+                                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                     lineNumber: 107,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
-                            fileName: "src/components/sections/InputDataForm.tsx",
+                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                             lineNumber: 105,
                             columnNumber: 13
                         }, this),
@@ -43101,7 +43110,7 @@ class InputDataForm extends React.Component {
                                     htmlFor: "use",
                                     children: "Horas de uso"
                                 }, void 0, false, {
-                                    fileName: "src/components/sections/InputDataForm.tsx",
+                                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                     lineNumber: 116,
                                     columnNumber: 15
                                 }, this),
@@ -43112,13 +43121,13 @@ class InputDataForm extends React.Component {
                                     onChange: this.handleUse,
                                     value: this.state.use
                                 }, void 0, false, {
-                                    fileName: "src/components/sections/InputDataForm.tsx",
+                                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                     lineNumber: 117,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
-                            fileName: "src/components/sections/InputDataForm.tsx",
+                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                             lineNumber: 115,
                             columnNumber: 13
                         }, this),
@@ -43131,28 +43140,28 @@ class InputDataForm extends React.Component {
                                 onClick: this.save,
                                 children: "Guardar"
                             }, void 0, false, {
-                                fileName: "src/components/sections/InputDataForm.tsx",
+                                fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                                 lineNumber: 126,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
-                            fileName: "src/components/sections/InputDataForm.tsx",
+                            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                             lineNumber: 125,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
-                    fileName: "src/components/sections/InputDataForm.tsx",
+                    fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                     lineNumber: 81,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
-                fileName: "src/components/sections/InputDataForm.tsx",
+                fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
                 lineNumber: 80,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
-            fileName: "src/components/sections/InputDataForm.tsx",
+            fileName: "src/components/sections/InputDataComponents/InputDataForm.tsx",
             lineNumber: 79,
             columnNumber: 7
         }, this);
@@ -43160,16 +43169,16 @@ class InputDataForm extends React.Component {
 }
 exports.default = InputDataForm;
 
-  $parcel$ReactRefreshHelpers$e0d2.postlude(module);
+  $parcel$ReactRefreshHelpers$c03e.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"ijzVe":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$3b88 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"4jVlG":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$47e7 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$3b88.prelude(module);
+$parcel$ReactRefreshHelpers$47e7.prelude(module);
 
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -43189,38 +43198,38 @@ class InputDataList extends React.Component {
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("td", {
                         children: item.type
                     }, void 0, false, {
-                        fileName: "src/components/sections/InputDataList.tsx",
-                        lineNumber: 27,
+                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                        lineNumber: 28,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("td", {
                         className: "text-center",
                         children: item.qt
                     }, void 0, false, {
-                        fileName: "src/components/sections/InputDataList.tsx",
-                        lineNumber: 28,
+                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                        lineNumber: 29,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("td", {
                         className: "text-center",
                         children: item.pw
                     }, void 0, false, {
-                        fileName: "src/components/sections/InputDataList.tsx",
-                        lineNumber: 29,
+                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                        lineNumber: 30,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("td", {
                         className: "text-center",
                         children: item.use
                     }, void 0, false, {
-                        fileName: "src/components/sections/InputDataList.tsx",
-                        lineNumber: 30,
+                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                        lineNumber: 31,
                         columnNumber: 9
                     }, this)
                 ]
             }, item.id, true, {
-                fileName: "src/components/sections/InputDataList.tsx",
-                lineNumber: 26,
+                fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                lineNumber: 27,
                 columnNumber: 14
             }, this);
         });
@@ -43236,53 +43245,53 @@ class InputDataList extends React.Component {
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
                                         children: "Tipo"
                                     }, void 0, false, {
-                                        fileName: "src/components/sections/InputDataList.tsx",
-                                        lineNumber: 38,
+                                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                                        lineNumber: 39,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
                                         children: "Cantidad"
                                     }, void 0, false, {
-                                        fileName: "src/components/sections/InputDataList.tsx",
-                                        lineNumber: 39,
+                                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                                        lineNumber: 40,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
                                         children: "Potencia (W)"
                                     }, void 0, false, {
-                                        fileName: "src/components/sections/InputDataList.tsx",
-                                        lineNumber: 40,
+                                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                                        lineNumber: 41,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
                                         children: "Horas uso d\xeda"
                                     }, void 0, false, {
-                                        fileName: "src/components/sections/InputDataList.tsx",
-                                        lineNumber: 41,
+                                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                                        lineNumber: 42,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
-                                fileName: "src/components/sections/InputDataList.tsx",
-                                lineNumber: 37,
+                                fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                                lineNumber: 38,
                                 columnNumber: 11
                             }, this)
                         }, void 0, false, {
-                            fileName: "src/components/sections/InputDataList.tsx",
-                            lineNumber: 36,
+                            fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                            lineNumber: 37,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tbody", {
                             children: dataRows
                         }, void 0, false, {
-                            fileName: "src/components/sections/InputDataList.tsx",
-                            lineNumber: 44,
+                            fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                            lineNumber: 45,
                             columnNumber: 9
                         }, this)
                     ]
                 }, void 0, true, {
-                    fileName: "src/components/sections/InputDataList.tsx",
-                    lineNumber: 35,
+                    fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                    lineNumber: 36,
                     columnNumber: 7
                 }, this),
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
@@ -43291,20 +43300,21 @@ class InputDataList extends React.Component {
                         children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
                             size: "sm",
                             variant: "danger",
+                            onClick: this.props.dataCleaner,
                             children: "Limpiar tabla"
                         }, void 0, false, {
-                            fileName: "src/components/sections/InputDataList.tsx",
-                            lineNumber: 50,
+                            fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                            lineNumber: 51,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
-                        fileName: "src/components/sections/InputDataList.tsx",
-                        lineNumber: 49,
+                        fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                        lineNumber: 50,
                         columnNumber: 9
                     }, this)
                 }, void 0, false, {
-                    fileName: "src/components/sections/InputDataList.tsx",
-                    lineNumber: 48,
+                    fileName: "src/components/sections/InputDataComponents/InputDataList.tsx",
+                    lineNumber: 49,
                     columnNumber: 7
                 }, this)
             ]
@@ -43313,51 +43323,402 @@ class InputDataList extends React.Component {
 }
 exports.default = InputDataList;
 
-  $parcel$ReactRefreshHelpers$3b88.postlude(module);
+  $parcel$ReactRefreshHelpers$47e7.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"c1YeN":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$5195 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"aBKqX":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f78a = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$5195.prelude(module);
+$parcel$ReactRefreshHelpers$f78a.prelude(module);
 
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _section = require("../Section");
+var _section = require("./Section");
 var _sectionDefault = parcelHelpers.interopDefault(_section);
+var _estimationList = require("./EstimationComponents/EstimationList");
+var _estimationListDefault = parcelHelpers.interopDefault(_estimationList);
+var _estimationForm = require("./EstimationComponents/EstimationForm");
+var _estimationFormDefault = parcelHelpers.interopDefault(_estimationForm);
+var _reactBootstrap = require("react-bootstrap");
 const React = require("react");
-class EstimationList extends React.Component {
+class Estimation extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            inputHidden: true
+        };
+        this.btnHandler = this.btnHandler.bind(this);
+    }
+    btnHandler() {
+        this.setState({
+            inputHidden: !this.state.inputHidden
+        });
+    }
     render() {
+        let subsectionsData;
+        let total;
+        let totalPrice;
+        totalPrice = 0;
+        // Datos de prueba. El array debería llenarse con los datos obtenidos del formulario
+        subsectionsData = [
+            {
+                type: "Paneles",
+                product: [
+                    {
+                        description: "PANEL SOLAR 120W, 24V",
+                        ref: 12345678,
+                        qt: 4,
+                        price: 79
+                    }
+                ]
+            },
+            {
+                type: "Baterías",
+                product: [
+                    {
+                        description: "BATERÍA 24V 250AH",
+                        ref: 87654321,
+                        qt: 2,
+                        price: 200
+                    }
+                ]
+            },
+            {
+                type: "Controlador",
+                product: [
+                    {
+                        description: "CONTROLADOR 20A 12/24V",
+                        ref: 98765432,
+                        qt: 1,
+                        price: 59
+                    }
+                ]
+            },
+            {
+                type: "Inversor",
+                product: [
+                    {
+                        description: "INVERSOR ONDA PURA 3000W 24V",
+                        ref: 32165498,
+                        qt: 1,
+                        price: 650
+                    }
+                ]
+            },
+            {
+                type: "Estructura",
+                product: [
+                    {
+                        description: "SOPORTE PANEL X2 CUBIERTA PLANA",
+                        ref: 45698712,
+                        qt: 1,
+                        price: 120
+                    },
+                    {
+                        description: "EXTENSIÓN SOPORTE PANEL X1 CUBIERTA PLANA",
+                        ref: 45698713,
+                        qt: 2,
+                        price: 60
+                    }
+                ]
+            },
+            {
+                type: "Cableado",
+                product: [
+                    {
+                        description: "CABLE ROJO 10MM 100M",
+                        ref: 78965412,
+                        qt: 1,
+                        price: 89
+                    },
+                    {
+                        description: "CABLE NEGRO 10MM 100M",
+                        ref: 78965413,
+                        qt: 1,
+                        price: 89
+                    }
+                ]
+            }
+        ] // let subsectionsData = []
+        ;
+        if (subsectionsData.length != 0) {
+            for(let i = 0; i < subsectionsData.length; i++){
+                let subtotal = 0;
+                for(let j = 0; j < subsectionsData[i].product.length; j++)subtotal += subsectionsData[i].product[j].price * subsectionsData[i].product[j].qt;
+                totalPrice += subtotal;
+            }
+            total = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
+                className: "mt-4",
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("hr", {}, void 0, false, {
+                        fileName: "src/components/sections/Estimation.tsx",
+                        lineNumber: 131,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                        className: "d-flex justify-content-end",
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h4", {
+                            children: [
+                                "TOTAL: ",
+                                totalPrice,
+                                " \u20AC"
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/components/sections/Estimation.tsx",
+                            lineNumber: 133,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "src/components/sections/Estimation.tsx",
+                        lineNumber: 132,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/sections/Estimation.tsx",
+                lineNumber: 130,
+                columnNumber: 9
+            }, this);
+        } else total = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
         return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_sectionDefault.default, {
             name: "Presupuesto",
             button: "A\xf1adir l\xednea",
-            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
-                children: "Aqu\xed el presupuesto"
-            }, void 0, false, {
-                fileName: "src/components/sections/EstimationList.tsx",
-                lineNumber: 7,
-                columnNumber: 7
-            }, this)
-        }, void 0, false, {
-            fileName: "src/components/sections/EstimationList.tsx",
-            lineNumber: 6,
+            btnHandler: this.btnHandler,
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationFormDefault.default, {
+                    isHidden: this.state.inputHidden
+                }, void 0, false, {
+                    fileName: "src/components/sections/Estimation.tsx",
+                    lineNumber: 146,
+                    columnNumber: 7
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationListDefault.default, {
+                    subsections: subsectionsData
+                }, void 0, false, {
+                    fileName: "src/components/sections/Estimation.tsx",
+                    lineNumber: 147,
+                    columnNumber: 7
+                }, this),
+                total
+            ]
+        }, void 0, true, {
+            fileName: "src/components/sections/Estimation.tsx",
+            lineNumber: 141,
             columnNumber: 12
         }, this);
     }
 }
-exports.default = EstimationList;
+exports.default = Estimation;
 
-  $parcel$ReactRefreshHelpers$5195.postlude(module);
+  $parcel$ReactRefreshHelpers$f78a.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","../Section":"9mXYb","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"1mHjo":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","./Section":"0478G","./EstimationComponents/EstimationList":"4Vd1e","./EstimationComponents/EstimationForm":"d3GK8","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"4Vd1e":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$15c0 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$15c0.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _subsection = require("./EstimationListComponents/Subsection");
+var _subsectionDefault = parcelHelpers.interopDefault(_subsection);
+const React = require("react");
+class EstimationList extends React.Component {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        let subsections;
+        subsections = [];
+        this.props.subsections.map((elem)=>{
+            subsections.push(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_subsectionDefault.default, {
+                title: elem.type,
+                product: elem.product
+            }, elem.type, false, {
+                fileName: "src/components/sections/EstimationComponents/EstimationList.tsx",
+                lineNumber: 19,
+                columnNumber: 9
+            }, this));
+        });
+        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {
+            children: subsections
+        }, void 0, false);
+    }
+}
+exports.default = EstimationList;
+
+  $parcel$ReactRefreshHelpers$15c0.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","./EstimationListComponents/Subsection":"7M1Lx","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7M1Lx":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$4146 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$4146.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _reactBootstrap = require("react-bootstrap");
+const React = require("react");
+class Subsection extends React.Component {
+    render() {
+        let productList;
+        productList = [];
+        this.props.product.map((article)=>{
+            productList.push(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                        xs: "12",
+                        md: "6",
+                        xl: "4",
+                        children: article.description
+                    }, void 0, false, {
+                        fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+                        lineNumber: 26,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                        xs: "6",
+                        xl: "3",
+                        className: "justify-content-start",
+                        children: article.ref
+                    }, void 0, false, {
+                        fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+                        lineNumber: 27,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                        xs: "6",
+                        xl: "2",
+                        className: "d-flex justify-content-end",
+                        children: [
+                            "x ",
+                            article.qt
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+                        lineNumber: 28,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                        xs: "12",
+                        md: "6",
+                        xl: "3",
+                        className: "d-flex justify-content-end",
+                        children: [
+                            article.price,
+                            " \u20AC/u"
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+                        lineNumber: 29,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, article.ref, true, {
+                fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+                lineNumber: 25,
+                columnNumber: 9
+            }, this));
+        });
+        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
+            className: "mb-3",
+            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h6", {
+                        children: this.props.title
+                    }, void 0, false, {
+                        fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+                        lineNumber: 35,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("hr", {}, void 0, false, {
+                        fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+                        lineNumber: 36,
+                        columnNumber: 9
+                    }, this),
+                    productList
+                ]
+            }, void 0, true, {
+                fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+                lineNumber: 34,
+                columnNumber: 7
+            }, this)
+        }, void 0, false, {
+            fileName: "src/components/sections/EstimationComponents/EstimationListComponents/Subsection.tsx",
+            lineNumber: 33,
+            columnNumber: 12
+        }, this);
+    }
+}
+exports.default = Subsection;
+
+  $parcel$ReactRefreshHelpers$4146.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"d3GK8":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$ca42 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$ca42.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _reactBootstrap = require("react-bootstrap");
+const React = require("react");
+class EstimationForm extends React.Component {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        if (this.props.isHidden) return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
+        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
+            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    children: "Formulario"
+                }, void 0, false, {
+                    fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                    lineNumber: 19,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                lineNumber: 18,
+                columnNumber: 7
+            }, this)
+        }, void 0, false, {
+            fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+            lineNumber: 17,
+            columnNumber: 12
+        }, this);
+    }
+}
+exports.default = EstimationForm;
+
+  $parcel$ReactRefreshHelpers$ca42.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"1mHjo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");

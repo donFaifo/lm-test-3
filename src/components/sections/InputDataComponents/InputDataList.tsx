@@ -11,16 +11,17 @@ export interface InputDataType {
 
 interface Props {
   data: InputDataType[]
+  dataCleaner(): any
 }
 
 export default class InputDataList extends React.Component<Props> {
-  
+
   constructor(props) {
     super(props)
   }
 
   render() {
-    if(this.props.data.length == 0) return <></>
+    if (this.props.data.length == 0) return <></>
 
     let dataRows = this.props.data.map((item) => {
       return <tr key={item.id}>
@@ -47,7 +48,11 @@ export default class InputDataList extends React.Component<Props> {
       </Table>
       <Row>
         <Col className="d-flex justify-content-end">
-          <Button size="sm" variant="danger">Limpiar tabla</Button>
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={this.props.dataCleaner}
+          >Limpiar tabla</Button>
         </Col>
       </Row>
     </>
