@@ -15191,6 +15191,7 @@ var _navbar = require("react-bootstrap/Navbar");
 var _navbarDefault = parcelHelpers.interopDefault(_navbar);
 var _nav = require("react-bootstrap/Nav");
 var _navDefault = parcelHelpers.interopDefault(_nav);
+var _reactBootstrap = require("react-bootstrap");
 class App extends _react.Component {
     render() {
         return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {
@@ -15205,8 +15206,8 @@ class App extends _react.Component {
                                 children: "C\xe1lculos solar"
                             }, void 0, false, {
                                 fileName: "src/App.tsx",
-                                lineNumber: 12,
-                                columnNumber: 21
+                                lineNumber: 13,
+                                columnNumber: 11
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_navDefault.default, {
                                 className: "me-auto",
@@ -15215,29 +15216,50 @@ class App extends _react.Component {
                                     children: "Inicio"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 14,
-                                    columnNumber: 25
+                                    lineNumber: 15,
+                                    columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "src/App.tsx",
-                                lineNumber: 13,
-                                columnNumber: 21
+                                lineNumber: 14,
+                                columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/App.tsx",
-                        lineNumber: 11,
-                        columnNumber: 17
+                        lineNumber: 12,
+                        columnNumber: 9
                     }, this)
                 }, void 0, false, {
                     fileName: "src/App.tsx",
-                    lineNumber: 10,
-                    columnNumber: 13
+                    lineNumber: 11,
+                    columnNumber: 7
                 }, this),
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_mainDefault.default, {}, void 0, false, {
                     fileName: "src/App.tsx",
-                    lineNumber: 19,
-                    columnNumber: 13
+                    lineNumber: 20,
+                    columnNumber: 7
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_containerDefault.default, {
+                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
+                        className: "mt-5",
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                            className: "d-flex justify-content-end",
+                            children: "Made by mGuerrero using React and Parcel for Google App Script"
+                        }, void 0, false, {
+                            fileName: "src/App.tsx",
+                            lineNumber: 24,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "src/App.tsx",
+                        lineNumber: 23,
+                        columnNumber: 9
+                    }, this)
+                }, void 0, false, {
+                    fileName: "src/App.tsx",
+                    lineNumber: 22,
+                    columnNumber: 7
                 }, this)
             ]
         }, void 0, true);
@@ -15250,7 +15272,7 @@ exports.default = App;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./components/Main":"gvVQo","react-bootstrap/Container":"hEdsw","react-bootstrap/Navbar":"1mHjo","react-bootstrap/Nav":"cXyL2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gvVQo":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./components/Main":"gvVQo","react-bootstrap/Container":"hEdsw","react-bootstrap/Navbar":"1mHjo","react-bootstrap/Nav":"cXyL2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap":"3AD9A"}],"gvVQo":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$47e0 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -43692,8 +43714,231 @@ class EstimationForm extends React.Component {
         if (this.props.isHidden) return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
         return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
             children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
-                    children: "Formulario"
+                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form, {
+                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
+                        children: [
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                                xs: "12",
+                                md: "4",
+                                xl: "3",
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
+                                        htmlFor: "type",
+                                        children: "Tipo"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 22,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
+                                        id: "type",
+                                        children: [
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                                value: "panel",
+                                                children: "Panel solar"
+                                            }, void 0, false, {
+                                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                                lineNumber: 24,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                                value: "battery",
+                                                children: "Bater\xeda"
+                                            }, void 0, false, {
+                                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                                lineNumber: 25,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                                value: "controller",
+                                                children: "Controlador de carga"
+                                            }, void 0, false, {
+                                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                                lineNumber: 26,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                                value: "inverter",
+                                                children: "Inversor"
+                                            }, void 0, false, {
+                                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                                lineNumber: 27,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                                value: "structure",
+                                                children: "Estructura"
+                                            }, void 0, false, {
+                                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                                lineNumber: 28,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                                value: "cable",
+                                                children: "Cableado"
+                                            }, void 0, false, {
+                                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                                lineNumber: 29,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                                value: "other",
+                                                children: "Otros"
+                                            }, void 0, false, {
+                                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                                lineNumber: 30,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 23,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                lineNumber: 21,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                                xs: "12",
+                                md: "8",
+                                xl: "5",
+                                className: "mb-4",
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
+                                        htmlFor: "description",
+                                        children: "Descripci\xf3n"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 34,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
+                                        id: "description",
+                                        type: "text",
+                                        placeholder: "Descripci\xf3n del producto"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 35,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                lineNumber: 33,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                                className: "mb-4",
+                                xs: "12",
+                                md: "4",
+                                xl: "2",
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
+                                        htmlFor: "ref",
+                                        children: "Referencia"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 41,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
+                                        id: "ref",
+                                        type: "number",
+                                        placeholder: "Referencia LM"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 42,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                lineNumber: 40,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                                className: "mb-4",
+                                xs: "12",
+                                md: "2",
+                                xl: "2",
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
+                                        htmlFor: "qt",
+                                        children: "Cantidad"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 48,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
+                                        id: "qt",
+                                        type: "number",
+                                        placeholder: "Cantidad"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 49,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                lineNumber: 47,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                                className: "mb-4",
+                                xs: "12",
+                                md: "3",
+                                xl: "3",
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
+                                        htmlFor: "price",
+                                        children: "Precio unitario"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 55,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
+                                        id: "price",
+                                        type: "number",
+                                        placeholder: "Precio por unidad"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                        lineNumber: 56,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                lineNumber: 54,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                                className: "d-flex align-items-end mb-4",
+                                xs: "2",
+                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                                    children: "Guardar"
+                                }, void 0, false, {
+                                    fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                    lineNumber: 62,
+                                    columnNumber: 15
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                                lineNumber: 61,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
+                        lineNumber: 20,
+                        columnNumber: 11
+                    }, this)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
                     lineNumber: 19,
