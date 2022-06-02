@@ -43372,102 +43372,120 @@ class Estimation extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            inputHidden: true
+            inputHidden: true,
+            estimationProducts: [
+                {
+                    type: "Paneles",
+                    product: [
+                        {
+                            description: "PANEL SOLAR 120W, 24V",
+                            ref: 12345678,
+                            qt: 4,
+                            price: 79
+                        }
+                    ]
+                },
+                {
+                    type: "Baterías",
+                    product: [
+                        {
+                            description: "BATERÍA 24V 250AH",
+                            ref: 87654321,
+                            qt: 2,
+                            price: 200
+                        }
+                    ]
+                },
+                {
+                    type: "Controlador",
+                    product: [
+                        {
+                            description: "CONTROLADOR 20A 12/24V",
+                            ref: 98765432,
+                            qt: 1,
+                            price: 59
+                        }
+                    ]
+                },
+                {
+                    type: "Inversor",
+                    product: [
+                        {
+                            description: "INVERSOR ONDA PURA 3000W 24V",
+                            ref: 32165498,
+                            qt: 1,
+                            price: 650
+                        }
+                    ]
+                },
+                {
+                    type: "Estructura",
+                    product: [
+                        {
+                            description: "SOPORTE PANEL X2 CUBIERTA PLANA",
+                            ref: 45698712,
+                            qt: 1,
+                            price: 120
+                        },
+                        {
+                            description: "EXTENSIÓN SOPORTE PANEL X1 CUBIERTA PLANA",
+                            ref: 45698713,
+                            qt: 2,
+                            price: 60
+                        }
+                    ]
+                },
+                {
+                    type: "Cableado",
+                    product: [
+                        {
+                            description: "CABLE ROJO 10MM 100M",
+                            ref: 78965412,
+                            qt: 1,
+                            price: 89
+                        },
+                        {
+                            description: "CABLE NEGRO 10MM 100M",
+                            ref: 78965413,
+                            qt: 1,
+                            price: 89
+                        }
+                    ]
+                }
+            ]
         };
         this.btnHandler = this.btnHandler.bind(this);
+        this.cleanEstimation = this.cleanEstimation.bind(this);
+        this.addNewProduct = this.addNewProduct.bind(this);
     }
     btnHandler() {
         this.setState({
             inputHidden: !this.state.inputHidden
         });
     }
+    cleanEstimation() {
+        this.setState({
+            estimationProducts: []
+        });
+    }
+    addNewProduct(product) {
+        let temp = this.state.estimationProducts;
+        let index = temp.findIndex((elem)=>{
+            return elem.type == product.type;
+        });
+        if (index != -1) temp[index].product.push(product.product[0]);
+        else temp.push(product);
+        this.setState({
+            estimationProducts: temp
+        });
+    }
     render() {
         let subsectionsData;
         let total;
+        let options;
         let totalPrice;
         totalPrice = 0;
-        // Datos de prueba. El array debería llenarse con los datos obtenidos del formulario
-        subsectionsData = [
-            {
-                type: "Paneles",
-                product: [
-                    {
-                        description: "PANEL SOLAR 120W, 24V",
-                        ref: 12345678,
-                        qt: 4,
-                        price: 79
-                    }
-                ]
-            },
-            {
-                type: "Baterías",
-                product: [
-                    {
-                        description: "BATERÍA 24V 250AH",
-                        ref: 87654321,
-                        qt: 2,
-                        price: 200
-                    }
-                ]
-            },
-            {
-                type: "Controlador",
-                product: [
-                    {
-                        description: "CONTROLADOR 20A 12/24V",
-                        ref: 98765432,
-                        qt: 1,
-                        price: 59
-                    }
-                ]
-            },
-            {
-                type: "Inversor",
-                product: [
-                    {
-                        description: "INVERSOR ONDA PURA 3000W 24V",
-                        ref: 32165498,
-                        qt: 1,
-                        price: 650
-                    }
-                ]
-            },
-            {
-                type: "Estructura",
-                product: [
-                    {
-                        description: "SOPORTE PANEL X2 CUBIERTA PLANA",
-                        ref: 45698712,
-                        qt: 1,
-                        price: 120
-                    },
-                    {
-                        description: "EXTENSIÓN SOPORTE PANEL X1 CUBIERTA PLANA",
-                        ref: 45698713,
-                        qt: 2,
-                        price: 60
-                    }
-                ]
-            },
-            {
-                type: "Cableado",
-                product: [
-                    {
-                        description: "CABLE ROJO 10MM 100M",
-                        ref: 78965412,
-                        qt: 1,
-                        price: 89
-                    },
-                    {
-                        description: "CABLE NEGRO 10MM 100M",
-                        ref: 78965413,
-                        qt: 1,
-                        price: 89
-                    }
-                ]
-            }
-        ] // let subsectionsData = []
-        ;
+        subsectionsData = this.state.estimationProducts;
         if (subsectionsData.length != 0) {
             for(let i = 0; i < subsectionsData.length; i++){
                 let subtotal = 0;
@@ -43479,7 +43497,7 @@ class Estimation extends React.Component {
                 children: [
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("hr", {}, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 131,
+                        lineNumber: 157,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43492,45 +43510,74 @@ class Estimation extends React.Component {
                             ]
                         }, void 0, true, {
                             fileName: "src/components/sections/Estimation.tsx",
-                            lineNumber: 133,
+                            lineNumber: 159,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 132,
+                        lineNumber: 158,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/sections/Estimation.tsx",
-                lineNumber: 130,
+                lineNumber: 156,
                 columnNumber: 9
             }, this);
-        } else total = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
+            options = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
+                className: "mt-4",
+                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                    className: "d-flex justify-content-end",
+                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                        variant: "danger",
+                        size: "sm",
+                        onClick: this.cleanEstimation,
+                        children: "Limpiar presupuesto"
+                    }, void 0, false, {
+                        fileName: "src/components/sections/Estimation.tsx",
+                        lineNumber: 167,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "src/components/sections/Estimation.tsx",
+                    lineNumber: 166,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "src/components/sections/Estimation.tsx",
+                lineNumber: 165,
+                columnNumber: 9
+            }, this);
+        } else {
+            total = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
+            options = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
+        }
         return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_sectionDefault.default, {
             name: "Presupuesto",
             button: "A\xf1adir l\xednea",
             btnHandler: this.btnHandler,
             children: [
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationFormDefault.default, {
-                    isHidden: this.state.inputHidden
+                    isHidden: this.state.inputHidden,
+                    saveBtnHandler: this.addNewProduct
                 }, void 0, false, {
                     fileName: "src/components/sections/Estimation.tsx",
-                    lineNumber: 146,
+                    lineNumber: 185,
                     columnNumber: 7
                 }, this),
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationListDefault.default, {
                     subsections: subsectionsData
                 }, void 0, false, {
                     fileName: "src/components/sections/Estimation.tsx",
-                    lineNumber: 147,
+                    lineNumber: 189,
                     columnNumber: 7
                 }, this),
-                total
+                total,
+                options
             ]
         }, void 0, true, {
             fileName: "src/components/sections/Estimation.tsx",
-            lineNumber: 141,
+            lineNumber: 180,
             columnNumber: 12
         }, this);
     }
@@ -43709,6 +43756,85 @@ const React = require("react");
 class EstimationForm extends React.Component {
     constructor(props){
         super(props);
+        this.state = {
+            type: "Paneles",
+            article: {
+                description: "",
+                ref: 0,
+                qt: 0,
+                price: 0
+            }
+        };
+        this.handleType = this.handleType.bind(this);
+        this.handleDescription = this.handleDescription.bind(this);
+        this.handleRef = this.handleRef.bind(this);
+        this.handleQt = this.handleQt.bind(this);
+        this.handlePrice = this.handlePrice.bind(this);
+        this.save = this.save.bind(this);
+        this.refType = React.createRef();
+    }
+    handleType(event) {
+        this.setState({
+            type: event.target.value
+        });
+    }
+    handleDescription(event) {
+        this.setState({
+            article: {
+                description: event.target.value,
+                ref: this.state.article.ref,
+                qt: this.state.article.qt,
+                price: this.state.article.price
+            }
+        });
+    }
+    handleRef(event) {
+        this.setState({
+            article: {
+                description: this.state.article.description,
+                ref: event.target.value,
+                qt: this.state.article.qt,
+                price: this.state.article.price
+            }
+        });
+    }
+    handleQt(event) {
+        this.setState({
+            article: {
+                description: this.state.article.description,
+                ref: this.state.article.ref,
+                qt: event.target.value,
+                price: this.state.article.price
+            }
+        });
+    }
+    handlePrice(event) {
+        this.setState({
+            article: {
+                description: this.state.article.description,
+                ref: this.state.article.ref,
+                qt: this.state.article.qt,
+                price: event.target.value
+            }
+        });
+    }
+    save() {
+        this.refType.current.focus();
+        this.props.saveBtnHandler({
+            type: this.state.type,
+            product: [
+                this.state.article
+            ]
+        });
+        this.setState({
+            type: "Paneles",
+            article: {
+                description: "",
+                ref: 0,
+                qt: 0,
+                price: 0
+            }
+        });
     }
     render() {
         if (this.props.isHidden) return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
@@ -43728,78 +43854,81 @@ class EstimationForm extends React.Component {
                                         children: "Tipo"
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 22,
+                                        lineNumber: 118,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
                                         id: "type",
+                                        onChange: this.handleType,
+                                        value: this.state.type,
+                                        ref: this.refType,
                                         children: [
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                                value: "panel",
-                                                children: "Panel solar"
+                                                value: "Paneles",
+                                                children: "Paneles"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 24,
+                                                lineNumber: 124,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                                value: "battery",
-                                                children: "Bater\xeda"
+                                                value: "Bater\xedas",
+                                                children: "Bater\xedas"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 25,
+                                                lineNumber: 125,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                                value: "controller",
-                                                children: "Controlador de carga"
+                                                value: "Controlador",
+                                                children: "Controlador"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 26,
+                                                lineNumber: 126,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                                value: "inverter",
+                                                value: "Inversor",
                                                 children: "Inversor"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 27,
+                                                lineNumber: 127,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                                value: "structure",
+                                                value: "Estructura",
                                                 children: "Estructura"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 28,
+                                                lineNumber: 128,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                                value: "cable",
+                                                value: "Cableado",
                                                 children: "Cableado"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 29,
+                                                lineNumber: 129,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                                value: "other",
+                                                value: "Otros",
                                                 children: "Otros"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 30,
+                                                lineNumber: 130,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 23,
+                                        lineNumber: 119,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 21,
+                                lineNumber: 117,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43813,22 +43942,24 @@ class EstimationForm extends React.Component {
                                         children: "Descripci\xf3n"
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 34,
+                                        lineNumber: 134,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
                                         id: "description",
                                         type: "text",
-                                        placeholder: "Descripci\xf3n del producto"
+                                        placeholder: "Descripci\xf3n del producto",
+                                        onChange: this.handleDescription,
+                                        value: this.state.article.description
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 35,
+                                        lineNumber: 135,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 33,
+                                lineNumber: 133,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43842,22 +43973,24 @@ class EstimationForm extends React.Component {
                                         children: "Referencia"
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 41,
+                                        lineNumber: 143,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
                                         id: "ref",
                                         type: "number",
-                                        placeholder: "Referencia LM"
+                                        placeholder: "Referencia LM",
+                                        onChange: this.handleRef,
+                                        value: this.state.article.ref
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 42,
+                                        lineNumber: 144,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 40,
+                                lineNumber: 142,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43871,22 +44004,24 @@ class EstimationForm extends React.Component {
                                         children: "Cantidad"
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 48,
+                                        lineNumber: 152,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
                                         id: "qt",
                                         type: "number",
-                                        placeholder: "Cantidad"
+                                        placeholder: "Cantidad",
+                                        onChange: this.handleQt,
+                                        value: this.state.article.qt
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 49,
+                                        lineNumber: 153,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 47,
+                                lineNumber: 151,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43900,58 +44035,61 @@ class EstimationForm extends React.Component {
                                         children: "Precio unitario"
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 55,
+                                        lineNumber: 161,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
                                         id: "price",
                                         type: "number",
-                                        placeholder: "Precio por unidad"
+                                        placeholder: "Precio por unidad",
+                                        onChange: this.handlePrice,
+                                        value: this.state.article.price
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 56,
+                                        lineNumber: 162,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 54,
+                                lineNumber: 160,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
                                 className: "d-flex align-items-end mb-4",
                                 xs: "2",
                                 children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                                    onClick: this.save,
                                     children: "Guardar"
                                 }, void 0, false, {
                                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                    lineNumber: 62,
+                                    lineNumber: 170,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 61,
+                                lineNumber: 169,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                        lineNumber: 20,
+                        lineNumber: 116,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 19,
+                    lineNumber: 115,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                lineNumber: 18,
+                lineNumber: 114,
                 columnNumber: 7
             }, this)
         }, void 0, false, {
             fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-            lineNumber: 17,
+            lineNumber: 113,
             columnNumber: 12
         }, this);
     }
