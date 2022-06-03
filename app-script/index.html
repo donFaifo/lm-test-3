@@ -43378,6 +43378,7 @@ class Estimation extends React.Component {
         this.btnHandler = this.btnHandler.bind(this);
         this.cleanEstimation = this.cleanEstimation.bind(this);
         this.addNewProduct = this.addNewProduct.bind(this);
+        this.saveEstimation = this.saveEstimation.bind(this);
     }
     btnHandler() {
         this.setState({
@@ -43400,6 +43401,17 @@ class Estimation extends React.Component {
             estimationProducts: temp
         });
     }
+    saveEstimation() {
+        let data;
+        let customerName;
+        customerName = prompt("Nombre del cliente:", "UNNAMED");
+        data = {
+            name: customerName,
+            list: this.state.estimationProducts
+        };
+        // @ts-ignore
+        google.script.run.withSuccessHandler().createEstimate(data);
+    }
     render() {
         let subsectionsData;
         let total;
@@ -43418,7 +43430,7 @@ class Estimation extends React.Component {
                 children: [
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("hr", {}, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 85,
+                        lineNumber: 101,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43431,42 +43443,58 @@ class Estimation extends React.Component {
                             ]
                         }, void 0, true, {
                             fileName: "src/components/sections/Estimation.tsx",
-                            lineNumber: 87,
+                            lineNumber: 103,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 86,
+                        lineNumber: 102,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/sections/Estimation.tsx",
-                lineNumber: 84,
+                lineNumber: 100,
                 columnNumber: 9
             }, this);
             options = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
                 className: "mt-4",
-                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                    className: "d-flex justify-content-end",
-                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
-                        variant: "danger",
-                        size: "sm",
-                        onClick: this.cleanEstimation,
-                        children: "Limpiar presupuesto"
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                            onClick: this.saveEstimation,
+                            children: "Guardar presupuesto"
+                        }, void 0, false, {
+                            fileName: "src/components/sections/Estimation.tsx",
+                            lineNumber: 111,
+                            columnNumber: 13
+                        }, this)
                     }, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 95,
-                        columnNumber: 13
+                        lineNumber: 110,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
+                        className: "d-flex justify-content-end",
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                            variant: "danger",
+                            size: "sm",
+                            onClick: this.cleanEstimation,
+                            children: "Limpiar presupuesto"
+                        }, void 0, false, {
+                            fileName: "src/components/sections/Estimation.tsx",
+                            lineNumber: 116,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "src/components/sections/Estimation.tsx",
+                        lineNumber: 115,
+                        columnNumber: 11
                     }, this)
-                }, void 0, false, {
-                    fileName: "src/components/sections/Estimation.tsx",
-                    lineNumber: 94,
-                    columnNumber: 11
-                }, this)
-            }, void 0, false, {
+                ]
+            }, void 0, true, {
                 fileName: "src/components/sections/Estimation.tsx",
-                lineNumber: 93,
+                lineNumber: 109,
                 columnNumber: 9
             }, this);
         } else {
@@ -43483,14 +43511,14 @@ class Estimation extends React.Component {
                     saveBtnHandler: this.addNewProduct
                 }, void 0, false, {
                     fileName: "src/components/sections/Estimation.tsx",
-                    lineNumber: 113,
+                    lineNumber: 134,
                     columnNumber: 7
                 }, this),
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationListDefault.default, {
                     subsections: subsectionsData
                 }, void 0, false, {
                     fileName: "src/components/sections/Estimation.tsx",
-                    lineNumber: 117,
+                    lineNumber: 138,
                     columnNumber: 7
                 }, this),
                 total,
@@ -43498,7 +43526,7 @@ class Estimation extends React.Component {
             ]
         }, void 0, true, {
             fileName: "src/components/sections/Estimation.tsx",
-            lineNumber: 108,
+            lineNumber: 129,
             columnNumber: 12
         }, this);
     }

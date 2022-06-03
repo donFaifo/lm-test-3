@@ -30,6 +30,7 @@ export default class Estimation extends React.Component<Props, States> {
     this.btnHandler = this.btnHandler.bind(this)
     this.cleanEstimation = this.cleanEstimation.bind(this)
     this.addNewProduct = this.addNewProduct.bind(this)
+    this.saveEstimation = this.saveEstimation.bind(this)
   }
 
   btnHandler() {
@@ -59,6 +60,21 @@ export default class Estimation extends React.Component<Props, States> {
     this.setState({
       estimationProducts: temp
     })
+  }
+
+  saveEstimation() {
+    let data: any
+    let customerName: string
+
+    customerName = prompt("Nombre del cliente:", "UNNAMED");
+
+    data = {
+      name: customerName,
+      list: this.state.estimationProducts
+    }
+
+    // @ts-ignore
+    google.script.run.withSuccessHandler().createEstimate(data)
   }
 
   render() {
@@ -91,6 +107,11 @@ export default class Estimation extends React.Component<Props, States> {
 
       options = (
         <Row className="mt-4">
+          <Col>
+            <Button
+              onClick={this.saveEstimation}
+            >Guardar presupuesto</Button>
+          </Col>
           <Col className="d-flex justify-content-end">
             <Button
               variant="danger"
