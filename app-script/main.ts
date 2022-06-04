@@ -66,11 +66,10 @@ function createEstimate(data: Data) {
   let total = 0
 
   for(let i=0; i<productsList.length; i++) {
-    let row = table.appendTableRow()
     productsList[i].product.forEach((product) => {
+      let row = table.appendTableRow()
       let subtotal = product.price * product.qt
       total += subtotal
-
       row.appendTableCell(product.ref.toString()).setWidth(66)
       row.appendTableCell(product.description).setWidth(200)
       row.appendTableCell(product.qt.toString()).setWidth(54)

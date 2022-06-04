@@ -3,7 +3,6 @@ import Section from "./Section";
 import EstimationList from "./EstimationComponents/EstimationList";
 import EstimationForm from "./EstimationComponents/EstimationForm";
 import { Button, Col, Row } from "react-bootstrap";
-
 import { Article } from "./EstimationComponents/EstimationListComponents/Subsection";
 
 export interface SubsectionData {
@@ -109,6 +108,7 @@ export default class Estimation extends React.Component<Props, States> {
         <Row className="mt-4">
           <Col>
             <Button
+              size="sm"
               onClick={this.saveEstimation}
             >Guardar presupuesto</Button>
           </Col>
