@@ -2,7 +2,7 @@ import React = require("react");
 import Section from "./Section";
 import EstimationList from "./EstimationComponents/EstimationList";
 import EstimationForm from "./EstimationComponents/EstimationForm";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { Article } from "./EstimationComponents/EstimationListComponents/Subsection";
 
 export interface SubsectionData {
@@ -15,6 +15,9 @@ interface Props { }
 interface States {
   inputHidden: boolean
   estimationProducts: SubsectionData[]
+  showCanvas: boolean
+  customerName: string
+  customerMail: string
 }
 
 export default class Estimation extends React.Component<Props, States> {
@@ -23,13 +26,20 @@ export default class Estimation extends React.Component<Props, States> {
 
     this.state = {
       inputHidden: true,
-      estimationProducts: []
+      estimationProducts: [],
+      showCanvas: false,
+      customerName: "",
+      customerMail: ""
     }
 
     this.btnHandler = this.btnHandler.bind(this)
     this.cleanEstimation = this.cleanEstimation.bind(this)
     this.addNewProduct = this.addNewProduct.bind(this)
     this.saveEstimation = this.saveEstimation.bind(this)
+    this.showCanvas = this.showCanvas.bind(this)
+    this.closeCanvas = this.closeCanvas.bind(this)
+    this.customerMailHandler = this.customerMailHandler.bind(this)
+    this.customerNameHandler = this.customerNameHandler.bind(this)
   }
 
   btnHandler() {
@@ -76,6 +86,30 @@ export default class Estimation extends React.Component<Props, States> {
     google.script.run.withSuccessHandler().createEstimate(data)
   }
 
+  showCanvas() {
+    this.setState({
+      showCanvas: true
+    })
+  }
+
+  closeCanvas() {
+    this.setState({
+      showCanvas: false
+    })
+  }
+
+  customerNameHandler(event) {
+    this.setState({
+      customerName: event.target.value
+    })
+  }
+
+  customerMailHandler(event) {
+    this.setState({
+      customerMail: event.target.value
+    })
+  }
+
   render() {
     let subsectionsData: SubsectionData[]
     let total: JSX.Element
@@ -109,7 +143,7 @@ export default class Estimation extends React.Component<Props, States> {
           <Col>
             <Button
               size="sm"
-              onClick={this.saveEstimation}
+              onClick={this.showCanvas}
             >Guardar presupuesto</Button>
           </Col>
           <Col className="d-flex justify-content-end">
@@ -126,11 +160,44 @@ export default class Estimation extends React.Component<Props, States> {
       options = <></>
     }
 
+
+
     return <Section
       name="Presupuesto"
       button="Añadir línea"
       btnHandler={this.btnHandler}
     >
+      <Modal show={this.state.showCanvas} onHide={this.closeCanvas}>
+        <Modal.Header closeButton>
+          <Modal.Title>Datos cliente</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row>
+              <Col xs="12" className="mb-3">
+                <Form.Label>Nombre cliente</Form.Label>
+                <Form.Control 
+                  id="customerName"
+                  type="text" 
+                  onChange={this.customerNameHandler}
+                  value={this.state.customerName}/>
+              </Col>
+              <Col xs="12" className="mb-3">
+                <Form.Label>Mail cliente</Form.Label>
+                <Form.Control 
+                  id="customerName"
+                  type="mail" 
+                  onChange={this.customerMailHandler}
+                  value={this.state.customerMail}/>
+              </Col>
+            </Row>
+            </Form>
+          <Modal.Footer>
+              <Button size="sm" onClick={()=>{console.log("Guardado")}}>Guardar Presupuesto</Button>
+              <Button variant="success" size="sm" onClick={()=>{console.log("Enviado")}}>Enviar por mail</Button>            
+          </Modal.Footer>
+        </Modal.Body>
+      </Modal>
       <EstimationForm 
         isHidden={this.state.inputHidden} 
         saveBtnHandler={this.addNewProduct}

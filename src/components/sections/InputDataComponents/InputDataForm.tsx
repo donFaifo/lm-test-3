@@ -1,8 +1,8 @@
 import React = require("react");
-import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { InputDataType } from "./InputDataList";
 
-interface Stats {
+interface State {
   type: string;
   qt: number;
   pw: number;
@@ -15,7 +15,7 @@ interface Props {
   lastId: number;
 }
 
-export default class InputDataForm extends React.Component<Props, Stats> {
+export default class InputDataForm extends React.Component<Props, State> {
 
   selectTypeRef: any
 
