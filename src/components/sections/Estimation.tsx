@@ -20,6 +20,11 @@ interface States {
   customerMail: string
 }
 
+enum Action {
+  Save = "GUARDAR",
+  Send = "ENVIAR"
+}
+
 export default class Estimation extends React.Component<Props, States> {
   constructor(props) {
     super(props)
@@ -71,19 +76,33 @@ export default class Estimation extends React.Component<Props, States> {
     })
   }
 
-  saveEstimation() {
+  saveEstimation(action: Action) {
     let data: any
     let customerName: string
+    let customerMail: string
 
-    customerName = prompt("Nombre del cliente:", "UNNAMED");
+    customerName = this.state.customerName
+    customerMail = this.state.customerMail
 
     data = {
       name: customerName,
+      mail: customerMail,
+      send: (action == Action.Send),
       list: this.state.estimationProducts
     }
 
+    this.setState({
+      showCanvas: false
+    })
+
     // @ts-ignore
-    google.script.run.withSuccessHandler().createEstimate(data)
+    google.script.run.withSuccessHandler(()=>{
+      if(data.send) {
+        alert("Documento guardado y enviado")
+      } else {
+        alert("Documento guardado")
+      }
+    }).createEstimate(data)
   }
 
   showCanvas() {
@@ -193,8 +212,8 @@ export default class Estimation extends React.Component<Props, States> {
             </Row>
             </Form>
           <Modal.Footer>
-              <Button size="sm" onClick={()=>{console.log("Guardado")}}>Guardar Presupuesto</Button>
-              <Button variant="success" size="sm" onClick={()=>{console.log("Enviado")}}>Enviar por mail</Button>            
+              <Button size="sm" onClick={this.saveEstimation.bind(this, Action.Save)}>Guardar Presupuesto</Button>
+              <Button variant="success" size="sm" onClick={this.saveEstimation.bind(this, Action.Send)}>Enviar por mail</Button>            
           </Modal.Footer>
         </Modal.Body>
       </Modal>

@@ -2,6 +2,8 @@ import { SubsectionData } from "../src/components/sections/Estimation";
 
 interface Data {
   name: string
+  mail: string
+  send: boolean
   list: SubsectionData[]
 }
 
@@ -86,15 +88,20 @@ function createEstimate(data: Data) {
   document.getBody().appendParagraph("Made with AppScript")
     .setAttributes(normalStyle)
   
+  const doc = document.getAs("application/pdf")
+  
+  GmailApp.sendEmail(data.mail, "Presupuesto Fotovoltaica Leroy Merlin", "Adjunto su presupuesto", {
+    attachments: [doc]
+  })
 }
 
 function getWorkingFolder() {
   let myFolder: any
   let folders = DriveApp.getFoldersByName("APP-SOLAR")
   if (folders.hasNext()) {
-    let myFolder = folders.next()
+    myFolder = folders.next()
   } else {
-    let myFolder = DriveApp.createFolder("APP-SOLAR")
+    myFolder = DriveApp.createFolder("APP-SOLAR")
   }
   return myFolder.getId()
 

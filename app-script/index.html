@@ -43706,6 +43706,11 @@ var _estimationForm = require("./EstimationComponents/EstimationForm");
 var _estimationFormDefault = parcelHelpers.interopDefault(_estimationForm);
 var _reactBootstrap = require("react-bootstrap");
 const React = require("react");
+let Action;
+(function(Action1) {
+    Action1["Save"] = "GUARDAR";
+    Action1["Send"] = "ENVIAR";
+})(Action || (Action = {}));
 class Estimation extends React.Component {
     constructor(props){
         super(props);
@@ -43746,16 +43751,26 @@ class Estimation extends React.Component {
             estimationProducts: temp
         });
     }
-    saveEstimation() {
+    saveEstimation(action) {
         let data;
         let customerName;
-        customerName = prompt("Nombre del cliente:", "UNNAMED");
+        let customerMail;
+        customerName = this.state.customerName;
+        customerMail = this.state.customerMail;
         data = {
             name: customerName,
+            mail: customerMail,
+            send: action == Action.Send,
             list: this.state.estimationProducts
         };
+        this.setState({
+            showCanvas: false
+        });
         // @ts-ignore
-        google.script.run.withSuccessHandler().createEstimate(data);
+        google.script.run.withSuccessHandler(()=>{
+            if (data.send) alert("Documento guardado y enviado");
+            else alert("Documento guardado");
+        }).createEstimate(data);
     }
     showCanvas() {
         this.setState({
@@ -43795,7 +43810,7 @@ class Estimation extends React.Component {
                 children: [
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("hr", {}, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 134,
+                        lineNumber: 153,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43808,18 +43823,18 @@ class Estimation extends React.Component {
                             ]
                         }, void 0, true, {
                             fileName: "src/components/sections/Estimation.tsx",
-                            lineNumber: 136,
+                            lineNumber: 155,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 135,
+                        lineNumber: 154,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/sections/Estimation.tsx",
-                lineNumber: 133,
+                lineNumber: 152,
                 columnNumber: 9
             }, this);
             options = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
@@ -43832,12 +43847,12 @@ class Estimation extends React.Component {
                             children: "Guardar presupuesto"
                         }, void 0, false, {
                             fileName: "src/components/sections/Estimation.tsx",
-                            lineNumber: 144,
+                            lineNumber: 163,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 143,
+                        lineNumber: 162,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43849,18 +43864,18 @@ class Estimation extends React.Component {
                             children: "Limpiar presupuesto"
                         }, void 0, false, {
                             fileName: "src/components/sections/Estimation.tsx",
-                            lineNumber: 150,
+                            lineNumber: 169,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/sections/Estimation.tsx",
-                        lineNumber: 149,
+                        lineNumber: 168,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/sections/Estimation.tsx",
-                lineNumber: 142,
+                lineNumber: 161,
                 columnNumber: 9
             }, this);
         } else {
@@ -43882,12 +43897,12 @@ class Estimation extends React.Component {
                                 children: "Datos cliente"
                             }, void 0, false, {
                                 fileName: "src/components/sections/Estimation.tsx",
-                                lineNumber: 172,
+                                lineNumber: 191,
                                 columnNumber: 11
                             }, this)
                         }, void 0, false, {
                             fileName: "src/components/sections/Estimation.tsx",
-                            lineNumber: 171,
+                            lineNumber: 190,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Modal.Body, {
@@ -43903,7 +43918,7 @@ class Estimation extends React.Component {
                                                         children: "Nombre cliente"
                                                     }, void 0, false, {
                                                         fileName: "src/components/sections/Estimation.tsx",
-                                                        lineNumber: 178,
+                                                        lineNumber: 197,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -43913,13 +43928,13 @@ class Estimation extends React.Component {
                                                         value: this.state.customerName
                                                     }, void 0, false, {
                                                         fileName: "src/components/sections/Estimation.tsx",
-                                                        lineNumber: 179,
+                                                        lineNumber: 198,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "src/components/sections/Estimation.tsx",
-                                                lineNumber: 177,
+                                                lineNumber: 196,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -43930,7 +43945,7 @@ class Estimation extends React.Component {
                                                         children: "Mail cliente"
                                                     }, void 0, false, {
                                                         fileName: "src/components/sections/Estimation.tsx",
-                                                        lineNumber: 186,
+                                                        lineNumber: 205,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -43940,67 +43955,63 @@ class Estimation extends React.Component {
                                                         value: this.state.customerMail
                                                     }, void 0, false, {
                                                         fileName: "src/components/sections/Estimation.tsx",
-                                                        lineNumber: 187,
+                                                        lineNumber: 206,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "src/components/sections/Estimation.tsx",
-                                                lineNumber: 185,
+                                                lineNumber: 204,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/sections/Estimation.tsx",
-                                        lineNumber: 176,
+                                        lineNumber: 195,
                                         columnNumber: 13
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "src/components/sections/Estimation.tsx",
-                                    lineNumber: 175,
+                                    lineNumber: 194,
                                     columnNumber: 11
                                 }, this),
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Modal.Footer, {
                                     children: [
                                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
                                             size: "sm",
-                                            onClick: ()=>{
-                                                console.log("Guardado");
-                                            },
+                                            onClick: this.saveEstimation.bind(this, Action.Save),
                                             children: "Guardar Presupuesto"
                                         }, void 0, false, {
                                             fileName: "src/components/sections/Estimation.tsx",
-                                            lineNumber: 196,
+                                            lineNumber: 215,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
                                             variant: "success",
                                             size: "sm",
-                                            onClick: ()=>{
-                                                console.log("Enviado");
-                                            },
+                                            onClick: this.saveEstimation.bind(this, Action.Send),
                                             children: "Enviar por mail"
                                         }, void 0, false, {
                                             fileName: "src/components/sections/Estimation.tsx",
-                                            lineNumber: 197,
+                                            lineNumber: 216,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "src/components/sections/Estimation.tsx",
-                                    lineNumber: 195,
+                                    lineNumber: 214,
                                     columnNumber: 11
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "src/components/sections/Estimation.tsx",
-                            lineNumber: 174,
+                            lineNumber: 193,
                             columnNumber: 9
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/sections/Estimation.tsx",
-                    lineNumber: 170,
+                    lineNumber: 189,
                     columnNumber: 7
                 }, this),
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationFormDefault.default, {
@@ -44008,14 +44019,14 @@ class Estimation extends React.Component {
                     saveBtnHandler: this.addNewProduct
                 }, void 0, false, {
                     fileName: "src/components/sections/Estimation.tsx",
-                    lineNumber: 201,
+                    lineNumber: 220,
                     columnNumber: 7
                 }, this),
                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_estimationListDefault.default, {
                     subsections: subsectionsData
                 }, void 0, false, {
                     fileName: "src/components/sections/Estimation.tsx",
-                    lineNumber: 205,
+                    lineNumber: 224,
                     columnNumber: 7
                 }, this),
                 total,
@@ -44023,7 +44034,7 @@ class Estimation extends React.Component {
             ]
         }, void 0, true, {
             fileName: "src/components/sections/Estimation.tsx",
-            lineNumber: 165,
+            lineNumber: 184,
             columnNumber: 12
         }, this);
     }
