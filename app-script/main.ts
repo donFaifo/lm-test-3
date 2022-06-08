@@ -15,7 +15,7 @@ function doGet() {
     .evaluate()
     .setTitle("Cálculo fotovoltaica")
     .addMetaTag("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1")
-    .setFaviconUrl("https://mguerrero.me/imgpublic/ico-google-m.png");
+    .setFaviconUrl("https://mguerrero.me/imgpublic/ico-app-solar.png");
 }
 
 function createEstimate(data: Data) {
@@ -24,6 +24,7 @@ function createEstimate(data: Data) {
   const shortDate = `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth()+1).toString().padStart(2, "0")}/${date.getFullYear().toString()}`
   const fileName = data.name + " " + shortDate
   let document = DocumentApp.create(fileName)
+  const documentId = document.getId()
   let folder = DriveApp.getFolderById(folderId)
   folder.addFile(DriveApp.getFileById(document.getId()))
 
@@ -81,12 +82,14 @@ function createEstimate(data: Data) {
     })
   }
 
-  document.getBody().appendParagraph("TOTAL: " + total.toString())
+  document.getBody().appendParagraph("TOTAL: " + total.toString() + " €")
     .setHeading(DocumentApp.ParagraphHeading.HEADING2)
     .setAttributes(headingStyle)
 
-  document.getBody().appendParagraph("Made with AppScript")
+  document.getBody().appendParagraph("\n\nMade with AppScript")
     .setAttributes(normalStyle)
+  
+  document.saveAndClose()
   
   const doc = document.getAs("application/pdf")
   
