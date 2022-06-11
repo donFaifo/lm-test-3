@@ -37890,7 +37890,7 @@ class Results extends React.Component {
             kwh += item.pw * item.qt * item.use;
         });
         amph = kwh / this.props.voltage / this.props.dischargeDeep;
-        pw = amph * this.props.voltage / this.props.panelEficiency / this.props.peekHours;
+        pw = kwh / this.props.panelEficiency / this.props.peekHours;
         amps = pw / this.props.voltage;
         let avEnergy = (kwh / 1000).toFixed(2).toString();
         let batCapacity = amph.toFixed(1).toString();
@@ -37934,18 +37934,6 @@ class Results extends React.Component {
                     }, void 0, true, {
                         fileName: "src/components/sections/Results.tsx",
                         lineNumber: 50,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_resultCardDefault.default, {
-                        header: "Amperaje necesario controlador",
-                        color: "warning",
-                        children: [
-                            amperage,
-                            " A"
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/components/sections/Results.tsx",
-                        lineNumber: 56,
                         columnNumber: 9
                     }, this)
                 ]

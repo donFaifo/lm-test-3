@@ -25,7 +25,7 @@ class Results extends React.Component<Props> {
     })
 
     amph = (kwh / this.props.voltage)/this.props.dischargeDeep
-    pw = ((amph * this.props.voltage) / this.props.panelEficiency) / this.props.peekHours
+    pw = (kwh / this.props.panelEficiency) / this.props.peekHours
     amps = pw / this.props.voltage
 
     let avEnergy = (kwh/1000).toFixed(2).toString()
@@ -51,12 +51,6 @@ class Results extends React.Component<Props> {
           header="Potencia necesaria paneles"
           color="success">
           {power} W
-        </ResultCard>
-
-        <ResultCard
-          header="Amperaje necesario controlador"
-          color="warning">
-          {amperage} A
         </ResultCard>
       </CardGroup>
     </Section>
