@@ -14,6 +14,7 @@ export default class Section extends React.Component<Props> {
 
     if (this.props.button != null) {
       button = <Button
+        variant="success"
         size="sm"
         onClick={this.props.btnHandler}
       >{this.props.button}</Button>
@@ -22,7 +23,7 @@ export default class Section extends React.Component<Props> {
     return <Row className="mt-3">
       <Col>
         <Card border="dark">
-          <Card.Header as="h6" className="">
+          <Card.Header as="h6" className="bg-purple">
             <div className="d-flex">
               <div className="flex-grow-1 pt-1">{this.props.name}</div>
               <div className="">

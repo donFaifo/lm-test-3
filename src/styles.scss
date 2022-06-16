@@ -1,5 +1,54 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
+// Paleta Material Design
+$dark-primary-color: #4a148c;
+$light-primary-color: #E1BEE7;
+$primary-color: #9C27B0;
+$accent-color: #4CAF50;
+$accent-light-color: #81c784;
+$accent-dark-color: #388E3C;
+$primary-text: #212121;
+$text-icons: #FFFFFF;
+$secondary-text: #757575;
+$divider-color: #BDBDBD;
+
+$input-btn-focus-width: .25rem;
+$input-btn-focus-color-opacity: .75;
+$input-btn-focus-color: rgba($accent-color, $input-btn-focus-color-opacity);
+$input-btn-focus-blur: .15rem;
+$input-btn-focus-box-shadow: 0 0 $input-btn-focus-blur $input-btn-focus-width $input-btn-focus-color;
+
 body {
-    background-color:lightgray;
+  background-color: lightgray;
+}
+
+.bg-dark-purple {
+  background-color: $dark-primary-color;
+  color: white;
+}
+
+.bg-purple {
+  background-color: $primary-color;
+  color: white;
+}
+
+.test {
+  background-color: #212121;
+}
+
+.btn-success {
+  background-color: $accent-color;
+  border-color: $accent-color;
+
+  &:hover {
+    background-color: $accent-light-color;
+    border-color: $accent-light-color;
+    box-shadow: $input-btn-focus-box-shadow  !important;
+  }
+
+  &:focus {
+    background-color: $accent-light-color;
+    border-color: $accent-light-color;
+    box-shadow: $input-btn-focus-box-shadow  !important;
+  }
 }

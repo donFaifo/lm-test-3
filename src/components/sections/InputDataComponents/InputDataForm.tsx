@@ -92,16 +92,6 @@ export default class InputDataForm extends React.Component<Props, State> {
                 <option value="Electrónico">Aparato electrónico</option>
               </Form.Select>
             </Col>
-            <Col sm="12" md="6" xxl="2" className="mb-3">
-              <Form.Label htmlFor="qt">Cantidad</Form.Label>
-              <Form.Control
-                id="qt"
-                type="number"
-                placeholder="nº elementos"
-                onChange={this.handleQt}
-                value={this.state.qt}
-              ></Form.Control>
-            </Col>
             <Col sm="12" xxl="3" md="5" className="mb-3">
               <Form.Label htmlFor="pw">Potencia (W)</Form.Label>
               <Form.Control
@@ -110,6 +100,28 @@ export default class InputDataForm extends React.Component<Props, State> {
                 placeholder="W (vatios)"
                 onChange={this.handlePw}
                 value={this.state.pw}
+                onClick={(event) => {
+                  event.currentTarget.select();
+                }}
+                onKeyUp={(event) => {
+                  if(event.key == 'Enter') this.save();
+                }}
+              ></Form.Control>
+            </Col>
+            <Col sm="12" md="6" xxl="2" className="mb-3">
+              <Form.Label htmlFor="qt">Cantidad</Form.Label>
+              <Form.Control
+                id="qt"
+                type="number"
+                placeholder="nº elementos"
+                onChange={this.handleQt}
+                value={this.state.qt}
+                onClick={(event) => {
+                  event.currentTarget.select();
+                }}
+                onKeyUp={(event) => {
+                  if(event.key == 'Enter') this.save();
+                }}
               ></Form.Control>
             </Col>
             <Col sm="12" xxl="2" md="5" className="mb-3">
@@ -120,10 +132,16 @@ export default class InputDataForm extends React.Component<Props, State> {
                 placeholder="uso medio al día"
                 onChange={this.handleUse}
                 value={this.state.use}
+                onClick={(event) => {
+                  event.currentTarget.select();
+                }}
+                onKeyUp={(event) => {
+                  if(event.key == 'Enter') this.save();
+                }}
               ></Form.Control>
             </Col>
             <Col sm="12" xxl="1" md="2" className="mb-3 d-flex align-items-end">
-              <Button onClick={this.save}>Guardar</Button>
+              <Button id="btnSave" variant="success" onClick={this.save}>Guardar</Button>
             </Col>
           </Row>
         </Form>

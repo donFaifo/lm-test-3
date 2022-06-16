@@ -8,7 +8,7 @@ import { Col, Row } from "react-bootstrap";
 class App extends React.Component {
   render() {
     return <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="dark-purple" variant="dark">
         <Container>
           <Navbar.Brand href="#home">Cálculos solar</Navbar.Brand>
           <Nav className="me-auto">
@@ -22,7 +22,12 @@ class App extends React.Component {
       <Container>
         <Row className="mt-5">
           <Col className="d-flex justify-content-end">
-            Made by mGuerrero using React and Parcel for Google App Script
+            Made by mGuerrero using &nbsp;
+            <a href="https://es.reactjs.org/" target="_blank">React</a>
+            &nbsp; and &nbsp;
+            <a href="https://parceljs.org/" target="_blank">ParcelJS</a>
+            &nbsp; for &nbsp; 
+            <a href="https://developers.google.com/apps-script" target="_blank">Google App Script</a>
           </Col>
         </Row>
       </Container>
