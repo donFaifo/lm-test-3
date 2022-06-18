@@ -8,11 +8,15 @@ import { InputDataType } from "./sections/InputDataComponents/InputDataList"
 interface Props { }
 
 interface States {
-  data: InputDataType[],
-  voltage: number,
-  peekHours: number,
-  panelEficiency: number,
-  dischargeDeep: number
+  data: InputDataType[];
+  voltage: number;
+  peekHours: number;
+  panelEficiency: number;
+  dischargeDeep: number;
+  requiredPower: number;
+  averageEnergy: number;
+  requiredCapacity: number;
+  autonomyDays: number;
 }
 
 class Main extends React.Component<Props, States> {
@@ -23,17 +27,34 @@ class Main extends React.Component<Props, States> {
       voltage: 12,
       peekHours: 3.2,
       panelEficiency: 0.9,
-      dischargeDeep: 0.6
-    }
+      dischargeDeep: 0.6,
+      autonomyDays: 1,
+      requiredPower: 0,
+      averageEnergy: 0,
+      requiredCapacity: 0,
+    };
 
     this.saveNewData = this.saveNewData.bind(this)
     this.clearData = this.clearData.bind(this)
   }
 
   saveNewData(record: InputDataType) {
+    let kwh: number;
+    let pw: number;
+    let amph: number;
+
+    this.state.data.map((item) => {
+      kwh += item.pw * item.qt * item.use
+    })
+    pw = (this.state.averageEnergy / this.state.panelEficiency) / this.state.peekHours;
+    amph = ((kwh / this.state.voltage)/this.state.dischargeDeep) * this.state.autonomyDays;
+
     this.state.data.push(record)
     this.setState({
-      data: this.state.data
+      data: this.state.data,
+      requiredPower: pw,
+      averageEnergy: kwh,
+      requiredCapacity: amph,
     })
   }
 
@@ -57,7 +78,11 @@ class Main extends React.Component<Props, States> {
         peekHours={this.state.peekHours}
         panelEficiency={this.state.panelEficiency}
         dischargeDeep={this.state.dischargeDeep}
-        voltage={this.state.voltage}/>
+        voltage={this.state.voltage}
+        pw={this.state.requiredPower}
+        amph={this.state.requiredCapacity}
+        kwh={this.state.averageEnergy}
+      />
 
       <Estimation />
       

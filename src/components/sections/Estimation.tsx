@@ -220,6 +220,7 @@ export default class Estimation extends React.Component<Props, States> {
       <EstimationForm 
         isHidden={this.state.inputHidden} 
         saveBtnHandler={this.addNewProduct}
+        pw={1200}
         />
       <EstimationList subsections={subsectionsData} />
       {total}

@@ -2,7 +2,7 @@ import React = require("react")
 import Card from "react-bootstrap/Card"
 
 interface Props {
-  color: "primary" | "secondary" | "success" | "warning" | "danger",
+  color: string,
   header: string,
   children: string[] | string
 }

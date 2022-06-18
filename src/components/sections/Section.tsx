@@ -23,7 +23,7 @@ export default class Section extends React.Component<Props> {
     return <Row className="mt-3">
       <Col>
         <Card border="dark">
-          <Card.Header as="h6" className="bg-purple">
+          <Card.Header as="h6">
             <div className="d-flex">
               <div className="flex-grow-1 pt-1">{this.props.name}</div>
               <div className="">

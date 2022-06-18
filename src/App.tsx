@@ -8,7 +8,7 @@ import { Col, Row } from "react-bootstrap";
 class App extends React.Component {
   render() {
     return <>
-      <Navbar bg="dark-purple" variant="dark">
+      <Navbar variant="dark" className="customNavbar">
         <Container>
           <Navbar.Brand href="#home">Cálculos solar</Navbar.Brand>
           <Nav className="me-auto">

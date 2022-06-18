@@ -12,6 +12,10 @@ $text-icons: #FFFFFF;
 $secondary-text: #757575;
 $divider-color: #BDBDBD;
 
+$red: #f44336;
+$blue-grey: #607d8b;
+$light-blue: #03a9f4;
+
 $input-btn-focus-width: .25rem;
 $input-btn-focus-color-opacity: .75;
 $input-btn-focus-color: rgba($accent-color, $input-btn-focus-color-opacity);
@@ -22,13 +26,14 @@ body {
   background-color: lightgray;
 }
 
-.bg-dark-purple {
-  background-color: $dark-primary-color;
+.customNavbar {
+  background-color: $primary-color;
   color: white;
+  box-shadow: .30rem .30rem black .10rem;
 }
 
-.bg-purple {
-  background-color: $primary-color;
+.customSection {
+  background-color: lightgray;
   color: white;
 }
 
@@ -51,4 +56,19 @@ body {
     border-color: $accent-light-color;
     box-shadow: $input-btn-focus-box-shadow  !important;
   }
+}
+
+.bg-energy-card {
+  background-color: $red;
+  color: white;
+}
+
+.bg-power-card {
+  background-color: $accent-color;
+  color: white;
+}
+
+.bg-capacity-card {
+  background-color: $blue-grey;
+  color: white;
 }
