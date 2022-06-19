@@ -1,12 +1,11 @@
 import React = require("react");
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { SubsectionData } from "../Estimation";
 import { Article } from "./EstimationListComponents/Subsection";
 import PanelForm from "./PanelForm";
 
 interface Props {
   isHidden: boolean;
-  saveBtnHandler(product: SubsectionData): void;
+  saveBtnHandler(product: Article): void;
   pw: number;
 }
 
@@ -25,8 +24,9 @@ export default class EstimationForm extends React.Component<Props, State> {
     this.state = {
       type: "Paneles",
       article: {
+        type: "",
         description: "",
-        ref: 0,
+        ref: '',
         qt: 0,
         price: 0
       }
@@ -44,17 +44,15 @@ export default class EstimationForm extends React.Component<Props, State> {
     })
   }
 
-  save() {
+  save(product: Article) {
     this.refType.current.focus()
-    this.props.saveBtnHandler({
-      type: this.state.type,
-      product: [this.state.article]
-    })
+    this.props.saveBtnHandler(product)
     this.setState({
       type: "Paneles",
       article: {
+        type: "",
         description: "",
-        ref: 0,
+        ref: '',
         qt: 0,
         price: 0
       }
@@ -68,7 +66,7 @@ export default class EstimationForm extends React.Component<Props, State> {
     
     switch(this.state.type) {
       case "Paneles":
-        form = <PanelForm pw={this.props.pw} />
+        form = <PanelForm pw={this.props.pw} addAction={(product) => this.save(product)}/>
         break;
       default:
         form = <></>
@@ -98,11 +96,6 @@ export default class EstimationForm extends React.Component<Props, State> {
           
           {form}
           
-          <Row>
-            <Col className="d-flex align-items-end mb-4" xs="2">
-              <Button onClick={this.save}>Guardar</Button>
-            </Col>
-          </Row>
         </Form>
       </Col>
     </Row>

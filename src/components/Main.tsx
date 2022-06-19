@@ -39,29 +39,32 @@ class Main extends React.Component<Props, States> {
   }
 
   saveNewData(record: InputDataType) {
-    let kwh: number;
+    let kwh: number = 0;
     let pw: number;
     let amph: number;
 
+    this.state.data.push(record);
     this.state.data.map((item) => {
-      kwh += item.pw * item.qt * item.use
-    })
-    pw = (this.state.averageEnergy / this.state.panelEficiency) / this.state.peekHours;
-    amph = ((kwh / this.state.voltage)/this.state.dischargeDeep) * this.state.autonomyDays;
+      kwh += item.pw * item.qt * item.use;
+    });
+    pw = (kwh / this.state.panelEficiency) / this.state.peekHours;
+    amph = ((kwh / this.state.voltage)/this.state.dischargeDeep)  * this.state.autonomyDays;
 
-    this.state.data.push(record)
     this.setState({
       data: this.state.data,
       requiredPower: pw,
       averageEnergy: kwh,
       requiredCapacity: amph,
-    })
+    });
   }
 
   clearData() {
     this.setState({
-      data: []
-    })
+      data: [],
+      averageEnergy: 0,
+      requiredCapacity: 0,
+      requiredPower: 0,
+    });
   }
 
   render() {
@@ -84,7 +87,7 @@ class Main extends React.Component<Props, States> {
         kwh={this.state.averageEnergy}
       />
 
-      <Estimation />
+      <Estimation pw={this.state.requiredPower}/>
       
     </Container>
   }

@@ -1,17 +1,19 @@
 import React = require("react");
 import { Col, Row } from "react-bootstrap";
+import EstimationRow from "./EstimationRow";
 
 export interface Article {
-  description: string
-  ref: number
-  qt: number
-  price: number
-}
+  type: string;
+  description: string;
+  ref: string;
+  qt: number;
+  price: number;
+};
 
 interface Props {
-  title: string
-  product: Array<Article>
-}
+  title: string;
+  products: Article[];
+};
 
 export default class Subsection extends React.Component<Props> {
 
@@ -20,16 +22,18 @@ export default class Subsection extends React.Component<Props> {
     let productList: Array<JSX.Element>
     productList = []
 
-    this.props.product.map((article) => {
+    this.props.products.map((article, id) => {
       productList.push((
-        <Row key={article.ref}>
-          <Col xs="12" md="6" xl="4">{article.description}</Col>
-          <Col xs="6" xl="3" className="justify-content-start">{article.ref}</Col>
-          <Col xs="6" xl="2" className="d-flex justify-content-end">x {article.qt}</Col>
-          <Col xs="12" md="6" xl="3" className="d-flex justify-content-end">{article.price} €/u</Col>
-        </Row>
-      ))
-    })
+        <EstimationRow
+          key={id}
+          description={article.description}
+          reference={article.ref}
+          qt={article.qt}
+          price={article.price}
+        />
+      ));
+    });
+
     return <Row className="mb-3">
       <Col>
         <h6>{this.props.title}</h6>

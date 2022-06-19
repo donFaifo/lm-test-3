@@ -1,9 +1,13 @@
 import React = require("react");
-import { Col, Row } from "react-bootstrap";
-import Subsection from "./EstimationListComponents/Subsection";
+import Subsection, { Article } from "./EstimationListComponents/Subsection";
 
 interface Props {
-  subsections: Array<any>
+  products: Article[];
+}
+
+interface SubsectionList {
+  type: string;
+  products: Article[];
 }
 
 export default class EstimationList extends React.Component<Props> {
@@ -12,18 +16,30 @@ export default class EstimationList extends React.Component<Props> {
   }
 
   render() {
-    let subsections: Array<JSX.Element>
-    subsections = []
-    this.props.subsections.map((elem) => {
-      subsections.push((
-        <Subsection
-          title={elem.type}
-          product={elem.product}
-          key={elem.type} />))
-    })
+    let subsections: SubsectionList[] = [];
+    let list: JSX.Element[] = [];
 
-    return <>
-      {subsections}
-    </>
+    this.props.products.forEach(product => {
+      let id = subsections.findIndex(item => item.type == product.type);
+      if (id != -1) {
+        subsections[id].products.push(product);
+      } else {
+        subsections.push({type: product.type, products: [product]})
+      }
+    });
+
+    if(subsections.length > 0) {
+      subsections.forEach((subsection, id) => {
+        list.push(
+          <Subsection
+            key={id}
+            title={subsection.type}
+            products={subsection.products}
+          />
+        )
+      });
+    }
+
+    return <>{list}</>;
   }
 }

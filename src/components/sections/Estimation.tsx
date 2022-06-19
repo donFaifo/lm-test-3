@@ -5,16 +5,13 @@ import EstimationForm from "./EstimationComponents/EstimationForm";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { Article } from "./EstimationComponents/EstimationListComponents/Subsection";
 
-export interface SubsectionData {
-  type: string
-  product: Article[]
+interface Props {
+  pw: number;
 }
-
-interface Props { }
 
 interface States {
   inputHidden: boolean
-  estimationProducts: SubsectionData[]
+  estimationProducts: Article[]
   showCanvas: boolean
   customerName: string
   customerMail: string
@@ -59,21 +56,11 @@ export default class Estimation extends React.Component<Props, States> {
     })
   }
 
-  addNewProduct(product: SubsectionData) {
-    let temp = this.state.estimationProducts
-    let index = temp.findIndex((elem) => {
-      return elem.type == product.type
-    })
-
-    if(index != -1) {
-      temp[index].product.push(product.product[0])
-    } else {
-      temp.push(product)
-    }
-    
+  addNewProduct(product: Article) {
+    this.state.estimationProducts.push(product);
     this.setState({
-      estimationProducts: temp
-    })
+      estimationProducts: this.state.estimationProducts,
+    });
   }
 
   saveEstimation(action: Action) {
@@ -130,23 +117,19 @@ export default class Estimation extends React.Component<Props, States> {
   }
 
   render() {
-    let subsectionsData: SubsectionData[]
-    let total: JSX.Element
-    let options: JSX.Element
-    let totalPrice: number
+    let productList: Article[];
+    let total: JSX.Element;
+    let options: JSX.Element;
+    let totalPrice: number;
 
-    totalPrice = 0
+    totalPrice = 0;
 
-    subsectionsData = this.state.estimationProducts
+    productList = this.state.estimationProducts;
 
-    if (subsectionsData.length != 0) {
-      for (let i = 0; i < subsectionsData.length; i++) {
-        let subtotal = 0
-        for (let j = 0; j < subsectionsData[i].product.length; j++) {
-          subtotal += subsectionsData[i].product[j].price * subsectionsData[i].product[j].qt
-        }
-        totalPrice += subtotal
-      }
+    if (productList.length != 0) {
+      productList.forEach(item => {
+        totalPrice += item.price * item.qt;
+      })
 
       total = (
         <Row className="mt-4">
@@ -217,12 +200,15 @@ export default class Estimation extends React.Component<Props, States> {
           </Modal.Footer>
         </Modal.Body>
       </Modal>
+
       <EstimationForm 
         isHidden={this.state.inputHidden} 
-        saveBtnHandler={this.addNewProduct}
-        pw={1200}
-        />
-      <EstimationList subsections={subsectionsData} />
+        saveBtnHandler={(product) => {this.addNewProduct(product)}}
+        pw={this.props.pw}
+      />
+
+      <EstimationList products={this.state.estimationProducts}/>
+
       {total}
       {options}
     </Section>
