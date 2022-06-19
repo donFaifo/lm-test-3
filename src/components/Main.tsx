@@ -87,7 +87,10 @@ class Main extends React.Component<Props, States> {
         kwh={this.state.averageEnergy}
       />
 
-      <Estimation pw={this.state.requiredPower}/>
+      <Estimation 
+        pw={this.state.requiredPower}
+        amph={this.state.requiredCapacity}
+      />
       
     </Container>
   }

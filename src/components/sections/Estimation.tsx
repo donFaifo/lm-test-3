@@ -7,6 +7,7 @@ import { Article } from "./EstimationComponents/EstimationListComponents/Subsect
 
 interface Props {
   pw: number;
+  amph: number;
 }
 
 interface States {
@@ -205,6 +206,7 @@ export default class Estimation extends React.Component<Props, States> {
         isHidden={this.state.inputHidden} 
         saveBtnHandler={(product) => {this.addNewProduct(product)}}
         pw={this.props.pw}
+        amph={this.props.amph}
       />
 
       <EstimationList products={this.state.estimationProducts}/>

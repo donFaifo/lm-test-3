@@ -2,35 +2,35 @@ import React = require("react");
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Article } from "./EstimationListComponents/Subsection";
 
-interface PanelObject {
+interface BatteryObject {
   ref: string;
   description: string;
-  power: number;
+  amph: number;
   voltage: number;
   price: number;
 };
 
 interface Props {
-  pw: number;
+  amph: number;
   addAction(product: Article): void;
 }
 
-const thisType = 'Paneles';
+const thisType = 'Baterías';
 
-function parsePanelObject(panelObject: PanelObject, n: number): Article {
+function parsePanelObject(batteryObject: BatteryObject, n: number): Article {
   return {
-    ref: panelObject.ref,
+    ref: batteryObject.ref,
     type: thisType,
-    description: `${panelObject.power}W ${panelObject.voltage}V - ${panelObject.description}`,
-    price: panelObject.price,
+    description: `${batteryObject.amph}Ah ${batteryObject.voltage}V - ${batteryObject.description}`,
+    price: batteryObject.price,
     qt: n,
   }
 }
 
-const PanelForm = (props: Props) => {
+const BatteryForm = (props: Props) => {
   const [qt, setQt] = React.useState<number>(0);
   const [price, setPrice] = React.useState<number>(0);
-  const [solarPanelsList, setSolarPanelsList] = React.useState<PanelObject[]>([]);
+  const [batteriesList, setBatteriesList] = React.useState<BatteryObject[]>([]);
   const [product, setProduct] = React.useState<Article>({
     ref: '',
     type: thisType,
@@ -40,40 +40,40 @@ const PanelForm = (props: Props) => {
   });
 
   React.useEffect(() => {
-    setSolarPanelsList(
+    setBatteriesList(
       [
         {
-          ref: '12345678',
-          description: 'Xunzel Monocristalino 60x60',
-          power: 60,
+          ref: '23456789',
+          description: 'Batería AGM',
+          amph: 60,
           voltage: 12,
           price: 70,
         },
         {
-          ref: '12345679',
-          description: 'Xunzel monocristalino 60x90',
-          power: 80,
+          ref: '23456790',
+          description: 'Batería GEL',
+          amph: 80,
           voltage: 12,
           price: 90,
         },
         {
-          ref: '12345680',
-          description: 'Xunzel monocristalino 60x100',
-          power: 100,
+          ref: '23456791',
+          description: 'Batería AGM',
+          amph: 100,
           voltage: 24,
           price: 100,
         },
         {
-          ref: '12345681',
-          description: 'Xunzel monocristalino 120x80',
-          power: 120,
+          ref: '23456792',
+          description: 'Batería GEL',
+          amph: 120,
           voltage: 24,
           price: 110,
         },
         {
-          ref: '12345682',
-          description: 'Risen monocristalino 203x110',
-          power: 450,
+          ref: '23456793',
+          description: 'Batería AGM',
+          amph: 450,
           voltage: 48,
           price: 179,
         },
@@ -81,23 +81,23 @@ const PanelForm = (props: Props) => {
     );
 
     setProduct(parsePanelObject({
-      ref: '12345678',
-      description: 'Xunzel Monocristalino 60x60',
-      power: 60,
+      ref: '23456789',
+      description: 'Batería AGM',
+      amph: 60,
       voltage: 12,
       price: 70,
-    }, Math.ceil(props.pw / 60)));
+    }, Math.ceil(props.amph / 60)));
 
     setPrice(70);
 
-    setQt(Math.ceil(props.pw / 60));
+    setQt(Math.ceil(props.amph / 60));
 
   }, []);
 
-  const list = solarPanelsList.length > 0 ? solarPanelsList.map((item, id) => {
+  const list = batteriesList.length > 0 ? batteriesList.map((item, id) => {
     return (
       <option value={item.ref} key={id}>
-        {`Panel ${item.power}W, ${item.voltage}V - ${item.description}`}
+        {`Batería ${item.amph}Ah, ${item.voltage}V - ${item.description}`}
       </option>
     );
   }) : <></>;
@@ -105,13 +105,13 @@ const PanelForm = (props: Props) => {
   return (
     <Row>
       <Col className="mb-3 col-xs-12 col-md-6 col-xl-6">
-        <Form.Label htmlFor="panel">Panel</Form.Label>
+        <Form.Label htmlFor="panel">Batería</Form.Label>
         <Form.Select id="panel" onChange={element => {
-          const item = solarPanelsList.find((item) => item.ref == element.target.value);
-          let nPanels = Math.ceil(props.pw / item.power);
-          setQt(nPanels);
+          const item = batteriesList.find((item) => item.ref == element.target.value);
+          let nBatteries = Math.ceil(props.amph / item.amph);
+          setQt(nBatteries);
           setPrice(item.price);
-          setProduct(parsePanelObject(item, nPanels));
+          setProduct(parsePanelObject(item, nBatteries));
         }}>
           {list}
         </Form.Select>
@@ -167,4 +167,4 @@ const PanelForm = (props: Props) => {
   );
 }
 
-export default PanelForm;
+export default BatteryForm;

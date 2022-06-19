@@ -1,5 +1,6 @@
 import React = require("react");
 import { Button, Col, Form, Row } from "react-bootstrap";
+import BatteryForm from "./BatteryForm";
 import { Article } from "./EstimationListComponents/Subsection";
 import PanelForm from "./PanelForm";
 
@@ -7,6 +8,7 @@ interface Props {
   isHidden: boolean;
   saveBtnHandler(product: Article): void;
   pw: number;
+  amph: number;
 }
 
 interface State {
@@ -66,7 +68,10 @@ export default class EstimationForm extends React.Component<Props, State> {
     
     switch(this.state.type) {
       case "Paneles":
-        form = <PanelForm pw={this.props.pw} addAction={(product) => this.save(product)}/>
+        form = <PanelForm pw={this.props.pw} addAction={(product) => this.save(product)}/>;
+        break;
+      case "Baterías":
+        form = <BatteryForm amph={this.props.amph} addAction={(product) => this.save(product)}/>;
         break;
       default:
         form = <></>
