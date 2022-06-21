@@ -104,7 +104,7 @@ const PanelForm = (props: Props) => {
 
   return (
     <Row>
-      <Col className="mb-3 col-xs-12 col-md-6 col-xl-6">
+      <Col className="mb-3 col-12 col-md-6 col-xl-6">
         <Form.Label htmlFor="panel">Panel</Form.Label>
         <Form.Select id="panel" onChange={element => {
           const item = solarPanelsList.find((item) => item.ref == element.target.value);
@@ -116,7 +116,7 @@ const PanelForm = (props: Props) => {
           {list}
         </Form.Select>
       </Col>
-      <Col>
+      <Col className="mb-3 col-6 col-xl-3">
         <Form.Label htmlFor="qt">Cantidad</Form.Label>
         <Form.Control 
           id="qt"
@@ -138,7 +138,7 @@ const PanelForm = (props: Props) => {
           }}
         />
       </Col>
-      <Col>
+      <Col className="mb-3 col-6 col-xl-3">
         <Form.Label htmlFor="price">Precio unitario</Form.Label>
         <Form.Control 
           id="price"
@@ -160,7 +160,7 @@ const PanelForm = (props: Props) => {
           }}
         />
       </Col>
-      <Col className="d-flex align-items-center">
+      <Col className="d-flex align-items-center mb-3 col-12 col-md-6 col-xl-3">
           <Button className="mt-3" onClick={(ev) => props.addAction(product)}>Añadir</Button>
       </Col>
     </Row>
