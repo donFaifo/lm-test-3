@@ -2,35 +2,35 @@ import React = require("react");
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Article } from "./EstimationListComponents/Subsection";
 
-interface BatteryObject {
+interface ControllerObject {
   ref: string;
   description: string;
-  amph: number;
+  amp: number;
   voltage: number;
   price: number;
 };
 
 interface Props {
-  amph: number;
+  pw: number
   addAction(product: Article): void;
 }
 
-const thisType = 'Baterías';
+const thisType = 'Controlador';
 
-function parsePanelObject(batteryObject: BatteryObject, n: number): Article {
+function parsePanelObject(controllerObject: ControllerObject, n: number): Article {
   return {
-    ref: batteryObject.ref,
+    ref: controllerObject.ref,
     type: thisType,
-    description: `${batteryObject.amph}Ah ${batteryObject.voltage}V - ${batteryObject.description}`,
-    price: batteryObject.price,
+    description: `${controllerObject.amp}A ${controllerObject.voltage}V - ${controllerObject.description}`,
+    price: controllerObject.price,
     qt: n,
   }
 }
 
-const BatteryForm = (props: Props) => {
+const ControllerForm = (props: Props) => {
   const [qt, setQt] = React.useState<number>(0);
   const [price, setPrice] = React.useState<number>(0);
-  const [batteriesList, setBatteriesList] = React.useState<BatteryObject[]>([]);
+  const [controllerList, setControllerList] = React.useState<ControllerObject[]>([]);
   const [product, setProduct] = React.useState<Article>({
     ref: '',
     type: thisType,
@@ -40,64 +40,43 @@ const BatteryForm = (props: Props) => {
   });
 
   React.useEffect(() => {
-    setBatteriesList(
+    setControllerList(
       [
         {
-          ref: '23456789',
-          description: 'Batería AGM',
-          amph: 60,
+          ref: '34567890',
+          description: 'Controlador de carga con USB',
+          amp: 5,
           voltage: 12,
-          price: 70,
+          price: 24.95,
         },
         {
-          ref: '23456790',
-          description: 'Batería GEL',
-          amph: 80,
-          voltage: 12,
-          price: 90,
-        },
-        {
-          ref: '23456791',
-          description: 'Batería AGM',
-          amph: 100,
+          ref: '34567891',
+          description: 'Controlador de carga 2 entradas con USB',
+          amp: 20,
           voltage: 24,
-          price: 100,
-        },
-        {
-          ref: '23456792',
-          description: 'Batería GEL',
-          amph: 120,
-          voltage: 24,
-          price: 110,
-        },
-        {
-          ref: '23456793',
-          description: 'Batería AGM',
-          amph: 450,
-          voltage: 48,
-          price: 179,
+          price: 39.95,
         },
       ]
     );
 
     setProduct(parsePanelObject({
-      ref: '23456789',
-      description: 'Batería AGM',
-      amph: 60,
+      ref: '34567890',
+      description: 'Controlador de carga con USB',
+      amp: 5,
       voltage: 12,
-      price: 70,
-    }, Math.ceil(props.amph / 60)));
+      price: 24.95,
+    }, props.pw < 60 ? 1 : 0));
 
-    setPrice(70);
+    setPrice(24.95);
 
-    setQt(Math.ceil(props.amph / 60));
+    setQt(props.pw < 60 ? 1 : 0);
 
   }, []);
 
-  const list = batteriesList.length > 0 ? batteriesList.map((item, id) => {
+  const list = controllerList.length > 0 ? controllerList.map((item, id) => {
     return (
       <option value={item.ref} key={id}>
-        {`Batería ${item.amph}Ah, ${item.voltage}V - ${item.description}`}
+        {`Controlador ${item.amp}A, ${item.voltage}V - ${item.description}`}
       </option>
     );
   }) : <></>;
@@ -105,13 +84,13 @@ const BatteryForm = (props: Props) => {
   return (
     <Row>
       <Col className="mb-3 col-xs-12 col-md-6 col-xl-6">
-        <Form.Label htmlFor="battery">Batería</Form.Label>
-        <Form.Select id="battery" onChange={element => {
-          const item = batteriesList.find((item) => item.ref == element.target.value);
-          let nBatteries = Math.ceil(props.amph / item.amph);
-          setQt(nBatteries);
+        <Form.Label htmlFor="controller">Batería</Form.Label>
+        <Form.Select id="controller" onChange={element => {
+          const item = controllerList.find((item) => item.ref == element.target.value);
+          let nControllers = props.pw < 60 ? 1 : 0;
+          setQt(nControllers);
           setPrice(item.price);
-          setProduct(parsePanelObject(item, nBatteries));
+          setProduct(parsePanelObject(item, nControllers));
         }}>
           {list}
         </Form.Select>
@@ -167,4 +146,4 @@ const BatteryForm = (props: Props) => {
   );
 }
 
-export default BatteryForm;
+export default ControllerForm;

@@ -2,35 +2,18 @@ import React = require("react");
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Article } from "./EstimationListComponents/Subsection";
 
-interface BatteryObject {
-  ref: string;
-  description: string;
-  amph: number;
-  voltage: number;
-  price: number;
-};
-
 interface Props {
-  amph: number;
+  productType: string;
+  productList: any[];
+  productParser(product: any): Article;
   addAction(product: Article): void;
 }
 
-const thisType = 'Baterías';
+const thisType = 'Inversor';
 
-function parsePanelObject(batteryObject: BatteryObject, n: number): Article {
-  return {
-    ref: batteryObject.ref,
-    type: thisType,
-    description: `${batteryObject.amph}Ah ${batteryObject.voltage}V - ${batteryObject.description}`,
-    price: batteryObject.price,
-    qt: n,
-  }
-}
-
-const BatteryForm = (props: Props) => {
+const ProductForm = (props: Props) => {
   const [qt, setQt] = React.useState<number>(0);
   const [price, setPrice] = React.useState<number>(0);
-  const [batteriesList, setBatteriesList] = React.useState<BatteryObject[]>([]);
   const [product, setProduct] = React.useState<Article>({
     ref: '',
     type: thisType,
@@ -40,64 +23,20 @@ const BatteryForm = (props: Props) => {
   });
 
   React.useEffect(() => {
-    setBatteriesList(
-      [
-        {
-          ref: '23456789',
-          description: 'Batería AGM',
-          amph: 60,
-          voltage: 12,
-          price: 70,
-        },
-        {
-          ref: '23456790',
-          description: 'Batería GEL',
-          amph: 80,
-          voltage: 12,
-          price: 90,
-        },
-        {
-          ref: '23456791',
-          description: 'Batería AGM',
-          amph: 100,
-          voltage: 24,
-          price: 100,
-        },
-        {
-          ref: '23456792',
-          description: 'Batería GEL',
-          amph: 120,
-          voltage: 24,
-          price: 110,
-        },
-        {
-          ref: '23456793',
-          description: 'Batería AGM',
-          amph: 450,
-          voltage: 48,
-          price: 179,
-        },
-      ]
-    );
 
-    setProduct(parsePanelObject({
-      ref: '23456789',
-      description: 'Batería AGM',
-      amph: 60,
-      voltage: 12,
-      price: 70,
-    }, Math.ceil(props.amph / 60)));
+    setProduct(props.productParser(props.productList[0]));
 
-    setPrice(70);
+    setPrice(props.productParser(props.productList[0]).price);
 
-    setQt(Math.ceil(props.amph / 60));
+    setQt(1);
 
   }, []);
 
-  const list = batteriesList.length > 0 ? batteriesList.map((item, id) => {
+  const list = props.productList.length > 0 ? props.productList.map((item, id) => {
+    let product = props.productParser(item);
     return (
-      <option value={item.ref} key={id}>
-        {`Batería ${item.amph}Ah, ${item.voltage}V - ${item.description}`}
+      <option value={product.ref} key={id}>
+        {product.description}
       </option>
     );
   }) : <></>;
@@ -105,13 +44,12 @@ const BatteryForm = (props: Props) => {
   return (
     <Row>
       <Col className="mb-3 col-xs-12 col-md-6 col-xl-6">
-        <Form.Label htmlFor="battery">Batería</Form.Label>
-        <Form.Select id="battery" onChange={element => {
-          const item = batteriesList.find((item) => item.ref == element.target.value);
-          let nBatteries = Math.ceil(props.amph / item.amph);
-          setQt(nBatteries);
+        <Form.Label htmlFor="product">Inversor</Form.Label>
+        <Form.Select id="product" onChange={element => {
+          const item = props.productList.find((item) => item.ref == element.target.value);
+          setQt(1);
           setPrice(item.price);
-          setProduct(parsePanelObject(item, nBatteries));
+          setProduct(props.productParser(item));
         }}>
           {list}
         </Form.Select>
@@ -167,4 +105,4 @@ const BatteryForm = (props: Props) => {
   );
 }
 
-export default BatteryForm;
+export default ProductForm;
