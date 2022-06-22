@@ -51806,16 +51806,9 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactBootstrap = require("react-bootstrap");
-var _batteryForm = require("./BatteryForm");
-var _batteryFormDefault = parcelHelpers.interopDefault(_batteryForm);
-var _controllerForm = require("./ControllerForm");
-var _controllerFormDefault = parcelHelpers.interopDefault(_controllerForm);
-var _inverterForm = require("./InverterForm");
-var _inverterFormDefault = parcelHelpers.interopDefault(_inverterForm);
-var _panelForm = require("./PanelForm");
-var _panelFormDefault = parcelHelpers.interopDefault(_panelForm);
 var _productForm = require("./ProductForm");
 var _productFormDefault = parcelHelpers.interopDefault(_productForm);
+var _productLists = require("./ProductLists");
 const React = require("react");
 class EstimationForm extends React.Component {
     constructor(props){
@@ -51858,73 +51851,91 @@ class EstimationForm extends React.Component {
         let form;
         switch(this.state.type){
             case "Paneles":
-                form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_panelFormDefault.default, {
-                    pw: this.props.pw,
+                form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
+                    productType: "Paneles",
+                    productList: _productLists.panelsList,
+                    productParser: (panel)=>{
+                        const n = Math.ceil(this.props.pw / panel.power);
+                        return {
+                            ref: panel.ref,
+                            type: 'Paneles',
+                            description: `${panel.description} ${panel.power}W ${panel.voltage}V`,
+                            price: panel.price,
+                            qt: n
+                        };
+                    },
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 74,
+                    lineNumber: 71,
                     columnNumber: 16
                 }, this);
                 break;
             case "Baterías":
-                form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_batteryFormDefault.default, {
-                    amph: this.props.amph,
+                form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
+                    productType: "Bater\xedas",
+                    productList: _productLists.batteriesList,
+                    productParser: (battery)=>{
+                        const n = Math.ceil(this.props.amph / battery.amph);
+                        return {
+                            ref: battery.ref,
+                            type: "Baterías",
+                            description: `${battery.amph}Ah ${battery.voltage}V - ${battery.description}`,
+                            price: battery.price,
+                            qt: n
+                        };
+                    },
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 77,
+                    lineNumber: 87,
                     columnNumber: 16
                 }, this);
                 break;
             case "Controlador":
-                form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_controllerFormDefault.default, {
-                    pw: this.props.pw,
+                form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
+                    productList: _productLists.controllersList,
+                    productType: "Controlador",
+                    productParser: (controller)=>{
+                        return {
+                            type: 'Controlador',
+                            ref: controller.ref,
+                            description: `${controller.description} - ${controller.amp}A ${controller.voltage}V`,
+                            price: controller.price,
+                            qt: 1
+                        };
+                    },
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 80,
+                    lineNumber: 103,
                     columnNumber: 16
                 }, this);
                 break;
             case "Inversor":
-                form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_inverterFormDefault.default, {
+                form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
+                    productType: "Inversor",
+                    productList: _productLists.invertersList,
+                    productParser: (inverter)=>{
+                        return {
+                            ref: inverter.ref,
+                            type: "Inversor",
+                            description: `${inverter.description} ${inverter.amp}A ${inverter.voltage}V`,
+                            price: inverter.price,
+                            qt: 1
+                        };
+                    },
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 83,
+                    lineNumber: 118,
                     columnNumber: 16
                 }, this);
                 break;
             case "Estructura":
                 form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
                     productType: "Estructura",
-                    productList: [
-                        {
-                            ref: '56789012',
-                            description: 'Estructura para paneles solares cubierta plana',
-                            nPanels: 1,
-                            price: 120
-                        },
-                        {
-                            ref: '56789013',
-                            description: 'Estructura para paneles solares cubierta inclinada',
-                            nPanels: 1,
-                            price: 120
-                        },
-                        {
-                            ref: '56789014',
-                            description: 'Estructura para paneles solares cubierta plana',
-                            nPanels: 2,
-                            price: 220
-                        },
-                        {
-                            ref: '56789015',
-                            description: 'Estructura para paneles solares cubierta inclinada',
-                            nPanels: 2,
-                            price: 220
-                        }, 
-                    ],
+                    productList: _productLists.structuresList,
                     productParser: (structure)=>{
                         return {
                             type: 'Estructura',
@@ -51937,29 +51948,14 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 86,
+                    lineNumber: 133,
                     columnNumber: 16
                 }, this);
                 break;
             case 'Cableado':
                 form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
                     productType: "Cableado",
-                    productList: [
-                        {
-                            ref: '67891234',
-                            description: 'Cable solar rojo',
-                            section: 10,
-                            cableLenght: 100,
-                            price: 100
-                        },
-                        {
-                            ref: '67891235',
-                            description: 'Cable solar negro',
-                            section: 10,
-                            cableLenght: 100,
-                            price: 100
-                        }, 
-                    ],
+                    productList: _productLists.wiringList,
                     productParser: (product)=>{
                         return {
                             type: 'Cableado',
@@ -51972,7 +51968,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 126,
+                    lineNumber: 148,
                     columnNumber: 16
                 }, this);
                 break;
@@ -51998,7 +51994,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 157,
+                    lineNumber: 164,
                     columnNumber: 16
                 }, this);
                 break;
@@ -52021,7 +52017,7 @@ class EstimationForm extends React.Component {
                                         children: "Tipo"
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 187,
+                                        lineNumber: 194,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
@@ -52035,7 +52031,7 @@ class EstimationForm extends React.Component {
                                                 children: "Paneles"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 193,
+                                                lineNumber: 200,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52043,7 +52039,7 @@ class EstimationForm extends React.Component {
                                                 children: "Bater\xedas"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 194,
+                                                lineNumber: 201,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52051,7 +52047,7 @@ class EstimationForm extends React.Component {
                                                 children: "Controlador"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 195,
+                                                lineNumber: 202,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52059,7 +52055,7 @@ class EstimationForm extends React.Component {
                                                 children: "Inversor"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 196,
+                                                lineNumber: 203,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52067,7 +52063,7 @@ class EstimationForm extends React.Component {
                                                 children: "Estructura"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 197,
+                                                lineNumber: 204,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52075,7 +52071,7 @@ class EstimationForm extends React.Component {
                                                 children: "Cableado"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 198,
+                                                lineNumber: 205,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52083,41 +52079,41 @@ class EstimationForm extends React.Component {
                                                 children: "Otros"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 199,
+                                                lineNumber: 206,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 188,
+                                        lineNumber: 195,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 186,
+                                lineNumber: 193,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                            lineNumber: 185,
+                            lineNumber: 192,
                             columnNumber: 11
                         }, this),
                         form
                     ]
                 }, void 0, true, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 184,
+                    lineNumber: 191,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                lineNumber: 183,
+                lineNumber: 190,
                 columnNumber: 7
             }, this)
         }, void 0, false, {
             fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-            lineNumber: 182,
+            lineNumber: 189,
             columnNumber: 12
         }, this);
     }
@@ -52129,941 +52125,7 @@ exports.default = EstimationForm;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","./PanelForm":"4OqcW","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./BatteryForm":"cEq0t","./ControllerForm":"fSnYx","./InverterForm":"Ut1WC","./ProductForm":"kMYWp"}],"4OqcW":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$447c = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$447c.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _reactBootstrap = require("react-bootstrap");
-var _s = $RefreshSig$();
-const React = require("react");
-const thisType = 'Paneles';
-function parsePanelObject(panelObject, n) {
-    return {
-        ref: panelObject.ref,
-        type: thisType,
-        description: `${panelObject.power}W ${panelObject.voltage}V - ${panelObject.description}`,
-        price: panelObject.price,
-        qt: n
-    };
-}
-const PanelForm = (props)=>{
-    _s();
-    const [qt, setQt] = React.useState(0);
-    const [price, setPrice] = React.useState(0);
-    const [solarPanelsList, setSolarPanelsList] = React.useState([]);
-    const [product, setProduct] = React.useState({
-        ref: '',
-        type: thisType,
-        description: '',
-        price: 0,
-        qt: 0
-    });
-    React.useEffect(()=>{
-        setSolarPanelsList([
-            {
-                ref: '12345678',
-                description: 'Xunzel Monocristalino 60x60',
-                power: 60,
-                voltage: 12,
-                price: 70
-            },
-            {
-                ref: '12345679',
-                description: 'Xunzel monocristalino 60x90',
-                power: 80,
-                voltage: 12,
-                price: 90
-            },
-            {
-                ref: '12345680',
-                description: 'Xunzel monocristalino 60x100',
-                power: 100,
-                voltage: 24,
-                price: 100
-            },
-            {
-                ref: '12345681',
-                description: 'Xunzel monocristalino 120x80',
-                power: 120,
-                voltage: 24,
-                price: 110
-            },
-            {
-                ref: '12345682',
-                description: 'Risen monocristalino 203x110',
-                power: 450,
-                voltage: 48,
-                price: 179
-            }, 
-        ]);
-        setProduct(parsePanelObject({
-            ref: '12345678',
-            description: 'Xunzel Monocristalino 60x60',
-            power: 60,
-            voltage: 12,
-            price: 70
-        }, Math.ceil(props.pw / 60)));
-        setPrice(70);
-        setQt(Math.ceil(props.pw / 60));
-    }, []);
-    const list = solarPanelsList.length > 0 ? solarPanelsList.map((item, id)=>{
-        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-            value: item.ref,
-            children: `Panel ${item.power}W, ${item.voltage}V - ${item.description}`
-        }, id, false, {
-            fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-            lineNumber: 99,
-            columnNumber: 7
-        }, undefined);
-    }) : /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
-    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
-        children: [
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "mb-3 col-12 col-md-6 col-xl-6",
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "panel",
-                        children: "Panel"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                        lineNumber: 108,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
-                        id: "panel",
-                        onChange: (element)=>{
-                            const item1 = solarPanelsList.find((item)=>item.ref == element.target.value
-                            );
-                            let nPanels = Math.ceil(props.pw / item1.power);
-                            setQt(nPanels);
-                            setPrice(item1.price);
-                            setProduct(parsePanelObject(item1, nPanels));
-                        },
-                        children: list
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                        lineNumber: 109,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                lineNumber: 107,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "mb-3 col-6 col-xl-3",
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "qt",
-                        children: "Cantidad"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                        lineNumber: 120,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
-                        id: "qt",
-                        placeholder: "Cantidad",
-                        type: "number",
-                        value: qt,
-                        onChange: (ev)=>{
-                            setQt(Number.parseInt(ev.currentTarget.value));
-                            setProduct({
-                                type: product.type,
-                                price: product.price,
-                                ref: product.ref,
-                                description: product.description,
-                                qt: Number.parseFloat(ev.currentTarget.value)
-                            });
-                        },
-                        onClick: (ev)=>{
-                            ev.currentTarget.select();
-                        }
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                        lineNumber: 121,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                lineNumber: 119,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "mb-3 col-6 col-xl-3",
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "price",
-                        children: "Precio unitario"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                        lineNumber: 142,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
-                        id: "price",
-                        placeholder: "Precio \u20AC",
-                        type: "number",
-                        value: price,
-                        onChange: (ev)=>{
-                            setPrice(Number.parseFloat(ev.currentTarget.value));
-                            setProduct({
-                                type: product.type,
-                                price: Number.parseFloat(ev.currentTarget.value),
-                                ref: product.ref,
-                                description: product.description,
-                                qt: product.qt
-                            });
-                        },
-                        onClick: (ev)=>{
-                            ev.currentTarget.select();
-                        }
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                        lineNumber: 143,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                lineNumber: 141,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "d-flex align-items-center mb-3 col-12 col-md-6 col-xl-3",
-                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
-                    className: "mt-3",
-                    onClick: (ev)=>props.addAction(product)
-                    ,
-                    children: "A\xf1adir"
-                }, void 0, false, {
-                    fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                    lineNumber: 164,
-                    columnNumber: 11
-                }, undefined)
-            }, void 0, false, {
-                fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-                lineNumber: 163,
-                columnNumber: 7
-            }, undefined)
-        ]
-    }, void 0, true, {
-        fileName: "src/components/sections/EstimationComponents/PanelForm.tsx",
-        lineNumber: 106,
-        columnNumber: 5
-    }, undefined);
-};
-_s(PanelForm, "i58sAYyrKZaCKm4Sw/a4leZs3Tg=");
-_c = PanelForm;
-exports.default = PanelForm;
-var _c;
-$RefreshReg$(_c, "PanelForm");
-
-  $parcel$ReactRefreshHelpers$447c.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"cEq0t":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$3aae = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$3aae.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _reactBootstrap = require("react-bootstrap");
-var _s = $RefreshSig$();
-const React = require("react");
-const thisType = 'Baterías';
-function parsePanelObject(batteryObject, n) {
-    return {
-        ref: batteryObject.ref,
-        type: thisType,
-        description: `${batteryObject.amph}Ah ${batteryObject.voltage}V - ${batteryObject.description}`,
-        price: batteryObject.price,
-        qt: n
-    };
-}
-const BatteryForm = (props)=>{
-    _s();
-    const [qt, setQt] = React.useState(0);
-    const [price, setPrice] = React.useState(0);
-    const [batteriesList, setBatteriesList] = React.useState([]);
-    const [product, setProduct] = React.useState({
-        ref: '',
-        type: thisType,
-        description: '',
-        price: 0,
-        qt: 0
-    });
-    React.useEffect(()=>{
-        setBatteriesList([
-            {
-                ref: '23456789',
-                description: 'Batería AGM',
-                amph: 60,
-                voltage: 12,
-                price: 70
-            },
-            {
-                ref: '23456790',
-                description: 'Batería GEL',
-                amph: 80,
-                voltage: 12,
-                price: 90
-            },
-            {
-                ref: '23456791',
-                description: 'Batería AGM',
-                amph: 100,
-                voltage: 24,
-                price: 100
-            },
-            {
-                ref: '23456792',
-                description: 'Batería GEL',
-                amph: 120,
-                voltage: 24,
-                price: 110
-            },
-            {
-                ref: '23456793',
-                description: 'Batería AGM',
-                amph: 450,
-                voltage: 48,
-                price: 179
-            }, 
-        ]);
-        setProduct(parsePanelObject({
-            ref: '23456789',
-            description: 'Batería AGM',
-            amph: 60,
-            voltage: 12,
-            price: 70
-        }, Math.ceil(props.amph / 60)));
-        setPrice(70);
-        setQt(Math.ceil(props.amph / 60));
-    }, []);
-    const list = batteriesList.length > 0 ? batteriesList.map((item, id)=>{
-        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-            value: item.ref,
-            children: `Batería ${item.amph}Ah, ${item.voltage}V - ${item.description}`
-        }, id, false, {
-            fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-            lineNumber: 99,
-            columnNumber: 7
-        }, undefined);
-    }) : /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
-    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
-        children: [
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "mb-3 col-xs-12 col-md-6 col-xl-6",
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "battery",
-                        children: "Bater\xeda"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                        lineNumber: 108,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
-                        id: "battery",
-                        onChange: (element)=>{
-                            const item1 = batteriesList.find((item)=>item.ref == element.target.value
-                            );
-                            let nBatteries = Math.ceil(props.amph / item1.amph);
-                            setQt(nBatteries);
-                            setPrice(item1.price);
-                            setProduct(parsePanelObject(item1, nBatteries));
-                        },
-                        children: list
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                        lineNumber: 109,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                lineNumber: 107,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "qt",
-                        children: "Cantidad"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                        lineNumber: 120,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
-                        id: "qt",
-                        placeholder: "Cantidad",
-                        type: "number",
-                        value: qt,
-                        onChange: (ev)=>{
-                            setQt(Number.parseInt(ev.currentTarget.value));
-                            setProduct({
-                                type: product.type,
-                                price: product.price,
-                                ref: product.ref,
-                                description: product.description,
-                                qt: Number.parseFloat(ev.currentTarget.value)
-                            });
-                        },
-                        onClick: (ev)=>{
-                            ev.currentTarget.select();
-                        }
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                        lineNumber: 121,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                lineNumber: 119,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "price",
-                        children: "Precio unitario"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                        lineNumber: 142,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
-                        id: "price",
-                        placeholder: "Precio \u20AC",
-                        type: "number",
-                        value: price,
-                        onChange: (ev)=>{
-                            setPrice(Number.parseFloat(ev.currentTarget.value));
-                            setProduct({
-                                type: product.type,
-                                price: Number.parseFloat(ev.currentTarget.value),
-                                ref: product.ref,
-                                description: product.description,
-                                qt: product.qt
-                            });
-                        },
-                        onClick: (ev)=>{
-                            ev.currentTarget.select();
-                        }
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                        lineNumber: 143,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                lineNumber: 141,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "d-flex align-items-center",
-                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
-                    className: "mt-3",
-                    onClick: (ev)=>props.addAction(product)
-                    ,
-                    children: "A\xf1adir"
-                }, void 0, false, {
-                    fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                    lineNumber: 164,
-                    columnNumber: 11
-                }, undefined)
-            }, void 0, false, {
-                fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-                lineNumber: 163,
-                columnNumber: 7
-            }, undefined)
-        ]
-    }, void 0, true, {
-        fileName: "src/components/sections/EstimationComponents/BatteryForm.tsx",
-        lineNumber: 106,
-        columnNumber: 5
-    }, undefined);
-};
-_s(BatteryForm, "aiyVllAmEptpk/KHxrLHi3vocjA=");
-_c = BatteryForm;
-exports.default = BatteryForm;
-var _c;
-$RefreshReg$(_c, "BatteryForm");
-
-  $parcel$ReactRefreshHelpers$3aae.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"fSnYx":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$7b4b = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$7b4b.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _reactBootstrap = require("react-bootstrap");
-var _s = $RefreshSig$();
-const React = require("react");
-const thisType = 'Controlador';
-function parsePanelObject(controllerObject, n) {
-    return {
-        ref: controllerObject.ref,
-        type: thisType,
-        description: `${controllerObject.amp}A ${controllerObject.voltage}V - ${controllerObject.description}`,
-        price: controllerObject.price,
-        qt: n
-    };
-}
-const ControllerForm = (props)=>{
-    _s();
-    const [qt, setQt] = React.useState(0);
-    const [price, setPrice] = React.useState(0);
-    const [controllerList, setControllerList] = React.useState([]);
-    const [product, setProduct] = React.useState({
-        ref: '',
-        type: thisType,
-        description: '',
-        price: 0,
-        qt: 0
-    });
-    React.useEffect(()=>{
-        setControllerList([
-            {
-                ref: '34567890',
-                description: 'Controlador de carga con USB',
-                amp: 5,
-                voltage: 12,
-                price: 24.95
-            },
-            {
-                ref: '34567891',
-                description: 'Controlador de carga 2 entradas con USB',
-                amp: 20,
-                voltage: 24,
-                price: 39.95
-            }, 
-        ]);
-        setProduct(parsePanelObject({
-            ref: '34567890',
-            description: 'Controlador de carga con USB',
-            amp: 5,
-            voltage: 12,
-            price: 24.95
-        }, props.pw < 60 ? 1 : 0));
-        setPrice(24.95);
-        setQt(props.pw < 60 ? 1 : 0);
-    }, []);
-    const list = controllerList.length > 0 ? controllerList.map((item, id)=>{
-        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-            value: item.ref,
-            children: `Controlador ${item.amp}A, ${item.voltage}V - ${item.description}`
-        }, id, false, {
-            fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-            lineNumber: 78,
-            columnNumber: 7
-        }, undefined);
-    }) : /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
-    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
-        children: [
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "mb-3 col-xs-12 col-md-6 col-xl-6",
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "controller",
-                        children: "Bater\xeda"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                        lineNumber: 87,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
-                        id: "controller",
-                        onChange: (element)=>{
-                            const item1 = controllerList.find((item)=>item.ref == element.target.value
-                            );
-                            let nControllers = props.pw < 60 ? 1 : 0;
-                            setQt(nControllers);
-                            setPrice(item1.price);
-                            setProduct(parsePanelObject(item1, nControllers));
-                        },
-                        children: list
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                        lineNumber: 88,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                lineNumber: 86,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "qt",
-                        children: "Cantidad"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                        lineNumber: 99,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
-                        id: "qt",
-                        placeholder: "Cantidad",
-                        type: "number",
-                        value: qt,
-                        onChange: (ev)=>{
-                            setQt(Number.parseInt(ev.currentTarget.value));
-                            setProduct({
-                                type: product.type,
-                                price: product.price,
-                                ref: product.ref,
-                                description: product.description,
-                                qt: Number.parseFloat(ev.currentTarget.value)
-                            });
-                        },
-                        onClick: (ev)=>{
-                            ev.currentTarget.select();
-                        }
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                        lineNumber: 100,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                lineNumber: 98,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "price",
-                        children: "Precio unitario"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                        lineNumber: 121,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
-                        id: "price",
-                        placeholder: "Precio \u20AC",
-                        type: "number",
-                        value: price,
-                        onChange: (ev)=>{
-                            setPrice(Number.parseFloat(ev.currentTarget.value));
-                            setProduct({
-                                type: product.type,
-                                price: Number.parseFloat(ev.currentTarget.value),
-                                ref: product.ref,
-                                description: product.description,
-                                qt: product.qt
-                            });
-                        },
-                        onClick: (ev)=>{
-                            ev.currentTarget.select();
-                        }
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                        lineNumber: 122,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                lineNumber: 120,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "d-flex align-items-center",
-                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
-                    className: "mt-3",
-                    onClick: (ev)=>props.addAction(product)
-                    ,
-                    children: "A\xf1adir"
-                }, void 0, false, {
-                    fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                    lineNumber: 143,
-                    columnNumber: 11
-                }, undefined)
-            }, void 0, false, {
-                fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-                lineNumber: 142,
-                columnNumber: 7
-            }, undefined)
-        ]
-    }, void 0, true, {
-        fileName: "src/components/sections/EstimationComponents/ControllerForm.tsx",
-        lineNumber: 85,
-        columnNumber: 5
-    }, undefined);
-};
-_s(ControllerForm, "TQPhFE8+CW9hZdbXER3zVMWjvTA=");
-_c = ControllerForm;
-exports.default = ControllerForm;
-var _c;
-$RefreshReg$(_c, "ControllerForm");
-
-  $parcel$ReactRefreshHelpers$7b4b.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"Ut1WC":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$948b = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$948b.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _reactBootstrap = require("react-bootstrap");
-var _s = $RefreshSig$();
-const React = require("react");
-const thisType = 'Inversor';
-function parsePanelObject(inverterObject, n) {
-    return {
-        ref: inverterObject.ref,
-        type: thisType,
-        description: `${inverterObject.amp}A ${inverterObject.voltage}V - ${inverterObject.description}`,
-        price: inverterObject.price,
-        qt: n
-    };
-}
-const InverterForm = (props)=>{
-    _s();
-    const [qt, setQt] = React.useState(0);
-    const [price, setPrice] = React.useState(0);
-    const [inverterList, setInverterList] = React.useState([]);
-    const [product, setProduct] = React.useState({
-        ref: '',
-        type: thisType,
-        description: '',
-        price: 0,
-        qt: 0
-    });
-    React.useEffect(()=>{
-        setInverterList([
-            {
-                ref: '45678901',
-                description: 'Inversor Xunzel 24x32',
-                amp: 5,
-                pw: 500,
-                voltage: 12,
-                price: 24.95
-            },
-            {
-                ref: '45678902',
-                description: 'Inversor Xunzel 32x38',
-                amp: 20,
-                pw: 750,
-                voltage: 24,
-                price: 39.95
-            },
-            {
-                ref: '45678903',
-                description: 'Inversor MasterBattery 42x58',
-                amp: 20,
-                pw: 3000,
-                voltage: 48,
-                price: 189.90
-            }
-        ]);
-        setProduct(parsePanelObject({
-            ref: '45678901',
-            description: 'Inversor Xunzel 24x32',
-            amp: 5,
-            pw: 500,
-            voltage: 12,
-            price: 24.95
-        }, 1));
-        setPrice(24.95);
-        setQt(1);
-    }, []);
-    const list = inverterList.length > 0 ? inverterList.map((item, id)=>{
-        return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-            value: item.ref,
-            children: `Inversor ${item.amp}A, ${item.voltage}V - ${item.description}`
-        }, id, false, {
-            fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-            lineNumber: 89,
-            columnNumber: 7
-        }, undefined);
-    }) : /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
-    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
-        children: [
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "mb-3 col-xs-12 col-md-6 col-xl-6",
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "inverter",
-                        children: "Inversor"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                        lineNumber: 98,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
-                        id: "inverter",
-                        onChange: (element)=>{
-                            const item1 = inverterList.find((item)=>item.ref == element.target.value
-                            );
-                            setQt(1);
-                            setPrice(item1.price);
-                            setProduct(parsePanelObject(item1, 1));
-                        },
-                        children: list
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                        lineNumber: 99,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                lineNumber: 97,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "qt",
-                        children: "Cantidad"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                        lineNumber: 109,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
-                        id: "qt",
-                        placeholder: "Cantidad",
-                        type: "number",
-                        value: qt,
-                        onChange: (ev)=>{
-                            setQt(Number.parseInt(ev.currentTarget.value));
-                            setProduct({
-                                type: product.type,
-                                price: product.price,
-                                ref: product.ref,
-                                description: product.description,
-                                qt: Number.parseFloat(ev.currentTarget.value)
-                            });
-                        },
-                        onClick: (ev)=>{
-                            ev.currentTarget.select();
-                        }
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                        lineNumber: 110,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                lineNumber: 108,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
-                        htmlFor: "price",
-                        children: "Precio unitario"
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                        lineNumber: 131,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
-                        id: "price",
-                        placeholder: "Precio \u20AC",
-                        type: "number",
-                        value: price,
-                        onChange: (ev)=>{
-                            setPrice(Number.parseFloat(ev.currentTarget.value));
-                            setProduct({
-                                type: product.type,
-                                price: Number.parseFloat(ev.currentTarget.value),
-                                ref: product.ref,
-                                description: product.description,
-                                qt: product.qt
-                            });
-                        },
-                        onClick: (ev)=>{
-                            ev.currentTarget.select();
-                        }
-                    }, void 0, false, {
-                        fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                        lineNumber: 132,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                lineNumber: 130,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
-                className: "d-flex align-items-center",
-                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
-                    className: "mt-3",
-                    onClick: (ev)=>props.addAction(product)
-                    ,
-                    children: "A\xf1adir"
-                }, void 0, false, {
-                    fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                    lineNumber: 153,
-                    columnNumber: 11
-                }, undefined)
-            }, void 0, false, {
-                fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-                lineNumber: 152,
-                columnNumber: 7
-            }, undefined)
-        ]
-    }, void 0, true, {
-        fileName: "src/components/sections/EstimationComponents/InverterForm.tsx",
-        lineNumber: 96,
-        columnNumber: 5
-    }, undefined);
-};
-_s(InverterForm, "QQobO1vyIVI5a2QTZ6CM8zf6aLU=");
-_c = InverterForm;
-exports.default = InverterForm;
-var _c;
-$RefreshReg$(_c, "InverterForm");
-
-  $parcel$ReactRefreshHelpers$948b.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"kMYWp":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./ProductForm":"kMYWp","./ProductLists":"1hkyB"}],"kMYWp":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$b654 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -53076,14 +52138,13 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactBootstrap = require("react-bootstrap");
 var _s = $RefreshSig$();
 const React = require("react");
-const thisType = 'Inversor';
 const ProductForm = (props)=>{
     _s();
     const [qt, setQt] = React.useState(0);
     const [price, setPrice] = React.useState(0);
     const [product1, setProduct] = React.useState({
         ref: '',
-        type: thisType,
+        type: '',
         description: '',
         price: 0,
         qt: 0
@@ -53091,7 +52152,7 @@ const ProductForm = (props)=>{
     React.useEffect(()=>{
         setProduct(props.productParser(props.productList[0]));
         setPrice(props.productParser(props.productList[0]).price);
-        setQt(1);
+        setQt(props.productParser(props.productList[0]).qt);
     }, []);
     const list = props.productList.length > 0 ? props.productList.map((item, id)=>{
         let product = props.productParser(item);
@@ -53100,7 +52161,7 @@ const ProductForm = (props)=>{
             children: product.description
         }, id, false, {
             fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-            lineNumber: 38,
+            lineNumber: 36,
             columnNumber: 7
         }, undefined);
     }) : /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {}, void 0, false);
@@ -53111,10 +52172,10 @@ const ProductForm = (props)=>{
                 children: [
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Label, {
                         htmlFor: "product",
-                        children: "Inversor"
+                        children: props.productType
                     }, void 0, false, {
                         fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                        lineNumber: 47,
+                        lineNumber: 45,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
@@ -53122,20 +52183,20 @@ const ProductForm = (props)=>{
                         onChange: (element)=>{
                             const item1 = props.productList.find((item)=>item.ref == element.target.value
                             );
-                            setQt(1);
+                            setQt(props.productParser(item1).qt);
                             setPrice(item1.price);
                             setProduct(props.productParser(item1));
                         },
                         children: list
                     }, void 0, false, {
                         fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                        lineNumber: 48,
+                        lineNumber: 46,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                lineNumber: 46,
+                lineNumber: 44,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -53145,7 +52206,7 @@ const ProductForm = (props)=>{
                         children: "Cantidad"
                     }, void 0, false, {
                         fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                        lineNumber: 58,
+                        lineNumber: 56,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -53168,13 +52229,13 @@ const ProductForm = (props)=>{
                         }
                     }, void 0, false, {
                         fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                        lineNumber: 59,
+                        lineNumber: 57,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                lineNumber: 57,
+                lineNumber: 55,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
@@ -53184,7 +52245,7 @@ const ProductForm = (props)=>{
                         children: "Precio unitario"
                     }, void 0, false, {
                         fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                        lineNumber: 80,
+                        lineNumber: 78,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -53207,40 +52268,41 @@ const ProductForm = (props)=>{
                         }
                     }, void 0, false, {
                         fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                        lineNumber: 81,
+                        lineNumber: 79,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                lineNumber: 79,
+                lineNumber: 77,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Col, {
                 className: "d-flex align-items-center",
                 children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                    variant: "success",
                     className: "mt-3",
                     onClick: (ev)=>props.addAction(product1)
                     ,
                     children: "A\xf1adir"
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                    lineNumber: 102,
+                    lineNumber: 100,
                     columnNumber: 11
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-                lineNumber: 101,
+                lineNumber: 99,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/sections/EstimationComponents/ProductForm.tsx",
-        lineNumber: 45,
+        lineNumber: 43,
         columnNumber: 5
     }, undefined);
 };
-_s(ProductForm, "AA2arYLDEQoSyVSaUY72Gszfb7U=");
+_s(ProductForm, "N8jhNmJDTv/lxN6ajQZPeCfKX7M=");
 _c = ProductForm;
 exports.default = ProductForm;
 var _c;
@@ -53251,7 +52313,181 @@ $RefreshReg$(_c, "ProductForm");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"lOjBx":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"1hkyB":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "panelsList", ()=>panelsList
+);
+parcelHelpers.export(exports, "batteriesList", ()=>batteriesList
+);
+parcelHelpers.export(exports, "controllersList", ()=>controllersList
+);
+parcelHelpers.export(exports, "invertersList", ()=>invertersList
+);
+parcelHelpers.export(exports, "structuresList", ()=>structuresList
+);
+parcelHelpers.export(exports, "wiringList", ()=>wiringList
+);
+const panelsList = [
+    {
+        ref: '12345678',
+        description: 'Panel solar Xunzel Monocristalino 60x60',
+        power: 60,
+        voltage: 12,
+        price: 70
+    },
+    {
+        ref: '12345679',
+        description: 'Panel solar Xunzel monocristalino 60x90',
+        power: 80,
+        voltage: 12,
+        price: 90
+    },
+    {
+        ref: '12345680',
+        description: 'Panel solar Xunzel monocristalino 60x100',
+        power: 100,
+        voltage: 24,
+        price: 100
+    },
+    {
+        ref: '12345681',
+        description: 'Panel solar Xunzel monocristalino 120x80',
+        power: 120,
+        voltage: 24,
+        price: 110
+    },
+    {
+        ref: '12345682',
+        description: 'Panel solar Risen monocristalino 203x110',
+        power: 450,
+        voltage: 48,
+        price: 179
+    }, 
+];
+const batteriesList = [
+    {
+        ref: '23456789',
+        description: 'Batería AGM',
+        amph: 60,
+        voltage: 12,
+        price: 70
+    },
+    {
+        ref: '23456790',
+        description: 'Batería GEL',
+        amph: 80,
+        voltage: 12,
+        price: 90
+    },
+    {
+        ref: '23456791',
+        description: 'Batería AGM',
+        amph: 100,
+        voltage: 24,
+        price: 100
+    },
+    {
+        ref: '23456792',
+        description: 'Batería GEL',
+        amph: 120,
+        voltage: 24,
+        price: 110
+    },
+    {
+        ref: '23456793',
+        description: 'Batería AGM',
+        amph: 450,
+        voltage: 48,
+        price: 179
+    }, 
+];
+const controllersList = [
+    {
+        ref: '34567890',
+        description: 'Controlador de carga con USB',
+        amp: 5,
+        voltage: 12,
+        price: 24.95
+    },
+    {
+        ref: '34567891',
+        description: 'Controlador de carga 2 entradas con USB',
+        amp: 20,
+        voltage: 24,
+        price: 39.95
+    }, 
+];
+const invertersList = [
+    {
+        ref: '45678901',
+        description: 'Inversor Xunzel 24x32',
+        amp: 5,
+        pw: 500,
+        voltage: 12,
+        price: 24.95
+    },
+    {
+        ref: '45678902',
+        description: 'Inversor Xunzel 32x38',
+        amp: 20,
+        pw: 750,
+        voltage: 24,
+        price: 39.95
+    },
+    {
+        ref: '45678903',
+        description: 'Inversor MasterBattery 42x58',
+        amp: 20,
+        pw: 3000,
+        voltage: 48,
+        price: 189.90
+    }, 
+];
+const structuresList = [
+    {
+        ref: '56789012',
+        description: 'Estructura para paneles solares cubierta plana',
+        nPanels: 1,
+        price: 120
+    },
+    {
+        ref: '56789013',
+        description: 'Estructura para paneles solares cubierta inclinada',
+        nPanels: 1,
+        price: 120
+    },
+    {
+        ref: '56789014',
+        description: 'Estructura para paneles solares cubierta plana',
+        nPanels: 2,
+        price: 220
+    },
+    {
+        ref: '56789015',
+        description: 'Estructura para paneles solares cubierta inclinada',
+        nPanels: 2,
+        price: 220
+    }, 
+];
+const wiringList = [
+    {
+        ref: '67891234',
+        description: 'Cable solar rojo',
+        section: 10,
+        cableLenght: 100,
+        price: 100
+    },
+    {
+        ref: '67891235',
+        description: 'Cable solar negro',
+        section: 10,
+        cableLenght: 100,
+        price: 100
+    }, 
+];
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lOjBx":[function(require,module,exports) {
 'use strict';
 var m = require('react-dom');
 var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;

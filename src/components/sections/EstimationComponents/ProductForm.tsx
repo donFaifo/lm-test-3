@@ -9,14 +9,12 @@ interface Props {
   addAction(product: Article): void;
 }
 
-const thisType = 'Inversor';
-
 const ProductForm = (props: Props) => {
   const [qt, setQt] = React.useState<number>(0);
   const [price, setPrice] = React.useState<number>(0);
   const [product, setProduct] = React.useState<Article>({
     ref: '',
-    type: thisType,
+    type: '',
     description: '',
     price: 0,
     qt: 0,
@@ -28,7 +26,7 @@ const ProductForm = (props: Props) => {
 
     setPrice(props.productParser(props.productList[0]).price);
 
-    setQt(1);
+    setQt(props.productParser(props.productList[0]).qt);
 
   }, []);
 
@@ -44,10 +42,10 @@ const ProductForm = (props: Props) => {
   return (
     <Row>
       <Col className="mb-3 col-xs-12 col-md-6 col-xl-6">
-        <Form.Label htmlFor="product">Inversor</Form.Label>
+        <Form.Label htmlFor="product">{props.productType}</Form.Label>
         <Form.Select id="product" onChange={element => {
           const item = props.productList.find((item) => item.ref == element.target.value);
-          setQt(1);
+          setQt(props.productParser(item).qt);
           setPrice(item.price);
           setProduct(props.productParser(item));
         }}>
@@ -99,7 +97,7 @@ const ProductForm = (props: Props) => {
         />
       </Col>
       <Col className="d-flex align-items-center">
-          <Button className="mt-3" onClick={(ev) => props.addAction(product)}>Añadir</Button>
+          <Button variant="success" className="mt-3" onClick={(ev) => props.addAction(product)}>Añadir</Button>
       </Col>
     </Row>
   );

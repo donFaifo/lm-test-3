@@ -1,11 +1,8 @@
 import React = require("react");
 import { Col, Form, Row } from "react-bootstrap";
-import BatteryForm from "./BatteryForm";
-import ControllerForm from "./ControllerForm";
 import { Article } from "./EstimationListComponents/Subsection";
-import InverterForm from "./InverterForm";
-import PanelForm from "./PanelForm";
 import ProductForm from "./ProductForm";
+import { batteriesList, controllersList, invertersList, panelsList, structuresList, wiringList } from "./ProductLists";
 
 interface Props {
   isHidden: boolean;
@@ -71,46 +68,71 @@ export default class EstimationForm extends React.Component<Props, State> {
     
     switch(this.state.type) {
       case "Paneles":
-        form = <PanelForm pw={this.props.pw} addAction={(product) => this.save(product)}/>;
+        form = <ProductForm 
+          productType="Paneles"
+          productList={panelsList}
+          productParser={(panel) => {
+            const n = Math.ceil(this.props.pw / panel.power);
+            return {
+              ref: panel.ref,
+              type: 'Paneles',
+              description: `${panel.description} ${panel.power}W ${panel.voltage}V`,
+              price: panel.price,
+              qt: n,
+            }
+          }}
+          addAction={(product) => this.save(product)}/>;
         break;
       case "Baterías":
-        form = <BatteryForm amph={this.props.amph} addAction={(product) => this.save(product)}/>;
+        form = <ProductForm 
+          productType="Baterías"
+          productList={batteriesList}
+          productParser={(battery) => {
+            const n = Math.ceil(this.props.amph / battery.amph);
+            return {
+              ref: battery.ref,
+              type: "Baterías",
+              description: `${battery.amph}Ah ${battery.voltage}V - ${battery.description}`,
+              price: battery.price,
+              qt: n,
+            }
+          }}
+          addAction={(product) => this.save(product)}/>;
         break;
       case "Controlador":
-        form = <ControllerForm pw={this.props.pw} addAction={(product) => this.save(product)}/>;
+        form = <ProductForm 
+          productList={controllersList}
+          productType="Controlador"
+          productParser={(controller) => {
+            return {
+              type: 'Controlador',
+              ref: controller.ref,
+              description: `${controller.description} - ${controller.amp}A ${controller.voltage}V`,
+              price: controller.price,
+              qt: 1
+            }
+          }}
+          addAction={(product) => this.save(product)}/>;
         break;
       case "Inversor":
-        form = <InverterForm addAction={(product) => this.save(product)}/>;
+        form = <ProductForm
+          productType="Inversor"
+          productList={invertersList}
+          productParser={(inverter) => {
+            return {
+              ref: inverter.ref,
+              type: "Inversor",
+              description: `${inverter.description} ${inverter.amp}A ${inverter.voltage}V`,
+              price: inverter.price,
+              qt: 1,
+            }
+          }}
+          addAction={(product) => this.save(product)}/>;
         break;
       case "Estructura":
         form = <ProductForm
           productType="Estructura"
-          productList={[
-            {
-              ref: '56789012',
-              description: 'Estructura para paneles solares cubierta plana',
-              nPanels: 1,
-              price: 120
-            },
-            {
-              ref: '56789013',
-              description: 'Estructura para paneles solares cubierta inclinada',
-              nPanels: 1,
-              price: 120
-            },
-            {
-              ref: '56789014',
-              description: 'Estructura para paneles solares cubierta plana',
-              nPanels: 2,
-              price: 220
-            },
-            {
-              ref: '56789015',
-              description: 'Estructura para paneles solares cubierta inclinada',
-              nPanels: 2,
-              price: 220
-            },
-          ]}
+          productList={structuresList}
           productParser={(structure) => {
             return {
               type: 'Estructura',
@@ -125,22 +147,7 @@ export default class EstimationForm extends React.Component<Props, State> {
       case 'Cableado':
         form = <ProductForm
           productType="Cableado"
-          productList={[
-            {
-              ref: '67891234',
-              description: 'Cable solar rojo',
-              section: 10,
-              cableLenght: 100,
-              price: 100,
-            },
-            {
-              ref: '67891235',
-              description: 'Cable solar negro',
-              section: 10,
-              cableLenght: 100,
-              price: 100,
-            },
-          ]}
+          productList={wiringList}
           productParser={(product) => {
             return {
               type: 'Cableado',
