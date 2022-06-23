@@ -136,7 +136,7 @@ export default class Estimation extends React.Component<Props, States> {
         <Row className="mt-4">
           <hr></hr>
           <Col className="d-flex justify-content-end">
-            <h4>TOTAL: {totalPrice} €</h4>
+            <h4>TOTAL: {totalPrice.toFixed(2)} €</h4>
           </Col>
         </Row>
       )

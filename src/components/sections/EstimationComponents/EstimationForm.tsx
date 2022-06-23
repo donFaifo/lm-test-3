@@ -1,6 +1,7 @@
 import React = require("react");
 import { Col, Form, Row } from "react-bootstrap";
 import { Article } from "./EstimationListComponents/Subsection";
+import OthersProductForm from "./OthersProductForm";
 import ProductForm from "./ProductForm";
 import { batteriesList, controllersList, invertersList, panelsList, structuresList, wiringList } from "./ProductLists";
 
@@ -92,7 +93,7 @@ export default class EstimationForm extends React.Component<Props, State> {
             return {
               ref: battery.ref,
               type: "Baterías",
-              description: `${battery.amph}Ah ${battery.voltage}V - ${battery.description}`,
+              description: `${battery.description} ${battery.amph}Ah ${battery.voltage}V`,
               price: battery.price,
               qt: n,
             }
@@ -161,26 +162,7 @@ export default class EstimationForm extends React.Component<Props, State> {
         />  
         break;
       case 'Otros':
-        form = <ProductForm
-          productType="Otros"
-          productList={[
-            {
-              ref: '987654321',
-              description: 'Producto de prueba',
-              price: 10,
-            }
-          ]}
-          productParser={(product) => {
-            return {
-              type: 'Otros',
-              ref: product.ref,
-              description: product.description,
-              price: product.price,
-              qt: 1
-            }
-          }}
-          addAction={(product) => this.save(product)}
-        />
+        form = <OthersProductForm addAction={(product) => this.save(product)}/>
         break;
       default:
         form = <></>
