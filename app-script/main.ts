@@ -1,10 +1,10 @@
-import { SubsectionData } from "../src/components/sections/Estimation";
+import { SubsectionList } from "../src/components/sections/EstimationComponents/EstimationList";
 
 interface Data {
-  name: string
-  mail: string
-  send: boolean
-  list: SubsectionData[]
+  name: string;
+  mail: string;
+  send: boolean;
+  list: SubsectionList[];
 }
 
 
@@ -69,7 +69,7 @@ function createEstimate(data: Data) {
   let total = 0
 
   for(let i=0; i<productsList.length; i++) {
-    productsList[i].product.forEach((product) => {
+    productsList[i].products.forEach((product) => {
       let row = table.appendTableRow()
       let subtotal = product.price * product.qt
       total += subtotal

@@ -5,7 +5,7 @@ interface Props {
   products: Article[];
 }
 
-interface SubsectionList {
+export interface SubsectionList {
   type: string;
   products: Article[];
 }
