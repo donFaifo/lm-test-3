@@ -1,9 +1,10 @@
 import React = require("react");
 import { Col, Form, Row } from "react-bootstrap";
+import { BatteryData, PanelData } from "../../../../app-script/main";
 import { Article } from "./EstimationListComponents/Subsection";
 import OthersProductForm from "./OthersProductForm";
 import ProductForm from "./ProductForm";
-import { batteriesList, controllersList, invertersList, panelsList, structuresList, wiringList } from "./ProductLists";
+import { controllersList, invertersList, structuresList, wiringList } from "./ProductLists";
 
 interface Props {
   isHidden: boolean;
@@ -13,8 +14,10 @@ interface Props {
 }
 
 interface State {
-  type: string
-  article: Article
+  type: string;
+  article: Article;
+  panelsList: PanelData[];
+  batteriesList: BatteryData[];
 }
 
 export default class EstimationForm extends React.Component<Props, State> {
@@ -32,13 +35,27 @@ export default class EstimationForm extends React.Component<Props, State> {
         ref: '',
         qt: 0,
         price: 0
-      }
+      },
+      panelsList: [],
+      batteriesList: [],
     }
 
     this.handleType = this.handleType.bind(this)
     this.save =this.save.bind(this)
 
     this.refType = React.createRef()
+  }
+
+  componentDidMount(): void {
+    //@ts-ignore
+    google.script.run.withSuccessHandler((data: PanelData[]) => {
+      this.setState({panelsList: data});
+    }).getPanelsData();
+
+    //@ts-ignore
+    google.script.run.withSuccessHandler((data: BatteryData[]) => {
+      this.setState({batteriesList: data});
+    }).getBatteriesData();
   }
 
   handleType(event) {
@@ -71,7 +88,7 @@ export default class EstimationForm extends React.Component<Props, State> {
       case "Paneles":
         form = <ProductForm 
           productType="Paneles"
-          productList={panelsList}
+          productList={this.state.panelsList}
           productParser={(panel) => {
             const n = Math.ceil(this.props.pw / panel.power);
             return {
@@ -87,13 +104,13 @@ export default class EstimationForm extends React.Component<Props, State> {
       case "Baterías":
         form = <ProductForm 
           productType="Baterías"
-          productList={batteriesList}
+          productList={this.state.batteriesList}
           productParser={(battery) => {
             const n = Math.ceil(this.props.amph / battery.amph);
             return {
               ref: battery.ref,
               type: "Baterías",
-              description: `${battery.description} ${battery.amph}Ah ${battery.voltage}V`,
+              description: `${battery.description} ${battery.capacity}Ah ${battery.voltage}V`,
               price: battery.price,
               qt: n,
             }

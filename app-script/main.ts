@@ -7,8 +7,67 @@ interface Data {
   list: SubsectionList[];
 }
 
+export interface PanelData {
+  ref: string;
+  description: string;
+  power: number;
+  voltage: number;
+  height: number;
+  width: number;
+  type: string;
+  price: number;
+}
 
-let folderId: string
+export interface BatteryData {
+  ref: string;
+  description: string;
+  capacity: number;
+  voltage: number;
+  type: string;
+  price: number;
+}
+
+export interface ControllerData {
+  ref: string;
+  description: string;
+  amperage: number;
+  voltage: number;
+  price: number;
+}
+
+export interface InverterData {
+  ref: string;
+  description: string;
+  power: number;
+  amperage: number;
+  voltage: number;
+  waveType: 'Modificada' | 'Pura' | 'Indeterminada';
+  price: number;
+}
+
+export interface StructureData {
+  ref: string;
+  description: string;
+  nPanels: number;
+  roofType: 'Inclinada' | 'Plana' | 'Vertical' | '';
+  material: string;
+  panelPowerRange: string;
+  panelMaxHeight: number;
+  panelMaxWidth: number;
+  price: number;
+}
+
+export interface CableData {
+  ref: string;
+  description: string;
+  section: number;
+  length: number;
+  price: number;
+}
+
+
+let folderId: string;
+const databaseId: string = '1_C-u2zp3xFLaclqZr820ZOaQU6Lyv78FhqC8PI8jiis';
 
 function doGet() {
   return HtmlService.createTemplateFromFile("index")
@@ -108,4 +167,116 @@ function getWorkingFolder() {
   }
   return myFolder.getId()
 
+}
+
+function getPanelsData(): PanelData[] {
+  const panelsSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Paneles');
+  const data = panelsSheet.getDataRange().getValues();
+  let panelsData: PanelData[] = [];
+
+  for(let i=1; i<data.length; i++) {
+    panelsData.push({
+      ref: data[i][0],
+      description: data[i][1],
+      power: data[i][2],
+      voltage: data[i][3],
+      height: data[i][4],
+      width: data[i][5],
+      type: data[i][6],
+      price: data[i][7],  
+    })
+  }
+  return panelsData;
+}
+
+function getBatteriesData(): BatteryData[] {
+  const batteriesSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Baterías');
+  const data = batteriesSheet.getDataRange().getValues();
+  let batteriesData: BatteryData[] = [];
+
+  for(let i=1; i<data.length; i++) {
+    batteriesData.push({
+      ref: data[i][0],
+      description: data[i][1],
+      capacity: data[i][2],
+      voltage: data[i][3],
+      type: data[i][4],
+      price: data[i][5],  
+    })
+  }
+  return batteriesData;
+}
+
+function getControllerData(): ControllerData[] {
+  const controllersSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Controladores');
+  const data = controllersSheet.getDataRange().getValues();
+  let controllersData: ControllerData[] = [];
+
+  for(let i=1; i<data.length; i++) {
+    controllersData.push({
+      ref: data[i][0],
+      description: data[i][1],
+      amperage: data[i][2],
+      voltage: data[i][3],
+      price: data[i][4],  
+    })
+  }
+  return controllersData;
+}
+
+function getInverterData(): InverterData[] {
+  const invertersSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Inversores');
+  const data = invertersSheet.getDataRange().getValues();
+  let invertersData: InverterData[] = [];
+
+  for(let i=1; i<data.length; i++) {
+    invertersData.push({
+      ref: data[i][0],
+      description: data[i][1],
+      power: data[i][2],
+      amperage: data[i][3],
+      voltage: data[i][4],
+      waveType: data[i][5],
+      price: data[i][6], 
+    })
+  }
+  return invertersData;
+}
+
+function getStructureData(): StructureData[] {
+  const structuresSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Estructuras');
+  const data = structuresSheet.getDataRange().getValues();
+  let structuresData: StructureData[] = [];
+
+  for(let i=1; i<data.length; i++) {
+    structuresData.push({
+      ref: data[i][0],
+      description: data[i][1],
+      nPanels: data[i][2],
+      roofType: data[i][3],
+      material: data[i][4],
+      panelPowerRange: data[i][5],
+      panelMaxHeight: data[i][6],
+      panelMaxWidth: data[i][7],
+      price: data[i][8], 
+    })
+  }
+  return structuresData;
+}
+
+function getCableData(): CableData[] {
+  const structuresSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Cables');
+  const data = structuresSheet.getDataRange().getValues();
+  let cablesData: CableData[] = [];
+
+  for(let i=1; i<data.length; i++) {
+    cablesData.push({
+      ref: data[i][0],
+      description: data[i][1],
+      section: data[i][2],
+      length: data[i][3],
+      price: data[i][4], 
+    })
+  }
+  return cablesData;
 }
