@@ -1,10 +1,10 @@
 import React = require("react");
 import { Col, Form, Row } from "react-bootstrap";
-import { BatteryData, PanelData } from "../../../../app-script/main";
+import { BatteryData, CableData, ControllerData, InverterData, PanelData, StructureData } from "../../../../app-script/main";
 import { Article } from "./EstimationListComponents/Subsection";
 import OthersProductForm from "./OthersProductForm";
 import ProductForm from "./ProductForm";
-import { controllersList, invertersList, structuresList, wiringList } from "./ProductLists";
+import {  } from "./ProductLists";
 
 interface Props {
   isHidden: boolean;
@@ -18,6 +18,10 @@ interface State {
   article: Article;
   panelsList: PanelData[];
   batteriesList: BatteryData[];
+  controllersList: ControllerData[];
+  invertersList: InverterData[];
+  structuresList: StructureData[];
+  wiringList: CableData[];
 }
 
 export default class EstimationForm extends React.Component<Props, State> {
@@ -38,6 +42,10 @@ export default class EstimationForm extends React.Component<Props, State> {
       },
       panelsList: [],
       batteriesList: [],
+      controllersList: [],
+      invertersList: [],
+      structuresList: [],
+      wiringList: [],
     }
 
     this.handleType = this.handleType.bind(this)
@@ -56,6 +64,26 @@ export default class EstimationForm extends React.Component<Props, State> {
     google.script.run.withSuccessHandler((data: BatteryData[]) => {
       this.setState({batteriesList: data});
     }).getBatteriesData();
+    
+    //@ts-ignore
+    google.script.run.withSuccessHandler((data: ControllerData[]) => {
+      this.setState({controllersList: data});
+    }).getControllersData();
+    
+    //@ts-ignore
+    google.script.run.withSuccessHandler((data: InverterData[]) => {
+      this.setState({invertersList: data});
+    }).getInverterData();
+    
+    //@ts-ignore
+    google.script.run.withSuccessHandler((data: StructureData[]) => {
+      this.setState({structuresList: data});
+    }).getStructuresData();
+    
+    //@ts-ignore
+    google.script.run.withSuccessHandler((data: CableData[]) => {
+      this.setState({wiringList: data});
+    }).getCablesData();
   }
 
   handleType(event) {
@@ -94,7 +122,7 @@ export default class EstimationForm extends React.Component<Props, State> {
             return {
               ref: panel.ref,
               type: 'Paneles',
-              description: `${panel.description} ${panel.power}W ${panel.voltage}V`,
+              description: `[${panel.power}W ${panel.voltage}V] ${panel.description}`,
               price: panel.price,
               qt: n,
             }
@@ -106,11 +134,11 @@ export default class EstimationForm extends React.Component<Props, State> {
           productType="Baterías"
           productList={this.state.batteriesList}
           productParser={(battery) => {
-            const n = Math.ceil(this.props.amph / battery.amph);
+            const n = Math.ceil(this.props.amph / battery.capacity);
             return {
               ref: battery.ref,
               type: "Baterías",
-              description: `${battery.description} ${battery.capacity}Ah ${battery.voltage}V`,
+              description: `[${battery.capacity}Ah ${battery.voltage}V] ${battery.description}`,
               price: battery.price,
               qt: n,
             }
@@ -119,13 +147,13 @@ export default class EstimationForm extends React.Component<Props, State> {
         break;
       case "Controlador":
         form = <ProductForm 
-          productList={controllersList}
+          productList={this.state.controllersList}
           productType="Controlador"
           productParser={(controller) => {
             return {
               type: 'Controlador',
               ref: controller.ref,
-              description: `${controller.description} - ${controller.amp}A ${controller.voltage}V`,
+              description: `[${controller.amperage}A ${controller.voltage}V] ${controller.description}`,
               price: controller.price,
               qt: 1
             }
@@ -135,12 +163,12 @@ export default class EstimationForm extends React.Component<Props, State> {
       case "Inversor":
         form = <ProductForm
           productType="Inversor"
-          productList={invertersList}
+          productList={this.state.invertersList}
           productParser={(inverter) => {
             return {
               ref: inverter.ref,
               type: "Inversor",
-              description: `${inverter.description} ${inverter.amp}A ${inverter.voltage}V`,
+              description: `[${inverter.power}W ${inverter.amperage}A ${inverter.voltage}V] ${inverter.description}`,
               price: inverter.price,
               qt: 1,
             }
@@ -150,12 +178,12 @@ export default class EstimationForm extends React.Component<Props, State> {
       case "Estructura":
         form = <ProductForm
           productType="Estructura"
-          productList={structuresList}
+          productList={this.state.structuresList}
           productParser={(structure) => {
             return {
               type: 'Estructura',
               ref: structure.ref,
-              description: `${structure.description} - ${structure.nPanels} paneles`,
+              description: `[${structure.nPanels} paneles] ${structure.description}`,
               price: structure.price,
               qt: 1
             }
@@ -165,12 +193,12 @@ export default class EstimationForm extends React.Component<Props, State> {
       case 'Cableado':
         form = <ProductForm
           productType="Cableado"
-          productList={wiringList}
+          productList={this.state.wiringList}
           productParser={(product) => {
             return {
               type: 'Cableado',
               ref: product.ref,
-              description: `${product.description} ${product.section}mm, ${product.cableLenght}m`,
+              description: `[${product.section}mm, ${product.length}m] ${product.description}`,
               price: product.price,
               qt: 1
             }

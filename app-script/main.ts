@@ -74,7 +74,7 @@ function doGet() {
     .evaluate()
     .setTitle("Cálculo fotovoltaica")
     .addMetaTag("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1")
-    .setFaviconUrl("https://mguerrero.me/imgpublic/ico-app-solar.png");
+    .setFaviconUrl("https://mguerrero.me/imgpublic/appsolar-ico.png");
 }
 
 function createEstimate(data: Data) {
@@ -207,7 +207,7 @@ function getBatteriesData(): BatteryData[] {
   return batteriesData;
 }
 
-function getControllerData(): ControllerData[] {
+function getControllersData(): ControllerData[] {
   const controllersSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Controladores');
   const data = controllersSheet.getDataRange().getValues();
   let controllersData: ControllerData[] = [];
@@ -243,7 +243,7 @@ function getInverterData(): InverterData[] {
   return invertersData;
 }
 
-function getStructureData(): StructureData[] {
+function getStructuresData(): StructureData[] {
   const structuresSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Estructuras');
   const data = structuresSheet.getDataRange().getValues();
   let structuresData: StructureData[] = [];
@@ -264,7 +264,7 @@ function getStructureData(): StructureData[] {
   return structuresData;
 }
 
-function getCableData(): CableData[] {
+function getCablesData(): CableData[] {
   const structuresSheet = SpreadsheetApp.openById(databaseId).getSheetByName('Cables');
   const data = structuresSheet.getDataRange().getValues();
   let cablesData: CableData[] = [];

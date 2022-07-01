@@ -51825,7 +51825,11 @@ class EstimationForm extends React.Component {
                 price: 0
             },
             panelsList: [],
-            batteriesList: []
+            batteriesList: [],
+            controllersList: [],
+            invertersList: [],
+            structuresList: [],
+            wiringList: []
         };
         this.handleType = this.handleType.bind(this);
         this.save = this.save.bind(this);
@@ -51844,6 +51848,30 @@ class EstimationForm extends React.Component {
                 batteriesList: data
             });
         }).getBatteriesData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                controllersList: data
+            });
+        }).getControllersData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                invertersList: data
+            });
+        }).getInverterData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                structuresList: data
+            });
+        }).getStructuresData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                wiringList: data
+            });
+        }).getCablesData();
     }
     handleType(event) {
         this.setState({
@@ -51877,7 +51905,7 @@ class EstimationForm extends React.Component {
                         return {
                             ref: panel.ref,
                             type: 'Paneles',
-                            description: `${panel.description} ${panel.power}W ${panel.voltage}V`,
+                            description: `[${panel.power}W ${panel.voltage}V] ${panel.description}`,
                             price: panel.price,
                             qt: n
                         };
@@ -51885,7 +51913,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 89,
+                    lineNumber: 117,
                     columnNumber: 16
                 }, this);
                 break;
@@ -51894,11 +51922,11 @@ class EstimationForm extends React.Component {
                     productType: "Bater\xedas",
                     productList: this.state.batteriesList,
                     productParser: (battery)=>{
-                        const n = Math.ceil(this.props.amph / battery.amph);
+                        const n = Math.ceil(this.props.amph / battery.capacity);
                         return {
                             ref: battery.ref,
                             type: "Baterías",
-                            description: `${battery.description} ${battery.capacity}Ah ${battery.voltage}V`,
+                            description: `[${battery.capacity}Ah ${battery.voltage}V] ${battery.description}`,
                             price: battery.price,
                             qt: n
                         };
@@ -51906,19 +51934,19 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 105,
+                    lineNumber: 133,
                     columnNumber: 16
                 }, this);
                 break;
             case "Controlador":
                 form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
-                    productList: _productLists.controllersList,
+                    productList: this.state.controllersList,
                     productType: "Controlador",
                     productParser: (controller)=>{
                         return {
                             type: 'Controlador',
                             ref: controller.ref,
-                            description: `${controller.description} - ${controller.amp}A ${controller.voltage}V`,
+                            description: `[${controller.amperage}A ${controller.voltage}V] ${controller.description}`,
                             price: controller.price,
                             qt: 1
                         };
@@ -51926,19 +51954,19 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 121,
+                    lineNumber: 149,
                     columnNumber: 16
                 }, this);
                 break;
             case "Inversor":
                 form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
                     productType: "Inversor",
-                    productList: _productLists.invertersList,
+                    productList: this.state.invertersList,
                     productParser: (inverter)=>{
                         return {
                             ref: inverter.ref,
                             type: "Inversor",
-                            description: `${inverter.description} ${inverter.amp}A ${inverter.voltage}V`,
+                            description: `[${inverter.power}W ${inverter.amperage}A ${inverter.voltage}V] ${inverter.description}`,
                             price: inverter.price,
                             qt: 1
                         };
@@ -51946,19 +51974,19 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 136,
+                    lineNumber: 164,
                     columnNumber: 16
                 }, this);
                 break;
             case "Estructura":
                 form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
                     productType: "Estructura",
-                    productList: _productLists.structuresList,
+                    productList: this.state.structuresList,
                     productParser: (structure)=>{
                         return {
                             type: 'Estructura',
                             ref: structure.ref,
-                            description: `${structure.description} - ${structure.nPanels} paneles`,
+                            description: `[${structure.nPanels} paneles] ${structure.description}`,
                             price: structure.price,
                             qt: 1
                         };
@@ -51966,19 +51994,19 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 151,
+                    lineNumber: 179,
                     columnNumber: 16
                 }, this);
                 break;
             case 'Cableado':
                 form = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productFormDefault.default, {
                     productType: "Cableado",
-                    productList: _productLists.wiringList,
+                    productList: this.state.wiringList,
                     productParser: (product)=>{
                         return {
                             type: 'Cableado',
                             ref: product.ref,
-                            description: `${product.description} ${product.section}mm, ${product.cableLenght}m`,
+                            description: `[${product.section}mm, ${product.length}m] ${product.description}`,
                             price: product.price,
                             qt: 1
                         };
@@ -51986,7 +52014,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 166,
+                    lineNumber: 194,
                     columnNumber: 16
                 }, this);
                 break;
@@ -51995,7 +52023,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 182,
+                    lineNumber: 210,
                     columnNumber: 16
                 }, this);
                 break;
@@ -52018,7 +52046,7 @@ class EstimationForm extends React.Component {
                                         children: "Tipo"
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 193,
+                                        lineNumber: 221,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Select, {
@@ -52032,7 +52060,7 @@ class EstimationForm extends React.Component {
                                                 children: "Paneles"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 199,
+                                                lineNumber: 227,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52040,7 +52068,7 @@ class EstimationForm extends React.Component {
                                                 children: "Bater\xedas"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 200,
+                                                lineNumber: 228,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52048,7 +52076,7 @@ class EstimationForm extends React.Component {
                                                 children: "Controlador"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 201,
+                                                lineNumber: 229,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52056,7 +52084,7 @@ class EstimationForm extends React.Component {
                                                 children: "Inversor"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 202,
+                                                lineNumber: 230,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52064,7 +52092,7 @@ class EstimationForm extends React.Component {
                                                 children: "Estructura"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 203,
+                                                lineNumber: 231,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52072,7 +52100,7 @@ class EstimationForm extends React.Component {
                                                 children: "Cableado"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 204,
+                                                lineNumber: 232,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
@@ -52080,41 +52108,41 @@ class EstimationForm extends React.Component {
                                                 children: "Otros"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 205,
+                                                lineNumber: 233,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 194,
+                                        lineNumber: 222,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 192,
+                                lineNumber: 220,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                            lineNumber: 191,
+                            lineNumber: 219,
                             columnNumber: 11
                         }, this),
                         form
                     ]
                 }, void 0, true, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 190,
+                    lineNumber: 218,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                lineNumber: 189,
+                lineNumber: 217,
                 columnNumber: 7
             }, this)
         }, void 0, false, {
             fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-            lineNumber: 188,
+            lineNumber: 216,
             columnNumber: 12
         }, this);
     }
