@@ -4,7 +4,7 @@ import { BatteryData, CableData, ControllerData, InverterData, PanelData, Struct
 import { Article } from "./EstimationListComponents/Subsection";
 import OthersProductForm from "./OthersProductForm";
 import ProductForm from "./ProductForm";
-import {  } from "./ProductLists";
+import { _batteriesList, _controllersList, _invertersList, _panelsList, _structuresList, _wiringList } from "./ProductLists";
 
 interface Props {
   isHidden: boolean;
@@ -40,12 +40,12 @@ export default class EstimationForm extends React.Component<Props, State> {
         qt: 0,
         price: 0
       },
-      panelsList: [],
-      batteriesList: [],
-      controllersList: [],
-      invertersList: [],
-      structuresList: [],
-      wiringList: [],
+      panelsList: _panelsList,
+      batteriesList: _batteriesList,
+      controllersList: _controllersList,
+      invertersList: _invertersList,
+      structuresList: _structuresList,
+      wiringList: _wiringList,
     }
 
     this.handleType = this.handleType.bind(this)

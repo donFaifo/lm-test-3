@@ -71,7 +71,7 @@ export default class Estimation extends React.Component<Props, States> {
 
     customerName = this.state.customerName
     customerMail = this.state.customerMail
-
+    
     data = {
       name: customerName,
       mail: customerMail,

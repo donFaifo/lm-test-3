@@ -1,10 +1,10 @@
-import { SubsectionList } from "../src/components/sections/EstimationComponents/EstimationList";
+import { Article } from "../src/components/sections/EstimationComponents/EstimationListComponents/Subsection";
 
 interface Data {
   name: string;
   mail: string;
   send: boolean;
-  list: SubsectionList[];
+  list: Article[];
 }
 
 export interface PanelData {
@@ -78,83 +78,85 @@ function doGet() {
 }
 
 function createEstimate(data: Data) {
-  folderId = getWorkingFolder()
-  const date = new Date()
-  const shortDate = `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth()+1).toString().padStart(2, "0")}/${date.getFullYear().toString()}`
-  const fileName = data.name + " " + shortDate
-  let document = DocumentApp.create(fileName)
-  const documentId = document.getId()
-  let folder = DriveApp.getFolderById(folderId)
-  folder.addFile(DriveApp.getFileById(document.getId()))
+  folderId = getWorkingFolder();
+  const date = new Date();
+  const shortDate = `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth()+1).toString().padStart(2, "0")}/${date.getFullYear().toString()}`;
+  const fileName = data.name + " " + shortDate;
+  let document = DocumentApp.create(fileName);
+  const documentId = document.getId();
+  let folder = DriveApp.getFolderById(folderId);
+  folder.addFile(DriveApp.getFileById(document.getId()));
 
-  let headingStyle = {}
+  let headingStyle = {};
 
-  headingStyle[DocumentApp.Attribute.FONT_FAMILY] = "Leroy Merlin Sans"
-  headingStyle[DocumentApp.Attribute.BOLD] = true
+  headingStyle[DocumentApp.Attribute.FONT_FAMILY] = "Leroy Merlin Sans";
+  headingStyle[DocumentApp.Attribute.BOLD] = true;
 
-  let rowHeadingStyle = {}
+  let rowHeadingStyle = {};
 
-  rowHeadingStyle[DocumentApp.Attribute.FONT_FAMILY] = "Leroy Merlin Sans"
-  rowHeadingStyle[DocumentApp.Attribute.BOLD] = true
-  rowHeadingStyle[DocumentApp.Attribute.FONT_SIZE] = 10
+  rowHeadingStyle[DocumentApp.Attribute.FONT_FAMILY] = "Leroy Merlin Sans";
+  rowHeadingStyle[DocumentApp.Attribute.BOLD] = true;
+  rowHeadingStyle[DocumentApp.Attribute.FONT_SIZE] = 10;
 
-  let rowStyle = {}
+  let rowStyle = {};
 
-  rowStyle[DocumentApp.Attribute.FONT_FAMILY] = "Leroy Merlin Sans"
-  rowStyle[DocumentApp.Attribute.BOLD] = false
-  rowStyle[DocumentApp.Attribute.FONT_SIZE] = 10
+  rowStyle[DocumentApp.Attribute.FONT_FAMILY] = "Leroy Merlin Sans";
+  rowStyle[DocumentApp.Attribute.BOLD] = false;
+  rowStyle[DocumentApp.Attribute.FONT_SIZE] = 10;
 
-  let normalStyle = {}
+  let normalStyle = {};
 
-  normalStyle[DocumentApp.Attribute.FONT_FAMILY] = "Leroy Merlin Sans"
-  normalStyle[DocumentApp.Attribute.BOLD] = false
-  normalStyle[DocumentApp.Attribute.FONT_SIZE] = 11
+  normalStyle[DocumentApp.Attribute.FONT_FAMILY] = "Leroy Merlin Sans";
+  normalStyle[DocumentApp.Attribute.BOLD] = false;
+  normalStyle[DocumentApp.Attribute.FONT_SIZE] = 11;
 
 
-  document.getBody().insertParagraph(0, fileName)
+  document.getBody().insertParagraph(0, `Presupuesto fotovoltaica Leroy Merlin\n${fileName}`)
     .setHeading(DocumentApp.ParagraphHeading.HEADING1)
-    .setAttributes(headingStyle)
+    .setAttributes(headingStyle);
 
-  let table = document.getBody().appendTable()
-  let header = table.appendTableRow()
-  header.appendTableCell("Ref.")
-  header.appendTableCell("Descripción")
-  header.appendTableCell("Cant.")
-  header.appendTableCell("Precio u.")
-  header.appendTableCell("Subtotal")
-  header.setAttributes(headingStyle)
+  let table = document.getBody().appendTable();
+  let header = table.appendTableRow();
+  header.appendTableCell("Ref.");
+  header.appendTableCell("Descripción");
+  header.appendTableCell("Cant.");
+  header.appendTableCell("Precio u.");
+  header.appendTableCell("Subtotal");
+  header.setAttributes(headingStyle);
 
-  let productsList = data.list
-  let total = 0
+  let productsList = data.list;
+  Logger.log(productsList);
+  let total = 0;
 
-  for(let i=0; i<productsList.length; i++) {
-    productsList[i].products.forEach((product) => {
-      let row = table.appendTableRow()
-      let subtotal = product.price * product.qt
-      total += subtotal
-      row.appendTableCell(product.ref.toString()).setWidth(66)
-      row.appendTableCell(product.description).setWidth(200)
-      row.appendTableCell(product.qt.toString()).setWidth(54)
-      row.appendTableCell(product.price.toString() + " €").setWidth(66)
-      row.appendTableCell(subtotal.toString() + " €")
-      row.setAttributes(rowStyle)
-    })
-  }
+  
+  productsList.forEach((product) => {
+    let row = table.appendTableRow()
+    let subtotal = product.price * product.qt
+    total += subtotal
+    row.appendTableCell(product.ref.toString()).setWidth(66)
+    row.appendTableCell(product.description).setWidth(200)
+    row.appendTableCell(product.qt.toString()).setWidth(54)
+    row.appendTableCell(product.price.toString() + " €").setWidth(66)
+    row.appendTableCell(subtotal.toString() + " €")
+    row.setAttributes(rowStyle)
+  });
 
   document.getBody().appendParagraph("TOTAL: " + total.toString() + " €")
     .setHeading(DocumentApp.ParagraphHeading.HEADING2)
-    .setAttributes(headingStyle)
+    .setAttributes(headingStyle);
 
-  document.getBody().appendParagraph("\n\nMade with AppScript")
-    .setAttributes(normalStyle)
+  document.getBody().appendParagraph("\n\nEste presupuesto es orientativo y no puede ser considerado como un presupuesto formal. Los precios pueden variar en el momento de realizar el presupuesto en firme con la visita de un técnico cualificado.\nPara más detalles, consulte al vendedor.")
+    .setAttributes(normalStyle);
   
-  document.saveAndClose()
-  
-  const doc = document.getAs("application/pdf")
-  
-  GmailApp.sendEmail(data.mail, "Presupuesto Fotovoltaica Leroy Merlin", "Adjunto su presupuesto", {
-    attachments: [doc]
-  })
+  document.saveAndClose();
+
+  if(data.send) {  
+    const doc = document.getAs("application/pdf");
+    
+    GmailApp.sendEmail(data.mail, "Presupuesto Fotovoltaica Leroy Merlin", "Adjunto su presupuesto", {
+      attachments: [doc]
+    });
+  }
 }
 
 function getWorkingFolder() {
