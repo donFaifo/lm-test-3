@@ -25,7 +25,7 @@ class Main extends React.Component<Props, States> {
     this.state ={
       data: [],
       voltage: 12,
-      peekHours: 3.2,
+      peekHours: 3,
       panelEficiency: 0.9,
       dischargeDeep: 0.6,
       autonomyDays: 1,
@@ -34,8 +34,10 @@ class Main extends React.Component<Props, States> {
       requiredCapacity: 0,
     };
 
-    this.saveNewData = this.saveNewData.bind(this)
-    this.clearData = this.clearData.bind(this)
+    this.saveNewData = this.saveNewData.bind(this);
+    this.clearData = this.clearData.bind(this);
+    this.setAutonomyDays = this.setAutonomyDays.bind(this);
+    this.setPeekHours = this.setPeekHours.bind(this);
   }
 
   saveNewData(record: InputDataType) {
@@ -67,6 +69,18 @@ class Main extends React.Component<Props, States> {
     });
   }
 
+  setPeekHours(nHours: number) {
+    this.setState({
+      peekHours: nHours,
+    })
+  }
+
+  setAutonomyDays(nDays: number) {
+    this.setState({
+      autonomyDays: nDays,
+    })
+  }
+
   render() {
 
     return <Container className="mt-3">
@@ -85,6 +99,9 @@ class Main extends React.Component<Props, States> {
         pw={this.state.requiredPower}
         amph={this.state.requiredCapacity}
         kwh={this.state.averageEnergy}
+        autonomy={this.state.autonomyDays}
+        onChangeAutonomy={this.setAutonomyDays}
+        onChancePeekHours={this.setPeekHours}
       />
 
       <Estimation 

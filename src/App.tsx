@@ -13,6 +13,7 @@ class App extends React.Component {
           <Navbar.Brand href="#home">Cálculos solar</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="#home">Inicio</Nav.Link>
+            <Nav.Link href="https://sites.google.com/leroymerlin.es/calculo-fotovoltaica/inicio" target="_blank">Ayuda</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
