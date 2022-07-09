@@ -55,7 +55,6 @@ export default class EstimationForm extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    /*
     //@ts-ignore
     google.script.run.withSuccessHandler((data: PanelData[]) => {
       this.setState({panelsList: data});
@@ -85,7 +84,6 @@ export default class EstimationForm extends React.Component<Props, State> {
     google.script.run.withSuccessHandler((data: CableData[]) => {
       this.setState({wiringList: data});
     }).getCablesData();
-    */
   }
 
   handleType(event) {

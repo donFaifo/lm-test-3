@@ -25,10 +25,10 @@ class Main extends React.Component<Props, States> {
     this.state ={
       data: [],
       voltage: 12,
-      peekHours: 3,
+      peekHours: 3.2,
       panelEficiency: 0.9,
       dischargeDeep: 0.6,
-      autonomyDays: 1,
+      autonomyDays: 2,
       requiredPower: 0,
       averageEnergy: 0,
       requiredCapacity: 0,
@@ -70,14 +70,24 @@ class Main extends React.Component<Props, States> {
   }
 
   setPeekHours(nHours: number) {
+    let pw: number;
+
+    pw = (this.state.averageEnergy / this.state.panelEficiency) / nHours;
+
     this.setState({
       peekHours: nHours,
+      requiredPower: pw,
     })
   }
 
   setAutonomyDays(nDays: number) {
+    let amph: number;
+
+    amph = ((this.state.averageEnergy / this.state.voltage)/this.state.dischargeDeep)  * nDays;
+
     this.setState({
       autonomyDays: nDays,
+      requiredCapacity: amph,
     })
   }
 

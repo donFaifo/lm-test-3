@@ -38732,10 +38732,10 @@ class Main extends React.Component {
         this.state = {
             data: [],
             voltage: 12,
-            peekHours: 3,
+            peekHours: 3.2,
             panelEficiency: 0.9,
             dischargeDeep: 0.6,
-            autonomyDays: 1,
+            autonomyDays: 2,
             requiredPower: 0,
             averageEnergy: 0,
             requiredCapacity: 0
@@ -38771,13 +38771,19 @@ class Main extends React.Component {
         });
     }
     setPeekHours(nHours) {
+        let pw;
+        pw = this.state.averageEnergy / this.state.panelEficiency / nHours;
         this.setState({
-            peekHours: nHours
+            peekHours: nHours,
+            requiredPower: pw
         });
     }
     setAutonomyDays(nDays) {
+        let amph;
+        amph = this.state.averageEnergy / this.state.voltage / this.state.dischargeDeep * nDays;
         this.setState({
-            autonomyDays: nDays
+            autonomyDays: nDays,
+            requiredCapacity: amph
         });
     }
     render() {
@@ -38790,7 +38796,7 @@ class Main extends React.Component {
                     dataCleaner: this.clearData
                 }, void 0, false, {
                     fileName: "src/components/Main.tsx",
-                    lineNumber: 88,
+                    lineNumber: 98,
                     columnNumber: 7
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _resultsDefault.default), {
@@ -38807,7 +38813,7 @@ class Main extends React.Component {
                     onChancePeekHours: this.setPeekHours
                 }, void 0, false, {
                     fileName: "src/components/Main.tsx",
-                    lineNumber: 93,
+                    lineNumber: 103,
                     columnNumber: 7
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _estimationDefault.default), {
@@ -38815,13 +38821,13 @@ class Main extends React.Component {
                     amph: this.state.requiredCapacity
                 }, void 0, false, {
                     fileName: "src/components/Main.tsx",
-                    lineNumber: 107,
+                    lineNumber: 117,
                     columnNumber: 7
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/components/Main.tsx",
-            lineNumber: 86,
+            lineNumber: 96,
             columnNumber: 12
         }, this);
     }
@@ -39899,7 +39905,15 @@ class Results extends React.Component {
                                     md: 2,
                                     lg: 1,
                                     htmlFor: "use",
-                                    children: "HPS:"
+                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                                        href: "https://www.tutiendasolar.es/hps.php",
+                                        target: "_blank",
+                                        children: "HPS:"
+                                    }, void 0, false, {
+                                        fileName: "src/components/sections/Results.tsx",
+                                        lineNumber: 36,
+                                        columnNumber: 15
+                                    }, this)
                                 }, void 0, false, {
                                     fileName: "src/components/sections/Results.tsx",
                                     lineNumber: 35,
@@ -39912,13 +39926,22 @@ class Results extends React.Component {
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Select, {
                                         id: "use",
                                         size: "sm",
+                                        onChange: (ev)=>{
+                                            switch(ev.target.value){
+                                                case "summer":
+                                                    this.props.onChancePeekHours(6.1);
+                                                    break;
+                                                default:
+                                                    this.props.onChancePeekHours(3.2);
+                                            }
+                                        },
                                         children: [
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
                                                 defaultValue: "fullYear",
                                                 children: "Uso para todo el a\xf1o"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/Results.tsx",
-                                                lineNumber: 38,
+                                                lineNumber: 50,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -39926,18 +39949,18 @@ class Results extends React.Component {
                                                 children: "Uso solo en verano"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/Results.tsx",
-                                                lineNumber: 39,
+                                                lineNumber: 51,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/sections/Results.tsx",
-                                        lineNumber: 37,
+                                        lineNumber: 41,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "src/components/sections/Results.tsx",
-                                    lineNumber: 36,
+                                    lineNumber: 40,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
@@ -39947,15 +39970,21 @@ class Results extends React.Component {
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                         type: "number",
                                         size: "sm",
-                                        defaultValue: this.props.peekHours
+                                        value: this.props.peekHours,
+                                        onChange: (ev)=>{
+                                            this.props.onChancePeekHours(parseFloat(ev.target.value));
+                                        },
+                                        onClick: (ev)=>{
+                                            ev.currentTarget.select();
+                                        }
                                     }, void 0, false, {
                                         fileName: "src/components/sections/Results.tsx",
-                                        lineNumber: 43,
+                                        lineNumber: 55,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "src/components/sections/Results.tsx",
-                                    lineNumber: 42,
+                                    lineNumber: 54,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Label, {
@@ -39966,7 +39995,7 @@ class Results extends React.Component {
                                     children: "D\xedas de autonom\xeda:"
                                 }, void 0, false, {
                                     fileName: "src/components/sections/Results.tsx",
-                                    lineNumber: 45,
+                                    lineNumber: 65,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
@@ -39975,15 +40004,21 @@ class Results extends React.Component {
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                         type: "number",
                                         size: "sm",
-                                        defaultValue: this.props.autonomy
+                                        value: this.props.autonomy,
+                                        onChange: (ev)=>{
+                                            this.props.onChangeAutonomy(parseInt(ev.target.value));
+                                        },
+                                        onClick: (ev)=>{
+                                            ev.currentTarget.select();
+                                        }
                                     }, void 0, false, {
                                         fileName: "src/components/sections/Results.tsx",
-                                        lineNumber: 47,
+                                        lineNumber: 67,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "src/components/sections/Results.tsx",
-                                    lineNumber: 46,
+                                    lineNumber: 66,
                                     columnNumber: 13
                                 }, this)
                             ]
@@ -40013,7 +40048,7 @@ class Results extends React.Component {
                             ]
                         }, void 0, true, {
                             fileName: "src/components/sections/Results.tsx",
-                            lineNumber: 53,
+                            lineNumber: 81,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _resultCardDefault.default), {
@@ -40025,7 +40060,7 @@ class Results extends React.Component {
                             ]
                         }, void 0, true, {
                             fileName: "src/components/sections/Results.tsx",
-                            lineNumber: 59,
+                            lineNumber: 87,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _resultCardDefault.default), {
@@ -40037,13 +40072,13 @@ class Results extends React.Component {
                             ]
                         }, void 0, true, {
                             fileName: "src/components/sections/Results.tsx",
-                            lineNumber: 65,
+                            lineNumber: 93,
                             columnNumber: 9
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/sections/Results.tsx",
-                    lineNumber: 52,
+                    lineNumber: 80,
                     columnNumber: 7
                 }, this)
             ]
@@ -53706,37 +53741,43 @@ class EstimationForm extends React.Component {
         this.refType = React.createRef();
     }
     componentDidMount() {
-    /*
-    //@ts-ignore
-    google.script.run.withSuccessHandler((data: PanelData[]) => {
-      this.setState({panelsList: data});
-    }).getPanelsData();
-
-    //@ts-ignore
-    google.script.run.withSuccessHandler((data: BatteryData[]) => {
-      this.setState({batteriesList: data});
-    }).getBatteriesData();
-    
-    //@ts-ignore
-    google.script.run.withSuccessHandler((data: ControllerData[]) => {
-      this.setState({controllersList: data});
-    }).getControllersData();
-    
-    //@ts-ignore
-    google.script.run.withSuccessHandler((data: InverterData[]) => {
-      this.setState({invertersList: data});
-    }).getInverterData();
-    
-    //@ts-ignore
-    google.script.run.withSuccessHandler((data: StructureData[]) => {
-      this.setState({structuresList: data});
-    }).getStructuresData();
-    
-    //@ts-ignore
-    google.script.run.withSuccessHandler((data: CableData[]) => {
-      this.setState({wiringList: data});
-    }).getCablesData();
-    */ }
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                panelsList: data
+            });
+        }).getPanelsData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                batteriesList: data
+            });
+        }).getBatteriesData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                controllersList: data
+            });
+        }).getControllersData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                invertersList: data
+            });
+        }).getInverterData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                structuresList: data
+            });
+        }).getStructuresData();
+        //@ts-ignore
+        google.script.run.withSuccessHandler((data)=>{
+            this.setState({
+                wiringList: data
+            });
+        }).getCablesData();
+    }
     handleType(event) {
         this.setState({
             type: event.target.value
@@ -53777,7 +53818,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 119,
+                    lineNumber: 117,
                     columnNumber: 16
                 }, this);
                 break;
@@ -53798,7 +53839,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 135,
+                    lineNumber: 133,
                     columnNumber: 16
                 }, this);
                 break;
@@ -53818,7 +53859,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 151,
+                    lineNumber: 149,
                     columnNumber: 16
                 }, this);
                 break;
@@ -53838,7 +53879,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 166,
+                    lineNumber: 164,
                     columnNumber: 16
                 }, this);
                 break;
@@ -53858,7 +53899,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 181,
+                    lineNumber: 179,
                     columnNumber: 16
                 }, this);
                 break;
@@ -53878,7 +53919,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 196,
+                    lineNumber: 194,
                     columnNumber: 16
                 }, this);
                 break;
@@ -53887,7 +53928,7 @@ class EstimationForm extends React.Component {
                     addAction: (product)=>this.save(product)
                 }, void 0, false, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 212,
+                    lineNumber: 210,
                     columnNumber: 16
                 }, this);
                 break;
@@ -53910,7 +53951,7 @@ class EstimationForm extends React.Component {
                                         children: "Tipo"
                                     }, void 0, false, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 223,
+                                        lineNumber: 221,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Select, {
@@ -53924,7 +53965,7 @@ class EstimationForm extends React.Component {
                                                 children: "Paneles"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 229,
+                                                lineNumber: 227,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -53932,7 +53973,7 @@ class EstimationForm extends React.Component {
                                                 children: "Bater\xedas"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 230,
+                                                lineNumber: 228,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -53940,7 +53981,7 @@ class EstimationForm extends React.Component {
                                                 children: "Controlador"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 231,
+                                                lineNumber: 229,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -53948,7 +53989,7 @@ class EstimationForm extends React.Component {
                                                 children: "Inversor"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 232,
+                                                lineNumber: 230,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -53956,7 +53997,7 @@ class EstimationForm extends React.Component {
                                                 children: "Estructura"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 233,
+                                                lineNumber: 231,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -53964,7 +54005,7 @@ class EstimationForm extends React.Component {
                                                 children: "Cableado"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 234,
+                                                lineNumber: 232,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -53972,41 +54013,41 @@ class EstimationForm extends React.Component {
                                                 children: "Otros"
                                             }, void 0, false, {
                                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                                lineNumber: 235,
+                                                lineNumber: 233,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 222,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                                lineNumber: 222,
+                                lineNumber: 220,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                            lineNumber: 221,
+                            lineNumber: 219,
                             columnNumber: 11
                         }, this),
                         form
                     ]
                 }, void 0, true, {
                     fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                    lineNumber: 220,
+                    lineNumber: 218,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-                lineNumber: 219,
+                lineNumber: 217,
                 columnNumber: 7
             }, this)
         }, void 0, false, {
             fileName: "src/components/sections/EstimationComponents/EstimationForm.tsx",
-            lineNumber: 218,
+            lineNumber: 216,
             columnNumber: 12
         }, this);
     }
