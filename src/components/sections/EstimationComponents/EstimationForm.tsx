@@ -1,6 +1,6 @@
 import React = require("react");
 import { Col, Form, Row } from "react-bootstrap";
-import { BatteryData, CableData, ControllerData, InverterData, PanelData, StructureData } from "../../../../app-script/main";
+import { BatteryData, CableData, ControllerData, InverterData, PanelData, StructureData } from "../../../../server/main";
 import { Article } from "./EstimationListComponents/Subsection";
 import OthersProductForm from "./OthersProductForm";
 import ProductForm from "./ProductForm";
